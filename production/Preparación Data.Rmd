@@ -10,7 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-### TRATAMIENTO DE VARIABLES DE PARTICIPACIÓN POLÍTICA, SEXO Y CANTIDAD DE LIBROS
+rm(list=ls())
+
+### TRATAMIENTO DE VARIABLES DE PARTICIPACIÓN POLÍTICA, SOCIALIZACIÓN POLÍTICA ESCOLAR, SEXO Y CANTIDAD DE LIBROS
 #Abrir base de datos desde Repositorio Github
 est_data <- haven::read_dta(file = url("https://github.com/formacionciudadana/data-paces/blob/main/docs/paces/data/base_estudiantesv2.dta?raw=true"))
 
@@ -32,53 +34,115 @@ est_data<- est_data %>% select(P58,
                                P33E,
                                P33F,
                                P33G,
-                               P33H)
+                               P33H,
+                               P49A,
+                               P49B,
+                               P49C,
+                               P49D,
+                               P49E,
+                               P49F,
+                               P49G,
+                               P50A,
+                               P50B,
+                               P50C,
+                               P50D,
+                               P50E,
+                               P50F,
+                               P50G)
 View(est_data)
 ```
 
 ```{r, echo=FALSE}
 #Nombrar variables
-est_data <- est_data %>% rename("SEXO" = P58)
-est_data <- est_data %>% rename("LIBROS" = P68) 
-est_data <- est_data %>% rename("MUNICIPALES" = P31A) #Intención de Voto en Municipales
-est_data <- est_data %>% rename("PRESIDENCIALES" = P31B) #Intención de voto en Presidenciales
-est_data <- est_data %>% rename("INFORMARSE" = P31C) #Intención de informarse
-est_data <- est_data %>% rename("FIRMAR PETICION" = P33A) # Desde A hasta H, actividades realizadas durante los últimos 12 meses
-est_data <- est_data %>% rename("MARCHA AUTORIZADA" = P33B)
-est_data <- est_data %>% rename("MARCHA NO AUTORIZADA" = P33C)
-est_data <- est_data %>% rename("BLOQUEO CALLES" = P33D)
-est_data <- est_data %>% rename("PINTAR PAREDES" = P33E)
-est_data <- est_data %>% rename("TOMA" = P33F)
-est_data <- est_data %>% rename("SERVICIOS COMUNITARIOS" = P33G)
-est_data <- est_data %>% rename("REUNION POLITICA" = P33H)
+est_data <- est_data %>% rename("sexo" = P58)
+est_data <- est_data %>% rename("libros" = P68) 
+est_data <- est_data %>% rename("int_mun" = P31A) #Intención de Voto en Municipales
+est_data <- est_data %>% rename("int_pre" = P31B) #Intención de voto en Presidenciales
+est_data <- est_data %>% rename("int_inf" = P31C) #Intención de informarse
+est_data <- est_data %>% rename("par_fir" = P33A) #Desde A hasta H, actividades realizadas durante los últimos 12 meses
+est_data <- est_data %>% rename("par_marau" = P33B)
+est_data <- est_data %>% rename("par_marnoau" = P33C)
+est_data <- est_data %>% rename("par_bloq" = P33D)
+est_data <- est_data %>% rename("par_pared" = P33E)
+est_data <- est_data %>% rename("par_toma" = P33F)
+est_data <- est_data %>% rename("par_servcom" = P33G)
+est_data <- est_data %>% rename("par_reupol" = P33H)
+est_data <- est_data %>% rename("aper_abiert" = P49A) #Apertura a la discusión (49A a 49G)
+est_data <- est_data %>% rename("aper_expr" = P49B)
+est_data <- est_data %>% rename("aper_act" = P49C)
+est_data <- est_data %>% rename("aper_dist" = P49D)
+est_data <- est_data %>% rename("aper_estim" = P49E)
+est_data <- est_data %>% rename("aper_punt" = P49F)
+est_data <- est_data %>% rename("aper_reflx" = P49G)
+est_data <- est_data %>% rename("civ_tall" = P50A) #Estrategias de aprendizaje cívico activo (50A a 50F)
+est_data <- est_data %>% rename("civ_simul" = P50B)
+est_data <- est_data %>% rename("civ_camp" = P50C)
+est_data <- est_data %>% rename("civ_foros" = P50D)
+est_data <- est_data %>% rename("civ_charlas" = P50E)
+est_data <- est_data %>% rename("civ_medio" = P50F)
+est_data <- est_data %>% rename("civ_comun" = P50G)
 ```
 
 ```{r, echo=FALSE}
 #Etiquetar variables
-est_data$SEXO <- set_label(x = est_data$SEXO,label = "Sexo")
-est_data$LIBROS <- set_label(x = est_data$LIBROS,label = "Número de libros")
-est_data$MUNICIPALES <- set_label(x = est_data$MUNICIPALES ,label = "Intención de voto en Municipales")
-est_data$PRESIDENCIALES <- set_label(x = est_data$PRESIDENCIALES ,label = "Intención de voto en Presidenciales")
-est_data$INFORMARSE <- set_label(x = est_data$INFORMARSE ,label = "Intención de informarse antes de elecciones")
-est_data$`FIRMAR PETICION` <- set_label(x = est_data$`FIRMAR PETICION` ,label = "PARTICIPACION: Firmar una petición")
-est_data$`MARCHA AUTORIZADA` <- set_label(x = est_data$`MARCHA AUTORIZADA` ,label = "PARTICIPACION: Marcha autorizada")
-est_data$`MARCHA NO AUTORIZADA` <- set_label(x = est_data$`MARCHA NO AUTORIZADA` ,label = "PARTICIPACION: Marcha no autorizada")
-est_data$TOMA <- set_label(x = est_data$TOMA ,label = "PARTICIPACION: EN tomas")
-est_data$`SERVICIOS COMUNITARIOS` <- set_label(x = est_data$`SERVICIOS COMUNITARIOS` ,label = "PARTICIPACION: Trabajos comunitarios")
-est_data$`REUNION POLITICA` <- set_label(x = est_data$`REUNION POLITICA` ,label = "PARTICIPACION: REUNION POLITICA")
+est_data$sexo <- set_label(x = est_data$sexo,label = "Sexo")
+est_data$libros <- set_label(x = est_data$libros,label = "Número de libros")
+est_data$int_mun <- set_label(x = est_data$int_mun ,label = "Intención de voto en Municipales")
+est_data$int_pre <- set_label(x = est_data$int_pre ,label = "Intención de voto en Presidenciales")
+est_data$int_inf <- set_label(x = est_data$int_inf ,label = "Intención de informarse antes de elecciones")
+est_data$par_fir <- set_label(x = est_data$par_fir ,label = "PARTICIPACION: Firmar una petición")
+est_data$par_marau <- set_label(x = est_data$par_marau ,label = "PARTICIPACION: Marcha autorizada")
+est_data$par_marnoau <- set_label(x = est_data$par_marnoau ,label = "PARTICIPACION: Marcha no autorizada")
+est_data$par_bloq <- set_label(x = est_data$par_bloq,label = "PARTICIPACIÓN: Bloqueo de calles")
+est_data$par_toma <- set_label(x = est_data$par_toma ,label = "PARTICIPACION: EN tomas")
+est_data$par_servcom <- set_label(x = est_data$par_servcom ,label = "PARTICIPACION: Trabajos comunitarios")
+est_data$par_reupol <- set_label(x = est_data$par_reupol ,label = "PARTICIPACION: Reuniones políticas")
+est_data$aper_abiert <- set_label(x = est_data$aper_abiert ,label = "APERTURA: Estudiantes pueden manifestar desacuerdo en clases")
+est_data$aper_expr <- set_label(x = est_data$aper_expr ,label = "APER: Profesores estimulan la opinión de estudiantes")
+est_data$aper_act <- set_label(x = est_data$aper_act ,label = "APER: Estudiantes plantean temas de actualidad política en clases")
+est_data$aper_dist <- set_label(x = est_data$aper_dist ,label = "APER: Estudiantes expresan opiniones diversas")
+est_data$aper_estim <- set_label(x = est_data$aper_estim ,label = "APER: Profesores estimulan dialogo entre gente que opina en clases")
+est_data$aper_punt <- set_label(x = est_data$aper_punt ,label = "APER: Profesores exponen temas desde diversos puntos de vista")
+est_data$aper_reflx <- set_label(x = est_data$aper_reflx ,label = "APER: Profesores fomentan reflexión y crítica")
+est_data$civ_tall <- set_label(x = est_data$civ_tall ,label = "ACA: Talleres y Jornadas") #ACA = aprendizaje cívico activo
+est_data$civ_simul <- set_label(x = est_data$civ_simul ,label = "ACA: Simulación de elecciones")
+est_data$civ_camp <- set_label(x = est_data$civ_camp ,label = "ACA: Campañas de elecciones de CAA")
+est_data$civ_foros <- set_label(x = est_data$civ_foros ,label = "ACA: Foros y Debates")
+est_data$civ_charlas <- set_label(x = est_data$civ_charlas ,label = "ACA: Charlas con invitados")
+est_data$civ_medio <- set_label(x = est_data$civ_medio ,label = "ACA: Actividades Medioambientales")
+est_data$civ_comun <- set_label(x = est_data$civ_comun ,label = "ACA: Servicio a la Comunidad")
 ```
 
 ```{r, echo=FALSE}
 #Decretar casos perdidos y eliminar sus antiguas etiquetas
-est_data$SEXO <- set_na(est_data$SEXO, na = c(3,4,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$LIBROS <- set_na(est_data$LIBROS, na = c(8,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$MUNICIPALES <- set_na(est_data$MUNICIPALES, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$PRESIDENCIALES <- set_na(est_data$PRESIDENCIALES, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$INFORMARSE <- set_na(est_data$INFORMARSE, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$`FIRMAR PETICION`<- set_na(est_data$`FIRMAR PETICION`, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$`MARCHA AUTORIZADA` <- set_na(est_data$`MARCHA AUTORIZADA`, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$`MARCHA NO AUTORIZADA` <- set_na(est_data$`MARCHA NO AUTORIZADA`, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$TOMA <- set_na(est_data$TOMA, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$`SERVICIOS COMUNITARIOS`<- set_na(est_data$`SERVICIOS COMUNITARIOS`, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
-est_data$`REUNION POLITICA`<- set_na(est_data$`REUNION POLITICA`, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$sexo <- set_na(est_data$sexo, na = c(3,4,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$libros <- set_na(est_data$libros, na = c(8,9), drop.levels = TRUE, as.tag = FALSE)
+# Intención de participación política
+est_data$int_mun <- set_na(est_data$int_mun, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$int_pre <- set_na(est_data$int_pre, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$int_inf <- set_na(est_data$int_inf, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
+# Participación política declarada
+est_data$par_fir<- set_na(est_data$par_fir, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$par_marau <- set_na(est_data$par_marau, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$par_marnoau <- set_na(est_data$par_marnoau, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$par_toma <- set_na(est_data$par_toma, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$par_bloq <- set_na(est_data$par_bloq, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$par_servcom <- set_na(est_data$par_servcom, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$par_reupol <- set_na(est_data$par_reupol, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+# Apertura a la discusión
+est_data$aper_abiert <- set_na(est_data$aper_abiert, na = c(5,9), drop.levels = TRUE, as.tag = FALSE) #Apertura a la discusión
+est_data$aper_expr <- set_na(est_data$aper_expr, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$aper_act <- set_na(est_data$aper_act, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$aper_dist <- set_na(est_data$aper_dist, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$aper_estim <- set_na(est_data$aper_estim, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$aper_punt <- set_na(est_data$aper_punt, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$aper_reflx <- set_na(est_data$aper_reflx, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+# Aprendizaje cívico activo
+est_data$civ_tall <- set_na(est_data$civ_tall, na = c(3,9), drop.levels = TRUE, as.tag = FALSE) # Estrategias de aprendizaje cívico activo
+est_data$civ_simul <- set_na(est_data$civ_simul, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$civ_camp <- set_na(est_data$civ_camp, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$civ_foros <- set_na(est_data$civ_foros, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$civ_charlas <- set_na(est_data$civ_charlas, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$civ_medio <- set_na(est_data$civ_medio, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+est_data$civ_comun <- set_na(est_data$civ_comun, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
 ```
