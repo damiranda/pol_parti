@@ -1,0 +1,422 @@
+---
+title: "data proccesing"
+author: "Brian Montenegro"
+date: "10-03-2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+rm(list=ls())
+### TRATAMIENTO DE VARIABLES DE PARTICIPACIÓN POLÍTICA, SOCIALIZACIÓN POLÍTICA ESCOLAR, SEXO, CANTIDAD DE LIBROS
+
+#Abrir base de datos desde Repositorio Github
+est_data <- haven::read_dta(file = url("https://github.com/formacionciudadana/data-paces/blob/main/docs/paces/data/base_estudiantesv2.dta?raw=true"))
+apod_data <- haven::read_dta(file = url("https://github.com/formacionciudadana/data-paces/blob/main/docs/paces/data/base_apoderadosv2.dta?raw=true"))
+
+#Librerías necesarias para la preparación de datos
+pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer)
+
+sjlabelled::get_label(data)
+
+```
+
+```{r, echo=FALSE}
+#Creación de data frame con variables a utilizar
+#P31 A - C corresponden a Participación Formal
+#P33 A - H corresponden a Participación Activista y Activista Disruptivo
+#P38 A - E corresponden a Socialización político familiar indirecta
+#P48 estudiantes A - C corresponden a Socialización político familiar directa
+#P49 A - G corresponden a Apertura a la Discusión en el Aula, como dimensión de SPE
+#P50 A - G corresponden a Estrategias de aprendizaje cívico activo en la escuela, como dimensión de SPE
+#Control y caracterización. P58 Sexo. P68 estudiantes: número de libros. P55 Apoderados: ingresos.
+
+est_data <- est_data %>% select(P31A, 
+                                P31B,   
+                                P31C,
+                                P33A,
+                                P33B,
+                                P33C,
+                                P33D,
+                                P33E,
+                                P33F,
+                                P33G,
+                                P33H,
+                                P38A,
+                                P38B,
+                                P38C,
+                                P38D,
+                                P38E,
+                                P48A,
+                                P48B,
+                                P48C,
+                                P49A,
+                                P49B,
+                                P49C,
+                                P49D,
+                                P49E,
+                                P49F,
+                                P49G,
+                                P50A,
+                                P50B,
+                                P50C,
+                                P50D,
+                                P50E,
+                                P50F,
+                                P50G,
+                                P58, 
+                                P68,
+                                REGION, 
+                                Dependencia,
+                                FOLIO)
+
+apod_data <- apod_data %>% select(P20A,
+                                  P20B,
+                                  P20C,
+                                  P20D,
+                                  P21A,
+                                  P21B,
+                                  P21C,
+                                  P21D,
+                                  P21E,
+                                  P21G,
+                                  P21H,
+                                  P55,
+                                  P47,
+                                  FOLIO)
+
+#Mezclar ambas bases de datos
+data <- merge(x = est_data, y = apod_data, by = c("FOLIO"), all.x = TRUE)
+
+```
+
+```{r, echo=FALSE}
+#Participación política (base estudiantes)
+data <- data %>% rename("int_mun" = P31A) #Intención de Voto en Municipales
+data <- data %>% rename("int_pre" = P31B) #Intención de voto en Presidenciales
+data <- data %>% rename("int_inf" = P31C) #Intención de informarse
+data <- data %>% rename("par_fir" = P33A) #Desde A hasta H, actividades realizadas durante los últimos 12 meses
+data <- data %>% rename("par_marau" = P33B)
+data <- data %>% rename("par_marnoau" = P33C)
+data <- data %>% rename("par_bloq" = P33D)
+data <- data %>% rename("par_pared" = P33E)
+data <- data %>% rename("par_toma" = P33F)
+data <- data %>% rename("par_servcom" = P33G)
+data <- data %>% rename("par_reupol" = P33H)
+
+
+#Socialización política escolar (base estudiantes)
+data <- data %>% rename("aper_abiert" = P49A) #Apertura a la discusión (49A a 49G)
+data <- data %>% rename("aper_expr" = P49B)
+data <- data %>% rename("aper_act" = P49C)
+data <- data %>% rename("aper_dist" = P49D)
+data <- data %>% rename("aper_estim" = P49E)
+data <- data %>% rename("aper_punt" = P49F)
+data <- data %>% rename("aper_reflx" = P49G)
+data <- data %>% rename("civ_tall" = P50A) #Estrategias de aprendizaje cívico activo (50A a 50F)
+data <- data %>% rename("civ_simul" = P50B)
+data <- data %>% rename("civ_camp" = P50C)
+data <- data %>% rename("civ_foros" = P50D)
+data <- data %>% rename("civ_charlas" = P50E)
+data <- data %>% rename("civ_medio" = P50F)
+data <- data %>% rename("civ_comun" = P50G)
+
+
+#Socialización política familiar 
+data <- data %>% rename("conv_noticias" = P38A) #Conversación con los padres de noticias de Chile y el mundo
+data <- data %>% rename("conv_colegio" = P38B) #Conversación con los padres sobre colegio
+data <- data %>% rename("conv_permisos" = P38C) #Conversación con los padres sobre permisos
+data <- data %>% rename("conv_amistades" = P38D) #Conversación con los padres sobre amigos
+data <- data %>% rename("conv_sociopol" = P38E) #Conversación con los padres de temas politicos y sociales
+data <- data %>% rename("pp_voto_presi" = P48A)#Participación política padres: Votar en presidenciales 2017
+data <- data %>% rename("pp_marcha_est" = P48B) #Participación política padreS: Marchar
+data <- data %>% rename("pp_act_comu" = P48C) #Participación política padres: Participar en actividades comunitarias 
+
+
+#Socialización política familiar 
+data <- data %>% rename("act_peticion" = P20A) #Actividad: petición 
+data <- data %>% rename("act_marcha_apod" = P20B) #Actividad: marcha 
+data <- data %>% rename("act_voluntariado" = P20C) #Actividad: voluntariado 
+data <- data %>% rename("act_reu_sociopol" = P20D) #Actividad: reunión sociopolítica 
+data <- data %>% rename("org_juntavecinos" = P21A) #Org Voluntaria: Junta de vecinos  
+data <- data %>% rename("org_iglesia" = P21B) #Org Voluntaria: iglesia 
+data <- data %>% rename("org_ppol" = P21C) #Org Voluntaria: partido político 
+data <- data %>% rename("org_sindicato" = P21D) #Org Voluntaria: sindicato  
+data <- data %>% rename("org_asocprof" = P21E) #Org Voluntaria: asociación profesional 
+data <- data %>% rename("org_caridad" = P21G) #Org Voluntaria: caridad 
+data <- data %>% rename("org_cpadres" = P21H) #Org Voluntaria: centros de padres
+
+
+#Nombrar variables de control y caractización
+data <- data %>% rename("sexo" = P58)
+data <- data %>% rename("region" = REGION) #Región
+data <- data %>% rename("dependencia" = Dependencia) #Dependencia
+data <- data %>% rename("ingresos" = P55) #Ingresos
+
+
+```
+
+```{r, echo=FALSE}
+
+#Etiquetar variables (46)
+#Etiquetar variables de participación
+data$int_mun <- set_label(x = data$int_mun ,label = "Intención de voto en Municipales")
+data$int_pre <- set_label(x = data$int_pre ,label = "Intención de voto en Presidenciales")
+data$int_inf <- set_label(x = data$int_inf ,label = "Intención de informarse antes de elecciones")
+data$par_fir <- set_label(x = data$par_fir ,label = "data: Firmar una petición")
+data$par_marau <- set_label(x = data$par_marau ,label = "data: Marcha autorizada")
+data$par_marnoau <- set_label(x = data$par_marnoau ,label = "data: Marcha no autorizada")
+data$par_bloq <- set_label(x = data$par_bloq,label = "PARTICIPACIÓN: Bloqueo de calles")
+data$par_pared <- set_label(x = data$par_pared,label = "PARTICIPACIÓN: Pintar Paredes")
+data$par_toma <- set_label(x = data$par_toma ,label = "data: EN tomas")
+data$par_servcom <- set_label(x = data$par_servcom ,label = "data: Trabajos comunitarios")
+data$par_reupol <- set_label(x = data$par_reupol ,label = "data: Reuniones políticas")
+
+
+#Etiquetar variables de SPE
+data$aper_abiert <- set_label(x = data$aper_abiert ,label = "APER: Estudiantes pueden manifestar desacuerdo en clases")
+data$aper_expr <- set_label(x = data$aper_expr ,label = "APER: Profesores estimulan la opinión de estudiantes")
+data$aper_act <- set_label(x = data$aper_act ,label = "APER: Estudiantes plantean temas de actualidad política en clases")
+data$aper_dist <- set_label(x = data$aper_dist ,label = "APER: Estudiantes expresan opiniones diversas")
+data$aper_estim <- set_label(x = data$aper_estim ,label = "APER: Profesores estimulan dialogo entre gente que opina en clases")
+data$aper_punt <- set_label(x = data$aper_punt ,label = "APER: Profesores exponen temas desde diversos puntos de vista")
+data$aper_reflx <- set_label(x = data$aper_reflx ,label = "APER: Profesores fomentan reflexión y crítica")
+data$civ_tall <- set_label(x = data$civ_tall ,label = "ACA: Talleres y Jornadas") #ACA = aprendizaje cívico activo
+data$civ_simul <- set_label(x = data$civ_simul ,label = "ACA: Simulación de elecciones")
+data$civ_camp <- set_label(x = data$civ_camp ,label = "ACA: Campañas de elecciones de CAA")
+data$civ_foros <- set_label(x = data$civ_foros ,label = "ACA: Foros y Debates")
+data$civ_charlas <- set_label(x = data$civ_charlas ,label = "ACA: Charlas con invitados")
+data$civ_medio <- set_label(x = data$civ_medio ,label = "ACA: Actividades Medioambientales")
+data$civ_comun <- set_label(x = data$civ_comun ,label = "ACA: Servicio a la Comunidad")
+
+
+#Etiquetar variables de SPF
+#Indirecta
+data$conv_noticias <- set_label(x = data$conv_noticias ,label = "Conversación: sobre noticias de Chile y el mundo") 
+data$conv_colegio <- set_label(x = data$conv_colegio ,label = "Conversación: sobre colegio y trabajos escolares")
+data$conv_permisos <- set_label(x = data$conv_permisos ,label = "Conversación: sobre permisos")
+data$conv_amistades <- set_label(x = data$conv_amistades ,label = "Conversación: sobre lo que haces con tus amigos")
+data$conv_sociopol <- set_label(x = data$conv_sociopol ,label = "Conversación: sobre temas políticos y sociales") 
+
+
+#Directa
+data$pp_voto_presi <- set_label(x = data$pp_voto_presi ,label = "Part Politica: Votación en presidenciales 2017") 
+data$pp_marcha <- set_label(x = data$pp_marcha_est ,label = "Part Política: Marchar") 
+data$pp_act_comu <- set_label(x = data$pp_act_comu ,label = "Part Política: Participar en actividades comunitarias") 
+data$act_peticion <- set_label(x = data$act_peticion ,label = "Actividad: petición") 
+data$act_marcha <- set_label(x = data$act_marcha_apod ,label = "Actividad: marcha")
+data$act_voluntariado <- set_label(x = data$act_voluntariado ,label = "Actividad: voluntariado") 
+data$act_reu_sociopol <- set_label(x = data$act_reu_sociopol ,label = "Actividad: reunión sociopolítica") 
+data$org_juntavecinos <- set_label(x = data$org_juntavecinos ,label = "Org Voluntaria: Junta de vecinos") 
+data$org_iglesia <- set_label(x = data$org_iglesia ,label = "Org Voluntaria: Iglesia") 
+data$org_ppol <- set_label(x = data$org_ppol ,label = "Org Voluntaria: partido político") 
+data$org_sindicato <- set_label(x = data$org_sindicato ,label = "Org Voluntaria: sindicato")
+data$org_asocprof <- set_label(x = data$org_asocprof ,label = "Org Voluntaria: asociación profesional") 
+data$org_caridad <- set_label(x = data$org_caridad ,label = "Org Voluntaria: caridad") 
+data$org_cpadres <- set_label(x = data$org_cpadres ,label = "Org Voluntaria: centros de padres") 
+
+
+#Etiquetar variables de control y recursos
+data$sexo <- set_label(x = data$sexo,label = "Sexo")
+data$region <- set_label(x = data$region ,label = "Region")
+data$dependencia <- set_label(x = data$dependencia ,label = "Dependencia")
+data$ingresos <- set_label(x = data$ingresos ,label = "Ingresos") 
+
+```
+
+```{r, echo=FALSE}
+#Variables de apertura deben ser cambiadas en su orden (de positivo a negativo, borrar categorías 5 y 9)
+#Variables de aprendizaje activo deben ser borrado categorías 3 y 9
+#Decretar casos perdidos y eliminar sus antiguas etiquetas
+# Participación política
+data$int_mun <- set_na(data$int_mun, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
+data$int_pre <- set_na(data$int_pre, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
+data$int_inf <- set_na(data$int_inf, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_fir<- set_na(data$par_fir, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_marau <- set_na(data$par_marau, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_marnoau <- set_na(data$par_marnoau, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_toma <- set_na(data$par_toma, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_bloq <- set_na(data$par_bloq, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_pared <- set_na(data$par_pared, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_servcom <- set_na(data$par_servcom, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$par_reupol <- set_na(data$par_reupol, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+
+
+# SPE
+data$aper_abiert <- set_na(data$aper_abiert, na = c(5,9), drop.levels = TRUE, as.tag = FALSE) #Apertura a la discusión
+data$aper_expr <- set_na(data$aper_expr, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+data$aper_act <- set_na(data$aper_act, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+data$aper_dist <- set_na(data$aper_dist, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+data$aper_estim <- set_na(data$aper_estim, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+data$aper_punt <- set_na(data$aper_punt, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+data$aper_reflx <- set_na(data$aper_reflx, na = c(5,9), drop.levels = TRUE, as.tag = FALSE)
+data$civ_tall <- set_na(data$civ_tall, na = c(3,9), drop.levels = TRUE, as.tag = FALSE) # Estrategias de aprendizaje cívico activo
+data$civ_simul <- set_na(data$civ_simul, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$civ_camp <- set_na(data$civ_camp, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$civ_foros <- set_na(data$civ_foros, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$civ_charlas <- set_na(data$civ_charlas, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$civ_medio <- set_na(data$civ_medio, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+data$civ_comun <- set_na(data$civ_comun, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
+
+
+# SPF
+data$conv_noticias <- set_na(data$conv_noticias, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$conv_colegio <- set_na(data$conv_colegio, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$conv_permisos <- set_na(data$conv_permisos, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$conv_amistades <- set_na(data$conv_amistades, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$conv_sociopol <- set_na(data$conv_sociopol, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$pp_voto_presi <- set_na(data$pp_voto_presi, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$pp_marcha <- set_na(data$pp_marcha, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$pp_act_comu <- set_na(data$pp_act_comu, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$act_peticion <- set_na(data$act_peticion, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$act_marcha <- set_na(data$act_marcha, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$act_voluntariado <- set_na(data$act_voluntariado, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$act_reu_sociopol <- set_na(data$act_reu_sociopol, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$org_juntavecinos <- set_na(data$org_juntavecinos, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$org_iglesia <- set_na(data$org_iglesia, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$org_ppol <- set_na(data$org_ppol, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$org_sindicato <- set_na(data$org_sindicato, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$org_asocprof <- set_na(data$org_asocprof, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$org_caridad <- set_na(data$org_caridad, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+data$org_cpadres <- set_na(data$org_cpadres, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+
+
+#Variables de control e ingresos
+data$sexo <- set_na(data$sexo, na = c(3,4,9), drop.levels = TRUE, as.tag = FALSE)
+data$ingresos <- set_na(data$ingresos, na = c(12, 13), drop.levels = TRUE, as.tag = FALSE)
+
+```
+
+```{r, echo=FALSE}
+#Operacionalización de variable libros
+data <- data %>% rename("est_libros" = P68) #Libros reportados por estudiantes
+data <- data %>% rename("pad_libros" = P47) #Libros reportados por apoderados
+
+
+data$est_libros <- set_label(x = data$est_libros,label = "Número de libros estudiantes")
+data$pad_libros <- set_label(x = data$pad_libros,label = "Número de libros apoderados")
+
+
+data$est_libros <- set_na(data$est_libros, na = c(8,9), drop.levels = TRUE, as.tag = FALSE)
+data$pad_libros <- set_na(data$pad_libros, na = c(8,9), drop.levels = TRUE, as.tag = FALSE)
+
+
+data$total_libros <- ifelse(is.na(data$pad_libros), data$est_libros, data$pad_libros)
+data$total_libros <- set_labels(data$total_libros,
+                                labels=c( "Entre 0 y 10 libros"=1,
+                                          "Entre 11 y 25 libros"=2,
+                                          "Entre 26 y 100 libros"=3,
+                                          "Entre 101 y 200 libros"=4,
+                                          "Entre 201 y 500 libros"=5,
+                                          "Más de 500 libros"=6))
+
+```
+
+```{r, echo=FALSE}
+#Orden en variables civicas, generar dummies
+data$civ_tall <- car::recode(data$civ_tall, "1=1;2=0")
+data$civ_tall <- set_labels(data$civ_tall,
+                                labels=c( "No"=0,
+                                          "Sí"=1))
+
+data$civ_simul <- car::recode(data$civ_simul, "1=1;2=0")
+data$civ_simul <- set_labels(data$civ_simul,
+                                 labels=c( "No"=0,
+                                           "Sí"=1))
+
+data$civ_camp <- car::recode(data$civ_camp, "1=1;2=0")
+data$civ_camp <- set_labels(data$civ_camp,
+                                labels=c( "No"=0,
+                                          "Sí"=1))
+
+data$civ_foros <- car::recode(data$civ_foros, "1=1;2=0")
+data$civ_foros <- set_labels(data$civ_foros,
+                                 labels=c( "No"=0,
+                                           "Sí"=1))
+
+data$civ_charlas <- car::recode(data$civ_charlas, "1=1;2=0")
+data$civ_charlas <- set_labels(data$civ_charlas,
+                                   labels=c( "No"=0,
+                                             "Sí"=1))
+
+data$civ_medio <- car::recode(data$civ_medio, "1=1;2=0")
+data$civ_medio <- set_labels(data$civ_medio,
+                                 labels=c( "No"=0,
+                                           "Sí"=1))
+
+data$civ_comun <- car::recode(data$civ_comun, "1=1;2=0")
+data$civ_comun <- set_labels(data$civ_comun,
+                                 labels=c( "No"=0,
+                                           "Sí"=1))
+
+
+data$par_fir <- car::recode(data$par_fir, "1=1;2=0")
+data$par_fir <- set_labels(data$par_fir,
+                                    labels=c( "No"=0,
+                                              "Sí"=1))
+
+data$par_marau <- car::recode(data$par_marau, "1=1;2=0")
+data$par_marau <- set_labels(data$par_marau,
+                                      labels=c( "No"=0,
+                                                "Sí"=1))
+
+data$par_marnoau <- car::recode(data$par_marnoau, "1=1;2=0")
+data$par_marnoau <- set_labels(data$par_marnoau,
+                                        labels=c( "No"=0,
+                                                  "Sí"=1))
+
+data$par_toma <- car::recode(data$par_toma, "1=1;2=0")
+data$par_toma <- set_labels(data$par_toma,
+                                     labels=c( "No"=0,
+                                               "Sí"=1))
+
+data$par_bloq <- car::recode(data$par_bloq, "1=1;2=0")
+data$par_bloq <- set_labels(data$par_bloq,
+                                     labels=c( "No"=0,
+                                               "Sí"=1))
+
+data$par_pared <- car::recode(data$par_pared, "1=1;2=0")
+data$par_pared <- set_labels(data$par_pared,
+                                      labels=c( "No"=0,
+                                                "Sí"=1))
+
+data$par_servcom <- car::recode(data$par_servcom, "1=1;2=0")
+data$par_servcom <- set_labels(data$par_servcom,
+                                        labels=c( "No"=0,
+                                                  "Sí"=1))
+
+data$par_reupol <- car::recode(data$par_reupol, "1=1;2=0")
+data$par_reupol <- set_labels(data$par_reupol,
+                                       labels=c( "No"=0,
+                                                 "Sí"=1))
+
+
+```
+
+```{r, echo=FALSE}
+# Variables dummy - Participación formal
+data$int_inf <- car::recode(data$int_inf, "1=0;2=1;3=1")
+data$int_inf <- set_labels(data$int_inf,
+                           labels=c( "No"=0,
+                                     "Sí"=1))
+
+data$int_mun <- car::recode(data$int_mun, "1=0;2=1;3=1")
+data$int_mun <- set_labels(data$int_mun,
+                           labels=c( "No"=0,
+                                     "Sí"=1))
+
+data$int_pre <- car::recode(data$int_pre, "1=0;2=1;3=1")
+data$int_pre <- set_labels(data$int_pre,
+                           labels=c( "No"=0,
+                                     "Sí"=1))
+
+```
+
+```{r, echo=FALSE}
+
+
+```
+
