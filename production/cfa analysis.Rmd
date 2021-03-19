@@ -17,7 +17,8 @@ pacman::p_load(lavaan, # pacman para instalar / cargar
                xtable,
                semPlot,
                semTools,
-               remedy
+               remedy,
+               dplyr
                )
 
 ```
@@ -113,53 +114,6 @@ Conocidos: $p(p+1)/2 = 7*8/2 = 28 $
 
 Desconocidos: 7 cargas factoriales + 7 varianzas únicas = 14.
 Por lo tanto, 28-14=14 df.
-
-
-### Diagrama con función _semPaths_ de la librería _semPlot_
-```{r }
-
-	#semPaths(fitsem, title = FALSE, fixedStyle = c(1, 1), curvePivot = FALSE,layout = "tree2", rotation=2, style="mx")
-	#semPaths(fitsem, title = FALSE, fixedStyle = c(1, 1),  curvePivot = FALSE,layout = "tree2", rotation=2, style="lisrel")
-	#semPaths(fitsem, rotation=3, what="std", structural=FALSE, exoVar=TRUE, color="red", layout = "tree", residuals=TRUE, intercepts=FALSE)
-  semPaths(fit_1, rotation=3, what="std", whatLabels="cons", style="lisrel", exoCov = T, curvePivot = TRUE, sizeMan = 5, sizeInt = 7, 
-     residuals=T)
-
-  semPaths(fit_1, rotation=3, whatLabels="std", style="lisrel", exoCov = T, curvePivot = TRUE, sizeMan = 5, sizeInt = 7)
-  
-  semPaths(fitsem, rotation=3, whatLabels="std", style="lisrel", exoCov = T, curvePivot = T, sizeMan = 8, sizeLat = 15, 
-     residuals=T)
-  
-  semPaths(fit_1, style="lisrel", curvePivot = TRUE,
-        whatLabels = "std", edge.label.cex = .9, node.label.cex = 1.5, 
-        label.prop=0.9, edge.label.color = "black", rotation = 4, 
-        equalizeManifests = TRUE, optimizeLatRes = TRUE, node.width = 1.5, 
-        edge.width = 0.5, shapeMan = "rectangle", shapeLat = "ellipse", 
-        shapeInt = "triangle", sizeMan = 5, sizeInt = 3, sizeLat = 15, 
-        curve=3, unCol = "#070b8c")
-  
-  semPaths(fit_1, style="lisrel", what="std", curvePivot = TRUE,
-        whatLabels = "std", edge.label.cex = .9, node.label.cex = 1.5, 
-        label.prop=0.9, edge.label.color = "black", rotation = 4, 
-        equalizeManifests = TRUE, optimizeLatRes = TRUE, node.width = 1.5, 
-        edge.width = 0.5, shapeMan = "rectangle", shapeLat = "ellipse", 
-        shapeInt = "triangle", sizeMan = 5, sizeInt = 3, sizeLat = 15, 
-        curve=3)
-	
-```
-
-
-### Diagrama con función _semPaths_ de la librería _semPlot_
-```{r }
-
- semPaths(fit_1, style="lisrel", what="std", curvePivot = TRUE,
-        whatLabels = "std", edge.label.cex = .9, node.label.cex = 1.5, 
-        label.prop=0.9, edge.label.color = "black", rotation = 4, 
-        equalizeManifests = TRUE, optimizeLatRes = TRUE, node.width = 1.5, 
-        edge.width = 0.5, shapeMan = "rectangle", shapeLat = "ellipse", 
-        shapeInt = "triangle", sizeMan = 5, sizeInt = 3, sizeLat = 15, 
-        curve=3)
-```
-
 
 ```{r}
 data2 <- data %>% select("folio", "par_fir","par_marau","par_marnoau","par_toma","par_bloq", "par_pared", "par_servcom", "par_reupol","int_mun","int_pre","int_inf") %>% na.omit()
