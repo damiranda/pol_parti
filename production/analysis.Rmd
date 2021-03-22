@@ -1,0 +1,30 @@
+---
+title: "analysis"
+author: "Daniel Miranda, Julio Iturra, Brian Montenegro & Karen Sepúlveda"
+date: "22-03-2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+Se cargan los paquetes necesarios para el Análisis Multinivel y se carga la BDD
+```{r, echo=FALSE}
+pacman::p_load(dplyr, sjlabelled, summarytools, ggplot2, ggExtra, lme4, texreg, sjPlot, lattice, summarytools, stargazer)
+
+load("C:/Users/Brian/Desktop/Carpetas Brian/pol_parti/input/data/proc/data.RData")
+```
+
+Se generan los modelos nulos para cada una de las variables dependientes (Participación
+formal, participación disruptiva y participación no disruptiva).
+
+```{r}
+screenreg(m001)
+screenreg(m002)
+screenreg(m003)
+```
+
+
+
+
+
+

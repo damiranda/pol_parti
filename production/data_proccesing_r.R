@@ -1,4 +1,3 @@
-rm(list=ls())
 options(scipen=999)
 ### TRATAMIENTO DE VARIABLES DE PARTICIPACIÓN POLÍTICA, SOCIALIZACIÓN POLÍTICA ESCOLAR, SEXO, CANTIDAD DE LIBROS
 
@@ -33,7 +32,7 @@ sjlabelled::get_label(apod_data)
 #Control y caracterización. P58 Sexo. P68 estudiantes: número de libros. P55 Apoderados: ingresos.
 
 
-est_data <- est_data %>% select(P31A, 
+est_data <- est_data %>% dplyr::select(P31A, 
                                 P31B,   
                                 P31C,
                                 P33A,
@@ -76,7 +75,7 @@ est_data <- est_data %>% select(P31A,
                                 RBD)
 
 
-apod_data <- apod_data %>% select(P17,
+apod_data <- apod_data %>% dplyr::select(P17,
                                   P18,
                                   P19,
                                   P20A,
@@ -750,10 +749,7 @@ show(fit_1)
 fitMeasures(fit_1, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea")) 
 
 #Selección de variables originales con folio
-data2 <- data %>% select("folio", "par_fir","par_marau","par_marnoau","par_toma","par_bloq", "par_pared", "par_servcom", "par_reupol","int_mun","int_pre","int_inf") %>% na.omit()
-
-#Se predicen los puntajes factoriales por variables
-predict <- predict(fit_1)
+data2 <- data %>% dplyr::select("folio", "par_fir","par_marau","par_marnoau","par_toma","par_bloq", "par_pared", "par_servcom", "par_reupol","int_mun","int_pre","int_inf") %>% na.omit()
 
 #Puntajes factoriales se guardan como df
 scores <- as.data.frame(predict)
@@ -762,7 +758,7 @@ scores <- as.data.frame(predict)
 data2 = bind_cols(data2, scores)
 
 #Nueva base de datos con folio y las variables con puntajes factoriales
-data3 = data2 %>% select(folio, formal, nodisruptivo, disruptivo)
+data3 = data2 %>% dplyr::select(folio, formal, nodisruptivo, disruptivo)
 
 #Merge
 data = left_join(x = data, y=data3, by="folio")
