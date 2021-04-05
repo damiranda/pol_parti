@@ -16,7 +16,6 @@ pacman::p_load(dplyr, sjlabelled, summarytools, ggplot2, ggExtra, lme4, texreg, 
 
 #BDD
 load(url("https://github.com/damiranda/pol_parti/blob/branch1/input/data/proc/data.RData?raw=true"))
-names(data)
 ```
 
 Se generan los modelos nulos para cada una de las variables dependientes (Participación
@@ -54,42 +53,42 @@ Modelos generales - Participación formal
 
 ```{r}
 # Hipótesis 1 - Incidencia de socialización política familiar sobre participación formal
-m1 <- lmer(formal ~ 1  + conversacion + pp_voto_presi + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+m1 <- lmer(formal ~ 1  + conversacion + pp_voto_presi + region + dependencia + sexo + (1 |RBDE), data)
 
-m1a <- lmer(formal ~ 1  + conversacion + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+m1a <- lmer(formal ~ 1  + conversacion + region + dependencia+ sexo + (1 |RBDE), data)
 
-m1b <- lmer(formal ~ 1   + pp_voto_presi + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+m1b <- lmer(formal ~ 1   + pp_voto_presi + region + dependencia+ sexo + (1 |RBDE), data)
 
 # Hipótesis 2 - Incidencia de recursos socioeconómicos sobre participación formal
-m2 <- lmer(formal ~ 1 + total_libros + educ_padres_factor + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+m2 <- lmer(formal ~ 1 + total_libros + educ_padres_factor + region + dependencia + sexo + (1 |RBDE), data)
 
-m2a <- lmer(formal ~ 1 + total_libros  + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+m2a <- lmer(formal ~ 1 + total_libros  + region + dependencia + sexo + (1 |RBDE), data)
 
-m2b <- lmer(formal ~ 1 + educ_padres_factor + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+m2b <- lmer(formal ~ 1 + educ_padres_factor + region + dependencia + sexo + (1 |RBDE), data)
 
 # Hipótesis 3 - Incidencia de socialización política escolar sobre participación formal
-m3 <- lmer(formal ~ 1  +  civico + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+m3 <- lmer(formal ~ 1  +  civico + apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
-m3a <- lmer(formal ~ 1  +  civico + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+m3a <- lmer(formal ~ 1  +  civico + region + dependencia+ sexo + (1 |RBDE), data)
 
-m3b <- lmer(formal ~ 1  + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+m3b <- lmer(formal ~ 1  + apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
 # Modelo saturado - con pendiente fija
-m4 <- lmer(formal ~ 1  + conversacion + pp_voto_presi + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+m4 <- lmer(formal ~ 1  + conversacion + pp_voto_presi + educ_padres_factor + total_libros + civico + apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
 # Resumen
-screenreg(list(m1, m2, m3, m4), custom.model.names = c("soc. familiar", "modelo recursos", "soc. escolar", "completo"), omit.coef = "(sexo)|(dependencia)|(region)")
+screenreg(list(m1, m2, m3, m4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo)|(dependencia)|(region)")
 
 #Hipótesis 5 - Interacción entre variables de nivel 1 (conversacion y pp_voto_presi) con variables de nivel 2 (apertura y civico) 
 
 # Modelo con Socialización política indirecta liberada
-m5 <- lmer(formal ~ 1  + conversacion + pp_voto_presi  + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1 + conversacion |RBDE), data)
+m5 <- lmer(formal ~ 1  + conversacion + pp_voto_presi  + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1 + conversacion |RBDE), data)
 
 # Modelo con socialización política indirecta liberada con interacción con apertura a la discusión
-m5b <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + conversacion * apertura + (1+conversacion |RBDE), data)
+m5b <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + conversacion * apertura + (1+conversacion |RBDE), data)
 
 # Modelo con socialización política indirecta liberada con interacción con civico
-m5c <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + conversacion * civico + (1+conversacion |RBDE), data)
+m5c <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + conversacion * civico + (1+conversacion |RBDE), data)
 
 skim(data$civico)
 
@@ -102,24 +101,24 @@ plot_model(m5c, type="pred", terms=c("conversacion", "civico[1.8,5.9]")) #modelo
 frq(data$civico)
 
 # Modelo de socialización política directa liberada
-m6 <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+pp_voto_presi |RBDE), data)
+m6 <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+pp_voto_presi |RBDE), data)
 
 anova(m4, m6)
 
-m6b <- lmer(formal ~ 1  + conversacion + pp_voto_presi + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + pp_voto_presi * apertura + (1+pp_voto_presi  |RBDE), data)
+m6b <- lmer(formal ~ 1  + conversacion + pp_voto_presi + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + pp_voto_presi * apertura + (1+pp_voto_presi  |RBDE), data)
 
-m6c <- lmer(formal ~ 1  + conversacion + pp_voto_presi + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + pp_voto_presi * civico + (1+pp_voto_presi  |RBDE), data)
+m6c <- lmer(formal ~ 1  + conversacion + pp_voto_presi + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + pp_voto_presi * civico + (1+pp_voto_presi  |RBDE), data)
 
 
 # Hipótesis 4 - Interacción de variables de nivel 1 (socioculturales) con variables de nivel 2 (apertura y civico)
 
 # Modelo de educación de padres liberada
-m8 <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+factor(educ_padres_factor) |RBDE), data)
+m8 <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+educ_padres_factor |RBDE), data)
 
 anova(m4, m8)
 
 # Modelo de tramos de libros liberado
-m9 <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+total_libros |RBDE), data)
+m9 <- lmer(formal ~ 1  + conversacion + pp_voto_presi   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+total_libros |RBDE), data)
 
 anova(m4, m9)
 
@@ -134,44 +133,44 @@ Modelos generales - Participación disruptiva
 
 #Se predicen puntajes factoriales
 ```{r}
-d1 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+d1 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha) + region + dependencia+ sexo + (1 |RBDE), data)
 
-d1a <- lmer(disruptivo ~ 1  + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+d1a <- lmer(disruptivo ~ 1  + factor(act_marcha) + region + dependencia+ sexo + (1 |RBDE), data)
 
-d1b <- lmer(disruptivo ~ 1  + conversacion + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+d1b <- lmer(disruptivo ~ 1  + conversacion + region + dependencia+ sexo + (1 |RBDE), data)
 
-d2 <- lmer(disruptivo ~ 1   + total_libros + educ_padres_factor + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+d2 <- lmer(disruptivo ~ 1   + total_libros + educ_padres_factor + region + dependencia + sexo + (1 |RBDE), data)
 
-d2a <- lmer(disruptivo ~ 1   +  educ_padres_factor + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+d2a <- lmer(disruptivo ~ 1   +  educ_padres_factor + region + dependencia + sexo + (1 |RBDE), data)
 
-d2b <- lmer(disruptivo ~ 1   + total_libros + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+d2b <- lmer(disruptivo ~ 1   + total_libros + region + dependencia + sexo + (1 |RBDE), data)
 
-d3 <- lmer(disruptivo ~ 1  +  civico + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+d3 <- lmer(disruptivo ~ 1  +  civico + apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
-d3a <- lmer(disruptivo ~ 1  +   apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+d3a <- lmer(disruptivo ~ 1  +   apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
-d3b <- lmer(disruptivo ~ 1  +  civico +  factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+d3b <- lmer(disruptivo ~ 1  +  civico +  region + dependencia+ sexo + (1 |RBDE), data)
 
-d4 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+d4 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
 #Tabla de regresiones
-screenreg(list(d1, d2, d3, d4), custom.model.names = c("soc. familiar", "modelo recursos", "soc. escolar", "completo"), omit.coef = "(sexo)|(dependencia)|(region)")
+screenreg(list(d1, d2, d3, d4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo)|(dependencia)|(region)")
 
-d5 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+conversacion |RBDE), data)
+d5 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+conversacion |RBDE), data)
 
 anova(d4, d5)
 
-d6 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+factor(act_marcha) |RBDE), data)
+d6 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+factor(act_marcha) |RBDE), data)
 
 anova(d4, d6)
 
-d6b <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*civico+ (1+factor(act_marcha) |RBDE), data)
+d6b <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + factor(act_marcha)*civico+ (1+factor(act_marcha) |RBDE), data)
 
 anova(d4, d6)
 
 screenreg(list(d6b), custom.model.names = c("m6b"))
 
-d6c <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*apertura + (1+factor(act_marcha) |RBDE), data)
+d6c <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + factor(act_marcha)*apertura + (1+factor(act_marcha) |RBDE), data)
 
 anova(d4, d6c)
 
@@ -179,11 +178,11 @@ anova(d4, d6c)
 screenreg(list(d4, d5, d6, d6b, d6c), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x civico", "marcha x apertura"), omit.coef = "(sexo)|(dependencia)|(region)")
 
 
-d8 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+educ_padres_factor |RBDE), data)
+d8 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+educ_padres_factor |RBDE), data)
 
 anova(d4, d8)
 
-d9 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+total_libros |RBDE), data)
+d9 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+total_libros |RBDE), data)
 
 anova(d4, d9)
 
@@ -193,39 +192,39 @@ screenreg(list(d4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libr
 Modelos generales - Participación no disruptiva
 
 ```{r}
-n1 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+n1 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + region + dependencia+ sexo + (1 |RBDE), data)
 
-n1a <- lmer(nodisruptivo ~ 1  +  factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+n1a <- lmer(nodisruptivo ~ 1  +  factor(act_marcha) + region + dependencia+ sexo + (1 |RBDE), data)
 
-n1b <- lmer(nodisruptivo ~ 1  + conversacion  + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+n1b <- lmer(nodisruptivo ~ 1  + conversacion  + region + dependencia+ sexo + (1 |RBDE), data)
 
-n2 <- lmer(nodisruptivo ~ 1   + total_libros + educ_padres_factor + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+n2 <- lmer(nodisruptivo ~ 1   + total_libros + educ_padres_factor + region + dependencia + sexo + (1 |RBDE), data)
 
-n2a <- lmer(nodisruptivo ~ 1   + educ_padres_factor + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+n2a <- lmer(nodisruptivo ~ 1   + educ_padres_factor + region + dependencia + sexo + (1 |RBDE), data)
 
-n2b <- lmer(nodisruptivo ~ 1   + total_libros + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data)
+n2b <- lmer(nodisruptivo ~ 1   + total_libros + region + dependencia + sexo + (1 |RBDE), data)
 
-n3 <- lmer(nodisruptivo ~ 1  +  civico + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+n3 <- lmer(nodisruptivo ~ 1  +  civico + apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
-n3a <- lmer(nodisruptivo ~ 1  +  apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+n3a <- lmer(nodisruptivo ~ 1  +  apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
-n3b <- lmer(nodisruptivo ~ 1  +  civico  + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
+n3b <- lmer(nodisruptivo ~ 1  +  civico  + region + dependencia+ sexo + (1 |RBDE), data)
 
-n4 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data)
-
-
-screenreg(list(n1, n2, n3, n4), custom.model.names = c("soc. familiar", "modelo recursos", "soc. escolar", "completo"), omit.coef = "(sexo)|(dependencia)|(region)")
+n4 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + educ_padres_factor + total_libros + civico + apertura + region + dependencia+ sexo + (1 |RBDE), data)
 
 
-n5 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+conversacion |RBDE), data)
+screenreg(list(n1, n2, n3, n4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo)|(dependencia)|(region)")
+
+
+n5 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+conversacion |RBDE), data)
 
 anova(n4, n5)
 
-n6 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+factor(act_marcha) |RBDE), data)
+n6 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+factor(act_marcha) |RBDE), data)
 
-n6a <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*apertura+ (1+factor(act_marcha) |RBDE), data)
+n6a <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + factor(act_marcha)*apertura+ (1+factor(act_marcha) |RBDE), data)
 
-n6b <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*civico+ (1+factor(act_marcha) |RBDE), data)
+n6b <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + factor(act_marcha)*civico+ (1+factor(act_marcha) |RBDE), data)
 
 anova(n4, n6)
 
@@ -233,11 +232,11 @@ anova(n4, n6)
 screenreg(list(n4, n5, n6, n6a, n6b), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x civico", "marcha x apertura"), omit.coef = "(sexo)|(dependencia)|(region)")
 
 
-n8 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+educ_padres_factor |RBDE), data)
+n8 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+educ_padres_factor |RBDE), data)
 
 anova(n4, n8)
 
-n9 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+total_libros |RBDE), data)
+n9 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_padres_factor + total_libros + civico + apertura + region + dependencia + sexo + (1+total_libros |RBDE), data)
 
 anova(n4, n9)
 
