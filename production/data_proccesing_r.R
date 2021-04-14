@@ -1,13 +1,8 @@
-options(scipen=999)
 ### TRATAMIENTO DE VARIABLES DE PARTICIPACIÓN POLÍTICA, SOCIALIZACIÓN POLÍTICA ESCOLAR, SEXO, CANTIDAD DE LIBROS
 
-#Abrir base de datos desde Repositorio Github
-est_data <- haven::read_dta(file = url("https://github.com/formacionciudadana/data-paces/blob/main/docs/paces/data/base_estudiantesv2.dta?raw=true"))
-apod_data <- haven::read_dta(file = url("https://github.com/formacionciudadana/data-paces/blob/main/docs/paces/data/base_apoderadosv2.dta?raw=true"))
-
 #Librerías necesarias para la preparación de datos
-pacman::p_load(sjmisc, lavaan, car, sjlabelled, stargazer,
-               dplyr, texreg, xtable, # Reporte a latex
+pacman::p_load(sjmisc, readstata13, lavaan, car, sjlabelled, stargazer,
+               dplyr, texreg, xtable, # Reporte a latex 
                sjPlot, sjmisc, # reporte y gráficos
                skimr,
                corrplot, # grafico correlaciones
@@ -16,11 +11,14 @@ pacman::p_load(sjmisc, lavaan, car, sjlabelled, stargazer,
                psych, # fa y principal factors
                psy, # scree plot function
                nFactors, # parallel
-               GPArotation, CTT, lavaan, semTable, GGally, QuantPsyc)                
+               GPArotation, CTT, lavaan, semTable, GGally, QuantPsyc)  
 
 
-sjlabelled::get_label(apod_data)
+#Abrir base de datos desde Repositorio Github
+est_data <- read.dta13(file = "https://github.com/formacionciudadana/data-paces/blob/main/docs/paces/data/base_estudiantesv2.dta?raw=true")
+apod_data <- read.dta13(file ="https://github.com/formacionciudadana/data-paces/blob/main/docs/paces/data/base_apoderadosv2.dta?raw=true")
 
+options(scipen=999)
 
 #Creación de data frame con variables a utilizar
 #P31 A - C corresponden a Participación Formal
@@ -30,7 +28,6 @@ sjlabelled::get_label(apod_data)
 #P49 A - G corresponden a Apertura a la Discusión en el Aula, como dimensión de SPE
 #P50 A - G corresponden a Estrategias de aprendizaje cívico activo en la escuela, como dimensión de SPE
 #Control y caracterización. P58 Sexo. P68 estudiantes: número de libros. P55 Apoderados: ingresos.
-
 
 est_data <- est_data %>% dplyr::select(P31A, 
                                 P31B,   
@@ -72,8 +69,7 @@ est_data <- est_data %>% dplyr::select(P31A,
                                 REGION, 
                                 Dependencia,
                                 folio=FOLIO,
-                                RBD)
-
+                                RBDE=RBD)
 
 apod_data <- apod_data %>% dplyr::select(P17,
                                   P18,
@@ -94,79 +90,78 @@ apod_data <- apod_data %>% dplyr::select(P17,
                                   P45,
                                   P47,
                                   P55,
-                                  folio=FOLIO_EST)
+                                  folio=FOLIO_EST,
+                                  RBDA=RBD)
+
 
 #Participación política (base estudiantes)
-est_data <- est_data %>% rename("int_mun" = P31A) #Intención de Voto en Municipales
-est_data <- est_data %>% rename("int_pre" = P31B) #Intención de voto en Presidenciales
-est_data <- est_data %>% rename("int_inf" = P31C) #Intención de informarse
-est_data <- est_data %>% rename("par_fir" = P33A) #Desde A hasta H, actividades realizadas durante los últimos 12 meses
-est_data <- est_data %>% rename("par_marau" = P33B)
-est_data <- est_data %>% rename("par_marnoau" = P33C)
-est_data <- est_data %>% rename("par_bloq" = P33D)
-est_data <- est_data %>% rename("par_pared" = P33E)
-est_data <- est_data %>% rename("par_toma" = P33F)
-est_data <- est_data %>% rename("par_servcom" = P33G)
-est_data <- est_data %>% rename("par_reupol" = P33H)
+est_data <- est_data %>% mutate(int_mun = P31A) #Intención de Voto en Municipales
+est_data <- est_data %>% mutate(int_pre = P31B) #Intención de voto en Presidenciales
+est_data <- est_data %>% mutate(int_inf = P31C) #Intención de informarse
+est_data <- est_data %>% mutate(par_fir = P33A) #Desde A hasta H, actividades realizadas durante los últimos 12 meses
+est_data <- est_data %>% mutate(par_marau = P33B)
+est_data <- est_data %>% mutate(par_marnoau = P33C)
+est_data <- est_data %>% mutate(par_bloq = P33D)
+est_data <- est_data %>% mutate(par_pared = P33E)
+est_data <- est_data %>% mutate(par_toma = P33F)
+est_data <- est_data %>% mutate(par_servcom = P33G)
+est_data <- est_data %>% mutate(par_reupol = P33H)
 
 
 #Socialización política escolar (base estudiantes)
-est_data <- est_data %>% rename("aper_abiert" = P49A) #Apertura a la discusión (49A a 49G)
-est_data <- est_data %>% rename("aper_expr" = P49B)
-est_data <- est_data %>% rename("aper_act" = P49C)
-est_data <- est_data %>% rename("aper_dist" = P49D)
-est_data <- est_data %>% rename("aper_estim" = P49E)
-est_data <- est_data %>% rename("aper_punt" = P49F)
-est_data <- est_data %>% rename("aper_reflx" = P49G)
-est_data <- est_data %>% rename("civ_tall" = P50A) #Estrategias de aprendizaje cívico activo (50A a 50F)
-est_data <- est_data %>% rename("civ_simul" = P50B)
-est_data <- est_data %>% rename("civ_camp" = P50C)
-est_data <- est_data %>% rename("civ_foros" = P50D)
-est_data <- est_data %>% rename("civ_charlas" = P50E)
-est_data <- est_data %>% rename("civ_medio" = P50F)
-est_data <- est_data %>% rename("civ_comun" = P50G)
+est_data <- est_data %>% mutate(aper_abiert = P49A) #Apertura a la discusión (49A a 49G)
+est_data <- est_data %>% mutate(aper_expr = P49B)
+est_data <- est_data %>% mutate(aper_act = P49C)
+est_data <- est_data %>% mutate(aper_dist = P49D)
+est_data <- est_data %>% mutate(aper_estim = P49E)
+est_data <- est_data %>% mutate(aper_punt = P49F)
+est_data <- est_data %>% mutate(aper_reflx = P49G)
+est_data <- est_data %>% mutate(civ_tall = P50A) #Estrategias de aprendizaje cívico activo (50A a 50F)
+est_data <- est_data %>% mutate(civ_simul = P50B)
+est_data <- est_data %>% mutate(civ_camp = P50C)
+est_data <- est_data %>% mutate(civ_foros = P50D)
+est_data <- est_data %>% mutate(civ_charlas = P50E)
+est_data <- est_data %>% mutate(civ_medio = P50F)
+est_data <- est_data %>% mutate(civ_comun = P50G)
 
 
 #Socialización política familiar 
-est_data <- est_data %>% rename("conv_noticias" = P38A) #Conversación con los padres de noticias de Chile y el mundo
-est_data <- est_data %>% rename("conv_colegio" = P38B) #Conversación con los padres sobre colegio
-est_data <- est_data %>% rename("conv_permisos" = P38C) #Conversación con los padres sobre permisos
-est_data <- est_data %>% rename("conv_amistades" = P38D) #Conversación con los padres sobre amigos
-est_data <- est_data %>% rename("conv_sociopol" = P38E) #Conversación con los padres de temas politicos y sociales
-est_data <- est_data %>% rename("pp_voto_presi" = P48A)#Participación política padres: Votar en presidenciales 2017
-est_data <- est_data %>% rename("pp_marcha" = P48B) #Participación política padreS: Marchar
-est_data <- est_data %>% rename("pp_act_comu" = P48C) #Participación política padres: Participar en actividades comunitarias 
-
+est_data <- est_data %>% mutate(conv_noticias = P38A) #Conversación con los padres de noticias de Chile y el mundo
+est_data <- est_data %>% mutate(conv_colegio = P38B) #Conversación con los padres sobre colegio
+est_data <- est_data %>% mutate(conv_permisos = P38C) #Conversación con los padres sobre permisos
+est_data <- est_data %>% mutate(conv_amistades = P38D) #Conversación con los padres sobre amigos
+est_data <- est_data %>% mutate(conv_sociopol = P38E) #Conversación con los padres de temas politicos y sociales
+est_data <- est_data %>% mutate(pp_voto_presi = P48A)#Participación política padres: Votar en presidenciales 2017
+est_data <- est_data %>% mutate(pp_marcha = P48B) #Participación política padreS: Marchar
+est_data <- est_data %>% mutate(pp_act_comu = P48C) #Participación política padres: Participar en actividades comunitarias 
 
 #Socialización política familiar (base apod)
-apod_data <- apod_data %>% rename("voto_apod" = P17) #Votación en las últimas elecciones
-apod_data <- apod_data %>% rename("voto_prox" = P18) #Votación el domingo
-apod_data <- apod_data %>% rename("voto_imp" = P19) #Importancia de elecciones
-
-apod_data <- apod_data %>% rename("act_peticion" = P20A) #Actividad: petición 
-apod_data <- apod_data %>% rename("act_marcha" = P20B) #Actividad: marcha 
-apod_data <- apod_data %>% rename("act_voluntariado" = P20C) #Actividad: voluntariado 
-apod_data <- apod_data %>% rename("act_reu_sociopol" = P20D) #Actividad: reunión sociopolítica 
-
-apod_data <- apod_data %>% rename("org_juntavecinos" = P21A) #Org Voluntaria: Junta de vecinos  
-apod_data <- apod_data %>% rename("org_iglesia" = P21B) #Org Voluntaria: iglesia 
-apod_data <- apod_data %>% rename("org_ppol" = P21C) #Org Voluntaria: partido político 
-apod_data <- apod_data %>% rename("org_sindicato" = P21D) #Org Voluntaria: sindicato  
-apod_data <- apod_data %>% rename("org_asocprof" = P21E) #Org Voluntaria: asociación profesional 
-apod_data <- apod_data %>% rename("org_caridad" = P21G) #Org Voluntaria: caridad 
-apod_data <- apod_data %>% rename("org_cpadres" = P21H) #Org Voluntaria: centros de padres
+apod_data <- apod_data %>% mutate(voto_apod = P17) #Votación en las últimas elecciones
+apod_data <- apod_data %>% mutate(voto_prox = P18) #Votación el domingo
+apod_data <- apod_data %>% mutate(voto_imp = P19) #Importancia de elecciones
+apod_data <- apod_data %>% mutate(act_peticion = P20A) #Actividad: petición 
+apod_data <- apod_data %>% mutate(act_marcha = P20B) #Actividad: marcha
+apod_data <- apod_data %>% mutate(act_voluntariado = P20C) #Actividad: voluntariado 
+apod_data <- apod_data %>% mutate(act_reu_sociopol = P20D) #Actividad: reunión sociopolítica 
+apod_data <- apod_data %>% mutate(org_juntavecinos = P21A) #Org Voluntaria: Junta de vecinos  
+apod_data <- apod_data %>% mutate(org_iglesia = P21B) #Org Voluntaria: iglesia 
+apod_data <- apod_data %>% mutate(org_ppol = P21C) #Org Voluntaria: partido político 
+apod_data <- apod_data %>% mutate(org_sindicato = P21D) #Org Voluntaria: sindicato  
+apod_data <- apod_data %>% mutate(org_asocprof = P21E) #Org Voluntaria: asociación profesional 
+apod_data <- apod_data %>% mutate(org_caridad = P21G) #Org Voluntaria: caridad 
+apod_data <- apod_data %>% mutate(org_cpadres = P21H) #Org Voluntaria: centros de padres
 
 
 #Nombrar variables de control y caractización socioeconómica
-est_data <- est_data %>% rename("sexo" = P58)
-apod_data <- apod_data %>% rename("sexo_apod" = P39)
-est_data <- est_data %>% rename("region" = REGION) #Región
-est_data <- est_data %>% rename("dependencia" = Dependencia) #Dependencia
-est_data <- est_data %>% rename("ed_padre" = P66) #Reportada por estudiantes
-est_data <- est_data %>% rename("ed_madre" = P67) #Reportada por estudiante
-apod_data <- apod_data %>% rename("educ_apod" = P45) #Reportada por apoderados
-apod_data <- apod_data %>% rename("ingresos" = P55) #Ingresos
-apod_data <- apod_data %>% rename("cantidad" = P41) #Cantidad de personas en el hogar
+est_data <- est_data %>% mutate(sexo = P58)
+apod_data <- apod_data %>% mutate(sexo_apod = P39)
+est_data <- est_data %>% mutate(region = REGION) #Región
+est_data <- est_data %>% mutate(dependencia = Dependencia) #Dependencia
+est_data <- est_data %>% mutate(ed_padre = P66) #Reportada por estudiantes
+est_data <- est_data %>% mutate(ed_madre = P67) #Reportada por estudiante
+apod_data <- apod_data %>% mutate(educ_apod = P45) #Reportada por apoderados
+apod_data <- apod_data %>% mutate(ingresos = P55) #Ingresos
+apod_data <- apod_data %>% mutate(cantidad = P41) #Cantidad de personas en el hogar
 
 
 #Etiquetar variables
@@ -300,7 +295,6 @@ apod_data$voto_prox <- set_na(apod_data$voto_prox, na = c(3, 9), drop.levels = T
 apod_data$voto_imp <- set_na(apod_data$voto_imp, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 
 apod_data$act_peticion <- set_na(apod_data$act_peticion, na = c(9), drop.levels = TRUE, as.tag = FALSE)
-apod_data$act_marcha <- set_na(apod_data$act_marcha, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 apod_data$act_voluntariado <- set_na(apod_data$act_voluntariado, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 apod_data$act_reu_sociopol <- set_na(apod_data$act_reu_sociopol, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 
@@ -312,7 +306,6 @@ apod_data$org_asocprof <- set_na(apod_data$org_asocprof, na = c(9), drop.levels 
 apod_data$org_caridad <- set_na(apod_data$org_caridad, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 apod_data$org_cpadres <- set_na(apod_data$org_cpadres, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 
-
 #Variables de control y recursos socioeconómicos
 est_data$sexo <- set_na(est_data$sexo, na = c(3,4,9), drop.levels = TRUE, as.tag = FALSE)
 apod_data$sexo_apod <- set_na(apod_data$sexo_apod, na = c(3,9), drop.levels = TRUE, as.tag = FALSE)
@@ -322,63 +315,67 @@ est_data$ed_padre <- set_na(est_data$ed_padre, na = c(8, 9), drop.levels = TRUE,
 apod_data$educ_apod <- set_na(apod_data$educ_apod, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 apod_data$cantidad <- set_na(apod_data$cantidad, na = c(999), drop.levels = TRUE, as.tag = FALSE)
 
-
-
-#Operacionalización de variable ingresos
-apod_data$ingresos_num[apod_data$ingresos == 1] <- 50500 
-apod_data$ingresos_num[apod_data$ingresos == 2] <- 117500
-apod_data$ingresos_num[apod_data$ingresos == 3] <- 156500
-apod_data$ingresos_num[apod_data$ingresos == 4] <- 201500
-apod_data$ingresos_num[apod_data$ingresos == 5] <- 257500
-apod_data$ingresos_num[apod_data$ingresos == 6] <- 324500
-apod_data$ingresos_num[apod_data$ingresos == 7] <- 403000
-apod_data$ingresos_num[apod_data$ingresos == 8] <- 724000
-apod_data$ingresos_num[apod_data$ingresos == 9] <- 1500000
-apod_data$ingresos_num[apod_data$ingresos == 10] <- 2500000
-apod_data$ingresos_num[apod_data$ingresos == 11] <- 3500000
-
-frq(apod_data$ingresos_num)
-
-apod_data$ingresos_pc <- apod_data$ingresos_num/apod_data$cantidad
-apod_data$ingresos_pc <- trunc(apod_data$ingresos_pc)
-
-# Construcción ingreso tramos como factor
-apod_data$ingresos_factor <- factor(apod_data$ingresos, levels = c(1,2,3,4,5,6,7,8,9,10,11,99), 
-                               labels = c("Menos de $101.000 mensuales líquidos",
-                                          "De $101.001 a $134.000 mensuales líquidos",
-                                          "De $134.001 a $179.000 mensuales líquidos",
-                                          "De $179.001 a $224.000 mensuales líquidos",
-                                          "De $224.001 a $291.000 mensuales líquidos",
-                                          "De $291.001 a $358.000 mensuales líquidos",
-                                          "De $358.001 a $448.000 mensuales líquidos",
-                                          "De $448.001 a $1.000.000 mensuales líquidos",
-                                          "De $1.000.001 a $2.000.000 mensuales líquidos",
-                                          "De $2.000.001 a $3.000.000 mensuales líquidos",
-                                          "Más de $3.000.000 mensuales líquidos",
-                                          "Ns/Nr"))
-
-# Construccion ingresos per capita quintiles
-apod_data <- apod_data %>% mutate(quintiles_ingresos_pc = ntile(ingresos_pc,5))
-
-#Recuperar NA
-apod_data$quintiles_ingresos_pc[is.na(apod_data$quintiles_ingresos_pc)] <- 99
-
-# Construcción ingresos per capita quintiles factor
-apod_data$quintiles_ingresos_pc_factor <- factor(apod_data$quintiles_ingresos_pc, levels = c(1,2,3,4,5,99), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5", "Ns/Nr"))
-
-## Eliminar 99 de la variable numerica
-apod_data$quintiles_ingresos_pc[apod_data$quintiles_ingresos_pc == 99] <- NA
-
-
+#Comparación de algunas variables nuevas y antiguas (variables de interés)
+table(apod_data$P20B, apod_data$act_marcha)
+table(apod_data$educ_apod, apod_data$P45)
 
 ##################### Unir ambas bases de datos ############################
 data <- left_join(x=est_data, y=apod_data, by="folio", suffix=c(".x", ".y"))
 
+#Comparación de algunas variables nuevas y antiguas (variables de interés, después de merge)
+table(data$P20B, data$act_marcha)
+table(data$educ_apod, data$P45)
 
+#Operacionalización de variable ingresos
+data$ingresos_num[data$ingresos == 1] <- 50500 
+data$ingresos_num[data$ingresos == 2] <- 117500
+data$ingresos_num[data$ingresos == 3] <- 156500
+data$ingresos_num[data$ingresos == 4] <- 201500
+data$ingresos_num[data$ingresos == 5] <- 257500
+data$ingresos_num[data$ingresos == 6] <- 324500
+data$ingresos_num[data$ingresos == 7] <- 403000
+data$ingresos_num[data$ingresos == 8] <- 724000
+data$ingresos_num[data$ingresos == 9] <- 1500000
+data$ingresos_num[data$ingresos == 10] <- 2500000
+data$ingresos_num[data$ingresos == 11] <- 3500000
+
+frq(data$ingresos_num)
+
+data$ingresos_pc <- data$ingresos_num/data$cantidad
+data$ingresos_pc <- trunc(data$ingresos_pc)
+
+# Construcción ingreso tramos como factor
+data$ingresos_factor <- factor(data$ingresos, levels = c(1,2,3,4,5,6,7,8,9,10,11,99), 
+                                    labels = c("Menos de $101.000 mensuales líquidos",
+                                               "De $101.001 a $134.000 mensuales líquidos",
+                                               "De $134.001 a $179.000 mensuales líquidos",
+                                               "De $179.001 a $224.000 mensuales líquidos",
+                                               "De $224.001 a $291.000 mensuales líquidos",
+                                               "De $291.001 a $358.000 mensuales líquidos",
+                                               "De $358.001 a $448.000 mensuales líquidos",
+                                               "De $448.001 a $1.000.000 mensuales líquidos",
+                                               "De $1.000.001 a $2.000.000 mensuales líquidos",
+                                               "De $2.000.001 a $3.000.000 mensuales líquidos",
+                                               "Más de $3.000.000 mensuales líquidos",
+                                               "Ns/Nr"))
+
+# Construccion ingresos per capita quintiles
+data <- data %>% mutate(quintiles_ingresos_pc = ntile(ingresos_pc,5))
+
+#Recuperar NA
+data$quintiles_ingresos_pc[is.na(data$quintiles_ingresos_pc)] <- 99
+
+# Construcción ingresos per capita quintiles factor
+data$quintiles_ingresos_pc_factor <- factor(data$quintiles_ingresos_pc, levels = c(1,2,3,4,5,99), labels = c("Quintil 1", "Quintil 2", "Quintil 3", "Quintil 4", "Quintil 5", "Ns/Nr"))
+
+## Eliminar 99 de la variable numerica
+data$quintiles_ingresos_pc[data$quintiles_ingresos_pc == 99] <- NA
+
+frq(data$quintiles_ingresos_pc)
 
 #Operacionalización de variable libros
-data <- data %>% rename("est_libros" = P68) #Libros reportados por estudiantes
-data <- data %>% rename("pad_libros" = P47) #Libros reportados por apoderados
+data <- data %>% mutate(est_libros = P68) #Libros reportados por estudiantes
+data <- data %>% mutate(pad_libros = P47) #Libros reportados por apoderados
 
 
 data$est_libros <- set_label(x = data$est_libros,label = "Número de libros estudiantes")
@@ -390,18 +387,27 @@ data$pad_libros <- set_na(data$pad_libros, na = c(8,9), drop.levels = TRUE, as.t
 
 
 data$total_libros <- ifelse(is.na(data$pad_libros), data$est_libros, data$pad_libros)
+data$total_libros <- car::recode(data$total_libros, "6=5")
 data$total_libros <- as.factor(data$total_libros)
 data$total_libros <- set_labels(data$total_libros,
                                 labels=c( "Entre 0 y 10 libros"=1,
                                           "Entre 11 y 25 libros"=2,
                                           "Entre 26 y 100 libros"=3,
                                           "Entre 101 y 200 libros"=4,
-                                          "Entre 201 y 500 libros"=5,
-                                          "Más de 500 libros"=6))
+                                          "Más de 200 libros"=5))
+
+#Factorizar y recodificar variable original de libros padres
+data$pad_libros <- car::recode(data$pad_libros, "6=5")
+data$pad_libros <- as.factor(data$pad_libros)
+data$pad_libros <- set_labels(data$pad_libros,
+                              labels=c( "Entre 0 y 10 libros"=1,
+                                        "Entre 11 y 25 libros"=2,
+                                        "Entre 26 y 100 libros"=3,
+                                        "Entre 101 y 200 libros"=4,
+                                        "Más de 200 libros"=5))
 
 #Se crea variable libros numérica
 data$libros_num <- as.numeric(data$total_libros)
-
 
 #Operacionalización variable educación padre y madre
 # Crear variable nueva
@@ -410,37 +416,30 @@ data$educ_padres <- ifelse(data$ed_madre>data$ed_padre,data$ed_madre,data$ed_pad
 # Etiquetar variable nueva
 data$educ_padres <- set_label(x = data$educ_padres,label = "Nivel educacional más alto de los padres")
 
-# Factor
-data$educ_padres_factor <- factor(data$educ_padres, levels = c(1,2,3,4,5), 
-                                  labels = c("No completó 8vo Básico", "8vo básico", "Educación media", "Educación Técnica superior", "Educación universitaria o posgrados"))
+data$educ_padres <- car::recode(data$educ_padres, "2=1; 3=2; 4=3; 5=4")
 
-# Etiquetar factor
-data$educ_padres_factor <- set_label(x = data$educ_padres, label = "Nivel educacional más alto de los padres factor")
+frq(data$educ_padres)
 
+# Factor de variable combinada
+data$educ_padres_factor <- factor(data$educ_padres, levels = c(1,2,3,4), 
+                                  labels = c("8vo básico o menos", 
+                                             "Educación media", 
+                                             "Educación Técnica superior", 
+                                             "Educación universitaria o posgrados"))
+
+# Educación padres reportada por ellos mismos
+data$educ_apod <- factor(data$educ_apod, levels = c(1,2,3,4), 
+                             labels = c("8vo básico o menos", 
+                                        "Educación media", 
+                                        "Educación Técnica superior", 
+                                        "Educación universitaria o posgrados"))
 
 
 #Sexo estudiantes a variable dummy Hombre =1, Mujer = 0 
-data$sexo <- car::recode(data$sexo, "1=1;2=0")
+data$sexo <- car::recode(data$sexo,"2=0")
 data$sexo <- set_labels(data$sexo,
                            labels=c( "Mujer"=0,
                                      "Hombre"=1))
-
-
-#Se establece como factor
-data$sexo <- as.factor(data$sexo)
-class(data$sexo)
-
-
-
-#Dependencia educacional a factor
-data$dependencia <- as.factor(data$dependencia)
-class(data$dependencia)
-
-
-
-#Region a factor
-data$region <- as.factor (data$region)
-class(data$region)
 
 
 #Voto apoderado a dummy
@@ -469,79 +468,79 @@ data$int_pre <- set_labels(data$int_pre,
 
 
 #Dummy para variables de participación de estudiantes (disruptivo y no disruptivo)
-data$par_fir <- car::recode(data$par_fir, "1=1;2=0")
+data$par_fir <- car::recode(data$par_fir, "2=0")
 data$par_fir <- set_labels(data$par_fir,
                                     labels=c( "No"=0,
                                               "Sí"=1))
 
-data$par_marau <- car::recode(data$par_marau, "1=1;2=0")
+data$par_marau <- car::recode(data$par_marau, "2=0")
 data$par_marau <- set_labels(data$par_marau,
                                       labels=c( "No"=0,
                                                 "Sí"=1))
 
-data$par_marnoau <- car::recode(data$par_marnoau, "1=1;2=0")
+data$par_marnoau <- car::recode(data$par_marnoau, "2=0")
 data$par_marnoau <- set_labels(data$par_marnoau,
                                         labels=c( "No"=0,
                                                   "Sí"=1))
 
-data$par_toma <- car::recode(data$par_toma, "1=1;2=0")
+data$par_toma <- car::recode(data$par_toma, "2=0")
 data$par_toma <- set_labels(data$par_toma,
                                      labels=c( "No"=0,
                                                "Sí"=1))
 
-data$par_bloq <- car::recode(data$par_bloq, "1=1;2=0")
+data$par_bloq <- car::recode(data$par_bloq, "2=0")
 data$par_bloq <- set_labels(data$par_bloq,
                                      labels=c( "No"=0,
                                                "Sí"=1))
 
-data$par_pared <- car::recode(data$par_pared, "1=1;2=0")
+data$par_pared <- car::recode(data$par_pared, "2=0")
 data$par_pared <- set_labels(data$par_pared,
                                       labels=c( "No"=0,
                                                 "Sí"=1))
 
-data$par_servcom <- car::recode(data$par_servcom, "1=1;2=0")
+data$par_servcom <- car::recode(data$par_servcom, "2=0")
 data$par_servcom <- set_labels(data$par_servcom,
                                         labels=c( "No"=0,
                                                   "Sí"=1))
 
-data$par_reupol <- car::recode(data$par_reupol, "1=1;2=0")
+data$par_reupol <- car::recode(data$par_reupol, "2=0")
 data$par_reupol <- set_labels(data$par_reupol,
                                        labels=c( "No"=0,
                                                  "Sí"=1))
 
 
 #Orden y conversión en variables de aprendizaje civico activo (data$civ_)
-data$civ_tall <- car::recode(data$civ_tall, "1=1;2=0")
+data$civ_tall <- car::recode(data$civ_tall, "2=0")
 data$civ_tall <- set_labels(data$civ_tall,
                             labels=c( "No"=0,
                                       "Sí"=1))
 
-data$civ_simul <- car::recode(data$civ_simul, "1=1;2=0")
+data$civ_simul <- car::recode(data$civ_simul, "2=0")
 data$civ_simul <- set_labels(data$civ_simul,
                              labels=c( "No"=0,
                                        "Sí"=1))
 
-data$civ_camp <- car::recode(data$civ_camp, "1=1;2=0")
+data$civ_camp <- car::recode(data$civ_camp, "2=0")
 data$civ_camp <- set_labels(data$civ_camp,
                             labels=c( "No"=0,
                                       "Sí"=1))
 
-data$civ_foros <- car::recode(data$civ_foros, "1=1;2=0")
+data$civ_foros <- car::recode(data$civ_foros, "2=0")
 data$civ_foros <- set_labels(data$civ_foros,
                              labels=c( "No"=0,
                                        "Sí"=1))
 
-data$civ_charlas <- car::recode(data$civ_charlas, "1=1;2=0")
+data$civ_charlas <- car::recode(data$civ_charlas, "2=0")
 data$civ_charlas <- set_labels(data$civ_charlas,
                                labels=c( "No"=0,
                                          "Sí"=1))
 
-data$civ_medio <- car::recode(data$civ_medio, "1=1;2=0")
+data$civ_medio <- car::recode(data$civ_medio, "2=0")
 data$civ_medio <- set_labels(data$civ_medio,
                              labels=c( "No"=0,
                                        "Sí"=1))
 
-data$civ_comun <- car::recode(data$civ_comun, "1=1;2=0")
+data$civ_comun <- car::recode(data$civ_comun, "2=0")
 data$civ_comun <- set_labels(data$civ_comun,
                              labels=c( "No"=0,
                                        "Sí"=1))
@@ -595,24 +594,24 @@ alfa_conv <- psych::alpha(df_conv)
 alfa_conv
 
 #Se realiza un índice con aquellas variables que tienen más sentido teórico y mayor correlación
-data$SPI <- (data$conv_sociopol + data$conv_noticias)/2
+data$conversacion <- (data$conv_sociopol + data$conv_noticias)/2
 
+frq(data$conversacion)
 
 
 ###### Participación política de padres (base estudiantes) data$pp ######
 #Variables dummy, participación política apod (data$pp_)
-data$pp_act_comu <- car::recode(data$pp_act_comu, "1=1;2=0")
+data$pp_act_comu <- car::recode(data$pp_act_comu, "2=0")
 data$pp_act_comu <- set_labels(data$pp_act_comu,
                                labels=c( "No"=0,
                                          "Sí"=1))
 
-data$pp_voto_presi <- car::recode(data$pp_voto_presi, "1=1;2=0;3:9=NA")
+data$pp_voto_presi <- car::recode(data$pp_voto_presi, "2=0")
 data$pp_voto_presi <- set_labels(data$pp_voto_presi,
                                  labels=c( "No"=0,
                                            "Sí"=1))
 
-
-data$pp_marcha <- car::recode(data$pp_marcha, "1=1;2=0")
+data$pp_marcha <- car::recode(data$pp_marcha, "2=0")
 data$pp_marcha <- set_labels(data$pp_marcha,
                              labels=c( "No"=0,
                                        "Sí"=1))
@@ -629,14 +628,24 @@ alfa_pp
 #Se agrega indicador a base de datos principal
 data$pp_apod<- (data$pp_voto_presi + data$pp_act_comu + data$pp_marcha)
 
-
+#Se genera indicador de voto de apoderados (si voto de apoderados es NA, se asume el que respondieron
+#estudiantes)
+data$voto_padres <- ifelse(is.na(data$voto_apod), data$pp_voto_presi, data$voto_apod)
+data$voto_padres <- as.factor(data$voto_padres)
+data$voto_padres <- set_labels(data$voto_padres,
+                                labels=c( "No"=0,
+                                          "Si"=1))
 
 ###### Participación política de padres (base apoderados) data$act ######
-data$act_marcha <- car::recode(data$act_marcha, "2=0;1=1")
+data$act_marcha <- car::recode(data$act_marcha, "2=0; 9=NA")
 data$act_marcha <- set_labels(data$act_marcha,
                                 labels=c( "No"=0,
                                           "Sí"=1))
 
+apod_data$P20B <- car::recode(apod_data$P20B, "2=0")
+apod_data$P20B <- set_labels(apod_data$P20B,
+                              labels=c( "No"=0,
+                                        "Sí"=1))
 
 data$act_voluntariado <- car::recode(data$act_voluntariado, "2=0")
 data$act_voluntariado <- set_labels(data$act_voluntariado,
@@ -644,13 +653,13 @@ data$act_voluntariado <- set_labels(data$act_voluntariado,
                                           "Sí"=1))
 
 
-data$act_reu_sociopol <- car::recode(data$act_reu_sociopol, "2=0;1=1")
+data$act_reu_sociopol <- car::recode(data$act_reu_sociopol, "2=0")
 data$act_reu_sociopol <- set_labels(data$act_reu_sociopol,
                                 labels=c( "No"=0,
                                           "Sí"=1))
 
 
-data$act_peticion <- car::recode(data$act_peticion, "2=0;1=1")
+data$act_peticion <- car::recode(data$act_peticion, "2=0")
 data$act_peticion <- set_labels(data$act_peticion,
                                 labels=c( "No"=0,
                                           "Sí"=1))
@@ -669,9 +678,6 @@ alfa_act
 #Se agrega a la base de datos principal
 data$act_apod <- (data$act_marcha + 
                   data$act_peticion + data$act_reu_sociopol)
-
-frq(data$act_apod)
-
 
 
 ##### #Participacion política de padres, (base apoderados, organizaciones voluntaria), data$org ######
@@ -730,7 +736,6 @@ data$org_vol <- (data$org_asocprof + data$org_caridad +  data$org_cpadres +
 
 frq(data$org_vol)
 
-
 ########################## Análisis Factorial Confirmatorio #############################
 #Especificación del Modelo
 cfa_1 <- '
@@ -751,6 +756,8 @@ fitMeasures(fit_1, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
 #Selección de variables originales con folio
 data2 <- data %>% dplyr::select("folio", "par_fir","par_marau","par_marnoau","par_toma","par_bloq", "par_pared", "par_servcom", "par_reupol","int_mun","int_pre","int_inf") %>% na.omit()
 
+predict <- predict(fit_1)
+
 #Puntajes factoriales se guardan como df
 scores <- as.data.frame(predict)
 
@@ -763,16 +770,29 @@ data3 = data2 %>% dplyr::select(folio, formal, nodisruptivo, disruptivo)
 #Merge
 data = left_join(x = data, y=data3, by="folio")
 
-#Resumen bdd
-frq(data)
+#Resumen de los datos para ver si están correctos
+descr <- data %>% dplyr::select(
+  formal,
+  disruptivo,
+  nodisruptivo,
+  act_marcha,
+  voto_apod,
+  educ_apod,
+  pad_libros,
+  civico,
+  apertura,
+  sexo,
+  dependencia,
+  region,
+  RBDE)
+
+dfSummary(descr)
 
 #Guardar base nueva
-save(data, file = "input/data.RData")
-
+save(data, file = "input/data/proc/data.RData")
 
 # Guardar base de datos apoderados
-save(apod_data, file = "input/apod_data.RData")
-
+save(apod_data, file = "input/data/proc/apod_data.RData")
 
 # Guardar base de datos estudiantes
-save(est_data, file = "input/est_data.RData")
+save(est_data, file = "input/data/proc/est_data.RData")
