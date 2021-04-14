@@ -11,7 +11,7 @@ Se cargan los paquetes necesarios para el Análisis Multinivel y se carga la BDD
 #Paquetes
 pacman::p_load(dplyr, sjlabelled, summarytools, ggplot2, ggExtra, lme4, texreg, sjPlot, lattice, stargazer)
 
-#BDD
+#BDDb
 load(url("https://github.com/damiranda/pol_parti/blob/branch1/input/data/proc/data.RData?raw=true"))
 
 ```
@@ -32,6 +32,7 @@ data_red <- data %>% dplyr::select(formal,
                                 dependencia,
                                 region,
                                 RBDE) %>% na.omit
+
 
 ```
 
@@ -93,7 +94,7 @@ m3b <- lmer(formal ~ 1  + apertura + factor(region) + factor(dependencia)+ facto
 m4 <- lmer(formal ~ 1  + conversacion + voto_apod + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
 
 # Resumen
-screenreg(list(m1, m2, m3, m4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(m1, m2, m3, m4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo|dependencia|region)")
 
 #Hipótesis 5 - Interacción entre variables de nivel 1 (conversacion y voto_apod) con variables de nivel 2 (apertura y conversacion) 
 
@@ -134,11 +135,9 @@ m9 <- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros + c
 
 anova(m4, m9)
 
-screenreg(list(m4, m8, m9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(m4, m8, m9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(sexo|dependencia|region)")
 
-screenreg(list(m4, m5, m5b, m5c, m6, m6b, m6c), custom.model.names = c("completo", "r_conv", "aper x conv", "act x conv", "r_voto", "aper x voto", "act x voto"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
-
-htmlreg(l = m4, type = "html", doctype = FALSE)
+screenreg(list(m4, m5, m5b, m5c, m6, m6b, m6c), custom.model.names = c("completo", "r_conv", "aper x conv", "act x conv", "r_voto", "aper x voto", "act x voto"), omit.coef = "(sexo|dependencia|region)")
 ```
 
 Modelos generales - Participación disruptiva
@@ -167,7 +166,7 @@ d3b <- lmer(disruptivo ~ 1  +  conversacion +  factor(region) + factor(dependenc
 d4 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
 
 #Tabla de regresiones
-screenreg(list(d1, d2, d3, d4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(d1, d2, d3, d4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo|dependencia|region)")
 
 d5 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+conversacion |RBDE), data_red)
 
@@ -188,7 +187,7 @@ d6c <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + 
 anova(d4, d6c)
 
 
-screenreg(list(d4, d5, d6, d6b, d6c), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x conversacion", "marcha x apertura"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(d4, d5, d6, d6b, d6c), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x conversacion", "marcha x apertura"), omit.coef = "(sexo|dependencia|region)")
 
 
 d8 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+educ_apod |RBDE), data_red)
@@ -199,7 +198,7 @@ d9 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + p
 
 anova(d4, d9)
 
-screenreg(list(d4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(d4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(sexo|dependencia|region)")
 ```
 
 Modelos generales - Participación no disruptiva
@@ -226,7 +225,7 @@ n3b <- lmer(nodisruptivo ~ 1  +  conversacion  + factor(region) + factor(depende
 n4 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
 
 
-screenreg(list(n1, n2, n3, n4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(n1, n2, n3, n4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo|dependencia|region)")
 
 
 n5 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+conversacion |RBDE), data_red)
@@ -242,7 +241,7 @@ n6b <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod 
 anova(n4, n6)
 
 
-screenreg(list(n4, n5, n6, n6a, n6b), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x conversacion", "marcha x apertura"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(n4, n5, n6, n6a, n6b), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x conversacion", "marcha x apertura"), omit.coef = "(sexo|dependencia|region)")
 
 
 n8 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+educ_apod |RBDE), data_red)
@@ -253,5 +252,5 @@ n9 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod +
 
 anova(n4, n9)
 
-screenreg(list(n4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(factor(sexo))|(factor(dependencia))|(factor(region))")
+screenreg(list(n4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(sexo|dependencia|region)")
 ```
