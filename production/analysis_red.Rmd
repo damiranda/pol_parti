@@ -3,6 +3,8 @@ title: "Untitled"
 author: "Daniel Miranda, Julio Iturra, Brian Montenegro & Karen Sepúlveda"
 date: "12-04-2021"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 Se cargan los paquetes necesarios para el Análisis Multinivel y se carga la BDD
@@ -31,8 +33,7 @@ data_red <- data %>% dplyr::select(formal,
                                 sexo,
                                 dependencia,
                                 region,
-                                RBDE) %>% na.omit
-
+                                RBDE) %>% na.omit()
 
 ```
 
@@ -66,7 +67,7 @@ qqmath(ranef(m002, condVar = TRUE))
 qqmath(ranef(m003, condVar = TRUE))
 ```
 
-Modelos generales - Participación formal
+# Modelos generales - Participación formal
 
 ```{r}
 # Hipótesis 1 - Incidencia de socialización política familiar sobre participación formal
@@ -140,7 +141,7 @@ screenreg(list(m4, m8, m9), custom.model.names = c("completo", "r_educ", "r_libr
 screenreg(list(m4, m5, m5b, m5c, m6, m6b, m6c), custom.model.names = c("completo", "r_conv", "aper x conv", "act x conv", "r_voto", "aper x voto", "act x voto"), omit.coef = "(sexo|dependencia|region)")
 ```
 
-Modelos generales - Participación disruptiva
+#Modelos generales - Participación disruptiva
 
 \#Se predicen puntajes factoriales
 
@@ -201,7 +202,7 @@ anova(d4, d9)
 screenreg(list(d4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(sexo|dependencia|region)")
 ```
 
-Modelos generales - Participación no disruptiva
+#Modelos generales - Participación no disruptiva
 
 ```{r}
 n1 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
