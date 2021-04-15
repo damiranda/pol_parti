@@ -91,6 +91,7 @@ apod_data <- apod_data %>% dplyr::select(P17,
                                   P47,
                                   P55,
                                   folio=FOLIO_EST,
+                                  folio_pa=FOLIO,
                                   RBDA=RBD)
 
 
@@ -295,6 +296,7 @@ apod_data$voto_prox <- set_na(apod_data$voto_prox, na = c(3, 9), drop.levels = T
 apod_data$voto_imp <- set_na(apod_data$voto_imp, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 
 apod_data$act_peticion <- set_na(apod_data$act_peticion, na = c(9), drop.levels = TRUE, as.tag = FALSE)
+apod_data$act_marcha <- set_na(apod_data$act_marcha, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 apod_data$act_voluntariado <- set_na(apod_data$act_voluntariado, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 apod_data$act_reu_sociopol <- set_na(apod_data$act_reu_sociopol, na = c(9), drop.levels = TRUE, as.tag = FALSE)
 
@@ -317,14 +319,12 @@ apod_data$cantidad <- set_na(apod_data$cantidad, na = c(999), drop.levels = TRUE
 
 #Comparación de algunas variables nuevas y antiguas (variables de interés)
 table(apod_data$P20B, apod_data$act_marcha)
-table(apod_data$educ_apod, apod_data$P45)
 
 ##################### Unir ambas bases de datos ############################
 data <- left_join(x=est_data, y=apod_data, by="folio", suffix=c(".x", ".y"))
 
 #Comparación de algunas variables nuevas y antiguas (variables de interés, después de merge)
 table(data$P20B, data$act_marcha)
-table(data$educ_apod, data$P45)
 
 #Operacionalización de variable ingresos
 data$ingresos_num[data$ingresos == 1] <- 50500 
