@@ -892,7 +892,7 @@ m9 &lt;- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros 
 ## Cov: RBDE (Intercept) voto_apod                                                                     -0.04        -0.03        -0.04    
 ## =======================================================================================================================================
 ## *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05</code></pre>
-<pre class="r"><code>stargazer(list(m1a, m1b, m2a, m2b, m3a, m3b, m4), type=&quot;html&quot;, title= &quot;Tabla 1: Modelos para participación formal&quot;, style = &quot;default&quot;, covariate.labels = c(&quot;Conversación&quot;, &quot;Familia votó&quot;, &quot;11 a 25 libros(vs menos de 10)&quot;, &quot;26 a 100 libros(vs menos de 10)&quot;, &quot;100 o más libros(vs menos de 10)&quot;, &quot;Ed. Media (vs Básica)&quot;, &quot;Ed. Técnica (vs Básica)&quot;, &quot;Ed. Universitaria (vs Básica)&quot;, &quot;Actividades cívicas(centrada)&quot;, &quot;Actividades cívicas(promedio)&quot;, &quot;Apertura a discusión(centrada)&quot;, &quot;Apertura a discusión(promedio)&quot;, &quot;Maule (vs Antofagasta)&quot;, &quot;RM (vs Antofagasta)&quot;, &quot;Subvencionado(vs Público)&quot;, &quot;Privado(vs Público)&quot;, &quot;Niña&quot;),
+<pre class="r"><code>stargazer(list(m1a, m1b, m2a, m2b, m3a, m3b, m4), type=&quot;text&quot;, title= &quot;Tabla 1: Modelos para participación formal&quot;, style = &quot;default&quot;, covariate.labels = c(&quot;Conversación&quot;, &quot;Familia votó&quot;, &quot;11 a 25 libros(vs menos de 10)&quot;, &quot;26 a 100 libros(vs menos de 10)&quot;, &quot;100 o más libros(vs menos de 10)&quot;, &quot;Ed. Media (vs Básica)&quot;, &quot;Ed. Técnica (vs Básica)&quot;, &quot;Ed. Universitaria (vs Básica)&quot;, &quot;Actividades cívicas(centrada)&quot;, &quot;Actividades cívicas(promedio)&quot;, &quot;Apertura a discusión(centrada)&quot;, &quot;Apertura a discusión(promedio)&quot;, &quot;Maule (vs Antofagasta)&quot;, &quot;RM (vs Antofagasta)&quot;, &quot;Subvencionado(vs Público)&quot;, &quot;Privado(vs Público)&quot;, &quot;Niña&quot;),
           dep.var.caption  = &quot;Indicador de Participación formal&quot;,
           dep.var.labels   = &quot;&quot;, digits= 2,
           star.char = c(&quot;+&quot;, &quot;*&quot;, &quot;**&quot;, &quot;***&quot;),
@@ -900,1307 +900,75 @@ m9 &lt;- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros 
           notes = c(&quot;+ p&lt;=0.1; * p&lt;=0.05; ** p&lt;=0.01; *** p&lt;0.001&quot;), 
           notes.append = F,
           column.labels = c(&quot;Conversación&quot;, &quot;Familia marchó&quot;, &quot;libros&quot;,&quot;Educación&quot;, &quot;Actividades cívicas&quot;, &quot;Apertura a disucusión&quot;, &quot;completo&quot;), model.numbers          = FALSE)</code></pre>
-<table style="text-align:center">
-<caption>
-<strong>Tabla 1: Modelos para participación formal</strong>
-</caption>
-<tr>
-<td colspan="8" style="border-bottom: 1px solid black">
-</td>
+<div id="tabla-1-modelos-para-participación-formal" class="section level1">
+<h1>Tabla 1: Modelos para participación formal</h1>
+<pre><code>                                                            Indicador de Participación formal                                
+                             ------------------------------------------------------------------------------------------------
+                                                                                                                             
+                             Conversación Familia marchó libros  Educación Actividades cívicas Apertura a disucusión completo</code></pre>
+<table>
+<colgroup>
+<col width="100%"></col>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">Conversación 0.21*** 0.18*** (0.03) (0.03)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td colspan="7">
-Indicador de Participación formal
-</td>
+<tr class="even">
+<td align="left">Familia votó 0.20*** 0.15*** (0.05) (0.05)</td>
 </tr>
-<tr>
-<td>
-</td>
-<td colspan="7" style="border-bottom: 1px solid black">
-</td>
+<tr class="odd">
+<td align="left">11 a 25 libros(vs menos de 10) 0.06 0.01 (0.06) (0.06)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td colspan="7">
-</td>
+<tr class="even">
+<td align="left">26 a 100 libros(vs menos de 10) 0.14* 0.05 (0.06) (0.06)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-Conversación
-</td>
-<td>
-Familia marchó
-</td>
-<td>
-libros
-</td>
-<td>
-Educación
-</td>
-<td>
-Actividades cívicas
-</td>
-<td>
-Apertura a disucusión
-</td>
-<td>
-completo
-</td>
+<tr class="odd">
+<td align="left">100 o más libros(vs menos de 10) 0.19* 0.08 (0.07) (0.07)</td>
 </tr>
-<tr>
-<td colspan="8" style="border-bottom: 1px solid black">
-</td>
+<tr class="even">
+<td align="left">Ed. Media (vs Básica) 0.09 0.11 (0.07) (0.07)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-Conversación
-</td>
-<td>
-0.21<sup>***</sup>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.18<sup>***</sup>
-</td>
+<tr class="odd">
+<td align="left">Ed. Técnica (vs Básica) 0.24** 0.22** (0.08) (0.07)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.03)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.03)
-</td>
+<tr class="even">
+<td align="left">Ed. Universitaria (vs Básica) 0.24** 0.15+ (0.09) (0.08)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
+<tr class="odd">
+<td align="left">Actividades cívicas(centrada) 0.05*** 0.03** (0.01) (0.01)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-Familia votó
-</td>
-<td>
-</td>
-<td>
-0.20<sup>***</sup>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.15<sup>***</sup>
-</td>
+<tr class="even">
+<td align="left">Actividades cívicas(promedio) 0.03 0.003 (0.03) (0.03)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-(0.05)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.05)
-</td>
+<tr class="odd">
+<td align="left">Apertura a discusión(centrada) 0.09* 0.02 (0.03) (0.03)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
+<tr class="even">
+<td align="left">Apertura a discusión(promedio) 0.24** 0.08 (0.09) (0.09)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-11 a 25 libros(vs menos de 10)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.06
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.01
-</td>
+<tr class="odd">
+<td align="left">Maule (vs Antofagasta) 0.11 0.02 0.07 0.06 0.03 0.05 0.06 (0.07) (0.08) (0.08) (0.08) (0.09) (0.08) (0.07)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.06)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.06)
-</td>
+<tr class="even">
+<td align="left">RM (vs Antofagasta) -0.01 -0.07 -0.04 -0.04 -0.05 -0.07 -0.07 (0.06) (0.07) (0.07) (0.07) (0.07) (0.07) (0.06)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
+<tr class="odd">
+<td align="left">Subvencionado(vs Público) 0.08 0.08 0.09 0.07 0.10 0.08 0.05 (0.05) (0.06) (0.06) (0.06) (0.06) (0.06) (0.05)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-26 a 100 libros(vs menos de 10)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.14<sup>*</sup>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.05
-</td>
+<tr class="even">
+<td align="left">Privado(vs Público) 0.22** 0.23** 0.23** 0.19* 0.29*** 0.24** 0.12 (0.07) (0.08) (0.08) (0.09) (0.08) (0.08) (0.08)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.06)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.06)
-</td>
+<tr class="odd">
+<td align="left">Niña -0.03 -0.08+ -0.08+ -0.08+ -0.08+ -0.05 -0.03 (0.04) (0.04) (0.04) (0.04) (0.04) (0.04) (0.04)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
+<tr class="even">
+<td align="left">Constant -0.77*** -0.28*** -0.27** -0.29*** -0.31* -0.91** -1.15*** (0.10) (0.07) (0.08) (0.09) (0.14) (0.28) (0.26)</td>
 </tr>
-<tr>
-<td style="text-align:left">
-100 o más libros(vs menos de 10)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.19<sup>*</sup>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.08
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.07)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.07)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Ed. Media (vs Básica)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.09
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.11
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.07)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.07)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Ed. Técnica (vs Básica)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.24<sup>**</sup>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.22<sup>**</sup>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.08)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.07)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Ed. Universitaria (vs Básica)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.24<sup>**</sup>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.15<sup>+</sup>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.09)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.08)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Actividades cívicas(centrada)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.05<sup>***</sup>
-</td>
-<td>
-</td>
-<td>
-0.03<sup>**</sup>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.01)
-</td>
-<td>
-</td>
-<td>
-(0.01)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Actividades cívicas(promedio)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.03
-</td>
-<td>
-</td>
-<td>
-0.003
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.03)
-</td>
-<td>
-</td>
-<td>
-(0.03)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Apertura a discusión(centrada)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.09<sup>*</sup>
-</td>
-<td>
-0.02
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.03)
-</td>
-<td>
-(0.03)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Apertura a discusión(promedio)
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-0.24<sup>**</sup>
-</td>
-<td>
-0.08
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-(0.09)
-</td>
-<td>
-(0.09)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Maule (vs Antofagasta)
-</td>
-<td>
-0.11
-</td>
-<td>
-0.02
-</td>
-<td>
-0.07
-</td>
-<td>
-0.06
-</td>
-<td>
-0.03
-</td>
-<td>
-0.05
-</td>
-<td>
-0.06
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.09)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.07)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-RM (vs Antofagasta)
-</td>
-<td>
--0.01
-</td>
-<td>
--0.07
-</td>
-<td>
--0.04
-</td>
-<td>
--0.04
-</td>
-<td>
--0.05
-</td>
-<td>
--0.07
-</td>
-<td>
--0.07
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.06)
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.06)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Subvencionado(vs Público)
-</td>
-<td>
-0.08
-</td>
-<td>
-0.08
-</td>
-<td>
-0.09
-</td>
-<td>
-0.07
-</td>
-<td>
-0.10
-</td>
-<td>
-0.08
-</td>
-<td>
-0.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.05)
-</td>
-<td>
-(0.06)
-</td>
-<td>
-(0.06)
-</td>
-<td>
-(0.06)
-</td>
-<td>
-(0.06)
-</td>
-<td>
-(0.06)
-</td>
-<td>
-(0.05)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Privado(vs Público)
-</td>
-<td>
-0.22<sup>**</sup>
-</td>
-<td>
-0.23<sup>**</sup>
-</td>
-<td>
-0.23<sup>**</sup>
-</td>
-<td>
-0.19<sup>*</sup>
-</td>
-<td>
-0.29<sup>***</sup>
-</td>
-<td>
-0.24<sup>**</sup>
-</td>
-<td>
-0.12
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.09)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.08)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Niña
-</td>
-<td>
--0.03
-</td>
-<td>
--0.08<sup>+</sup>
-</td>
-<td>
--0.08<sup>+</sup>
-</td>
-<td>
--0.08<sup>+</sup>
-</td>
-<td>
--0.08<sup>+</sup>
-</td>
-<td>
--0.05
-</td>
-<td>
--0.03
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.04)
-</td>
-<td>
-(0.04)
-</td>
-<td>
-(0.04)
-</td>
-<td>
-(0.04)
-</td>
-<td>
-(0.04)
-</td>
-<td>
-(0.04)
-</td>
-<td>
-(0.04)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Constant
-</td>
-<td>
--0.77<sup>***</sup>
-</td>
-<td>
--0.28<sup>***</sup>
-</td>
-<td>
--0.27<sup>**</sup>
-</td>
-<td>
--0.29<sup>***</sup>
-</td>
-<td>
--0.31<sup>*</sup>
-</td>
-<td>
--0.91<sup>**</sup>
-</td>
-<td>
--1.15<sup>***</sup>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.10)
-</td>
-<td>
-(0.07)
-</td>
-<td>
-(0.08)
-</td>
-<td>
-(0.09)
-</td>
-<td>
-(0.14)
-</td>
-<td>
-(0.28)
-</td>
-<td>
-(0.26)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td colspan="8" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Observations
-</td>
-<td>
-532
-</td>
-<td>
-532
-</td>
-<td>
-532
-</td>
-<td>
-532
-</td>
-<td>
-532
-</td>
-<td>
-532
-</td>
-<td>
-532
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Log Likelihood
-</td>
-<td>
--345.45
-</td>
-<td>
--364.87
-</td>
-<td>
--373.46
-</td>
-<td>
--370.26
-</td>
-<td>
--368.94
-</td>
-<td>
--369.39
-</td>
-<td>
--350.41
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Akaike Inf. Crit.
-</td>
-<td>
-708.90
-</td>
-<td>
-747.74
-</td>
-<td>
-768.92
-</td>
-<td>
-762.52
-</td>
-<td>
-757.89
-</td>
-<td>
-758.77
-</td>
-<td>
-740.82
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Bayesian Inf. Crit.
-</td>
-<td>
-747.39
-</td>
-<td>
-786.23
-</td>
-<td>
-815.96
-</td>
-<td>
-809.56
-</td>
-<td>
-800.65
-</td>
-<td>
-801.54
-</td>
-<td>
-826.35
-</td>
-</tr>
-<tr>
-<td colspan="8" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-<em>Note:</em>
-</td>
-<td colspan="7" style="text-align:right">
-<ul>
-<li>p&lt;=0.1; * p&lt;=0.05; ** p&lt;=0.01; *** p&lt;0.001
-</td>
-</tr>
-</table></li>
-</ul>
+</tbody>
+</table>
+<p>Observations 532 532 532 532 532 532 532<br />
+Log Likelihood -345.45 -364.87 -373.46 -370.26 -368.94 -369.39 -350.41 Akaike Inf. Crit. 708.90 747.74 768.92 762.52 757.89 758.77 740.82 Bayesian Inf. Crit. 747.39 786.23 815.96 809.56 800.65 801.54 826.35 ================================================================================================================================= Note: + p&lt;=0.1; * p&lt;=0.05; ** p&lt;=0.01; *** p&lt;0.001</p>
 <p>Modelos generales - Participación disruptiva</p>
 <p>#Se predicen puntajes factoriales</p>
 <pre class="r"><code>d1 &lt;- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
@@ -5461,6 +4229,835 @@ Bayesian Inf. Crit.
 </tr>
 </table></li>
 </ul>
+<pre class="r"><code>stargazer(list(m4, n4, d4), type=&quot;html&quot;, title= &quot;Tabla: Modelos Finales para los tres tipos de Participación&quot;, style = &quot;default&quot;, covariate.labels = c(&quot;Conversación&quot;, &quot;Familia votó&quot;, &quot;Familia marchó&quot;, &quot;11 a 25 libros(vs menos de 10)&quot;, &quot;26 a 100 libros(vs menos de 10)&quot;, &quot;100 o más libros(vs menos de 10)&quot;, &quot;Ed. Media (vs Básica)&quot;, &quot;Ed. Técnica (vs Básica)&quot;, &quot;Ed. Universitaria (vs Básica)&quot;, &quot;Actividades cívicas(centrada)&quot;, &quot;Actividades cívicas(promedio)&quot;, &quot;Apertura a discusión(centrada)&quot;, &quot;Apertura a discusión(promedio)&quot;, &quot;Maule (vs Antofagasta)&quot;, &quot;RM (vs Antofagasta)&quot;, &quot;Subvencionado(vs Público)&quot;, &quot;Privado(vs Público)&quot;, &quot;Niña&quot;),
+          dep.var.caption  = &quot;Indicadores de Participación&quot;,
+          dep.var.labels   = c(&quot;&quot;, &quot;&quot;, &quot;&quot;), digits= 2,
+          star.char = c(&quot;+&quot;, &quot;*&quot;, &quot;**&quot;, &quot;***&quot;),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c(&quot;+ p&lt;=0.1; * p&lt;=0.05; ** p&lt;=0.01; *** p&lt;0.001&quot;), 
+          notes.append = F,
+          column.labels = c(&quot;Formal&quot;, &quot;No Disruptiva&quot;, &quot;Disruptiva&quot;), model.numbers= FALSE)</code></pre>
+<table style="text-align:center">
+<caption>
+<strong>Tabla: Modelos Finales para los tres tipos de Participación</strong>
+</caption>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+Indicadores de Participación
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+Formal
+</td>
+<td>
+No Disruptiva
+</td>
+<td>
+Disruptiva
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Conversación
+</td>
+<td>
+0.18<sup>***</sup>
+</td>
+<td>
+0.07<sup>***</sup>
+</td>
+<td>
+0.08<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.03)
+</td>
+<td>
+(0.02)
+</td>
+<td>
+(0.03)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Familia votó
+</td>
+<td>
+0.15<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.05)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Familia marchó
+</td>
+<td>
+</td>
+<td>
+0.08<sup>*</sup>
+</td>
+<td>
+0.14<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(0.03)
+</td>
+<td>
+(0.07)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+11 a 25 libros(vs menos de 10)
+</td>
+<td>
+0.11
+</td>
+<td>
+0.04
+</td>
+<td>
+0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.07)
+</td>
+<td>
+(0.04)
+</td>
+<td>
+(0.09)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+26 a 100 libros(vs menos de 10)
+</td>
+<td>
+0.22<sup>**</sup>
+</td>
+<td>
+0.07
+</td>
+<td>
+0.07
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.07)
+</td>
+<td>
+(0.05)
+</td>
+<td>
+(0.10)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+100 o más libros(vs menos de 10)
+</td>
+<td>
+0.15<sup>+</sup>
+</td>
+<td>
+0.01
+</td>
+<td>
+-0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.08)
+</td>
+<td>
+(0.06)
+</td>
+<td>
+(0.11)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Ed. Media (vs Básica)
+</td>
+<td>
+0.01
+</td>
+<td>
+0.02
+</td>
+<td>
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.06)
+</td>
+<td>
+(0.04)
+</td>
+<td>
+(0.08)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Ed. Técnica (vs Básica)
+</td>
+<td>
+0.05
+</td>
+<td>
+0.04
+</td>
+<td>
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.06)
+</td>
+<td>
+(0.04)
+</td>
+<td>
+(0.07)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Ed. Universitaria (vs Básica)
+</td>
+<td>
+0.08
+</td>
+<td>
+0.07
+</td>
+<td>
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.07)
+</td>
+<td>
+(0.05)
+</td>
+<td>
+(0.09)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Actividades cívicas(centrada)
+</td>
+<td>
+0.03<sup>**</sup>
+</td>
+<td>
+0.02<sup>**</sup>
+</td>
+<td>
+0.03<sup>+</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.01)
+</td>
+<td>
+(0.01)
+</td>
+<td>
+(0.01)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Actividades cívicas(promedio)
+</td>
+<td>
+0.003
+</td>
+<td>
+0.01
+</td>
+<td>
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.03)
+</td>
+<td>
+(0.03)
+</td>
+<td>
+(0.05)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Apertura a discusión(centrada)
+</td>
+<td>
+0.02
+</td>
+<td>
+0.01
+</td>
+<td>
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.03)
+</td>
+<td>
+(0.02)
+</td>
+<td>
+(0.04)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Apertura a discusión(promedio)
+</td>
+<td>
+0.08
+</td>
+<td>
+-0.10
+</td>
+<td>
+-0.26
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.09)
+</td>
+<td>
+(0.08)
+</td>
+<td>
+(0.17)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Maule (vs Antofagasta)
+</td>
+<td>
+0.06
+</td>
+<td>
+0.05
+</td>
+<td>
+0.07
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.07)
+</td>
+<td>
+(0.07)
+</td>
+<td>
+(0.14)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+RM (vs Antofagasta)
+</td>
+<td>
+-0.07
+</td>
+<td>
+0.04
+</td>
+<td>
+0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.06)
+</td>
+<td>
+(0.06)
+</td>
+<td>
+(0.12)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Subvencionado(vs Público)
+</td>
+<td>
+0.05
+</td>
+<td>
+-0.02
+</td>
+<td>
+-0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.05)
+</td>
+<td>
+(0.05)
+</td>
+<td>
+(0.10)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Privado(vs Público)
+</td>
+<td>
+0.12
+</td>
+<td>
+-0.03
+</td>
+<td>
+-0.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.08)
+</td>
+<td>
+(0.07)
+</td>
+<td>
+(0.15)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Niña
+</td>
+<td>
+-0.03
+</td>
+<td>
+-0.05
+</td>
+<td>
+-0.09
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.04)
+</td>
+<td>
+(0.03)
+</td>
+<td>
+(0.05)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+-1.15<sup>***</sup>
+</td>
+<td>
+0.05
+</td>
+<td>
+0.53
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.26)
+</td>
+<td>
+(0.24)
+</td>
+<td>
+(0.48)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+532
+</td>
+<td>
+532
+</td>
+<td>
+532
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+-350.41
+</td>
+<td>
+-135.99
+</td>
+<td>
+-475.66
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+740.82
+</td>
+<td>
+311.97
+</td>
+<td>
+991.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Bayesian Inf. Crit.
+</td>
+<td>
+826.35
+</td>
+<td>
+397.50
+</td>
+<td>
+1,076.86
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<ul>
+<li>p&lt;=0.1; * p&lt;=0.05; ** p&lt;=0.01; *** p&lt;0.001
+</td>
+</tr>
+</table></li>
+</ul>
+</div>
 
 
 

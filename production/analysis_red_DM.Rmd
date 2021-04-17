@@ -162,7 +162,7 @@ screenreg(list(m4, m5, m5b, m5c, m6, m6b, m6c), custom.model.names = c("completo
 ```
 
 ```{r , results='asis'}
-stargazer(list(m1a, m1b, m2a, m2b, m3a, m3b, m4), type="html", title= "Tabla 1: Modelos para participación formal", style = "default", covariate.labels = c("Conversación", "Familia votó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña"),
+stargazer(list(m1a, m1b, m2a, m2b, m3a, m3b, m4), type="text", title= "Tabla 1: Modelos para participación formal", style = "default", covariate.labels = c("Conversación", "Familia votó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña"),
           dep.var.caption  = "Indicador de Participación formal",
           dep.var.labels   = "", digits= 2,
           star.char = c("+", "*", "**", "***"),
@@ -314,3 +314,17 @@ stargazer(list(n1a, n1b, n2a, n2b, n3a, n3b, n4), type="html", title= "Tabla 3: 
           notes.append = F,
           column.labels = c("Conversación", "Familia marchó", "libros","Educación", "Actividades cívicas", "Apertura a disucusión", "completo"), model.numbers          = FALSE)
 ```
+
+```{r , results='asis'}
+stargazer(list(m4, n4, d4), type="html", title= "Tabla: Modelos Finales para los tres tipos de Participación", style = "default", covariate.labels = c("Conversación", "Familia votó", "Familia marchó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña"),
+          dep.var.caption  = "Indicadores de Participación",
+          dep.var.labels   = c("", "", ""), digits= 2,
+          star.char = c("+", "*", "**", "***"),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c("+ p<=0.1; * p<=0.05; ** p<=0.01; *** p<0.001"), 
+          notes.append = F,
+          column.labels = c("Formal", "No Disruptiva", "Disruptiva"), model.numbers= FALSE)
+```
+
+
+
