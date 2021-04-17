@@ -1,0 +1,316 @@
+---
+title: "Untitled"
+author: "Daniel Miranda, Julio Iturra, Brian Montenegro & Karen Sepúlveda"
+date: "12-04-2021"
+output: html_document
+---
+
+Se cargan los paquetes necesarios para el Análisis Multinivel y se carga la BDD
+
+```{r, echo=FALSE}
+#Paquetes
+pacman::p_load(dplyr, sjlabelled, summarytools, ggplot2, lme4, texreg, lattice, stargazer, car)
+
+#BDDb
+load(url("https://github.com/damiranda/pol_parti/blob/branch1/input/data/proc/data.RData?raw=true"))
+
+```
+
+Se genera base de datos con N fijado
+
+```{r}
+#names(data)
+#View(data)
+#table(data$P45, data$educ_apod)
+data$pad_libros <- recode(data$pad_libros, "c(4,5)=4")
+#table (data$pad_libros, data$P47)
+
+data_red <- data %>% 
+  dplyr::mutate(quintil=quintiles_ingresos_pc_factor)%>%
+  dplyr::group_by(RBDE)%>% # Agrupa los datos 
+  dplyr::mutate(meancivico=mean(civico, na.rm = TRUE)) %>% # crea promedio para cada escuela
+  dplyr::mutate(meanap=mean(apertura, na.rm = TRUE)) %>% # crea promedio para cada escuela
+  ungroup() %>% # Desagrupa
+  dplyr::mutate(civico_gc=civico-meancivico)%>% # Crea variavble centrada al grupo (escuela)
+  dplyr::mutate(apertura_gc=apertura-meanap)%>% # Crea variavble centrada al grupo (escuela)
+  dplyr::select(formal,
+                                disruptivo,
+                                nodisruptivo,
+                                act_marcha,
+                                voto_apod,
+                                educ_apod,
+                                pad_libros,
+                                conversacion,
+                                apertura,
+                                civico,
+                                quintil,
+                                sexo,
+                                dependencia,
+                                region,
+                                RBDE, meancivico, meanap, civico_gc, apertura_gc) %>% na.omit
+
+str(data_red)
+#View(data_red)
+
+```
+
+Se generan los modelos nulos para cada una de las variables dependientes (Participación formal, participación disruptiva y participación no disruptiva). Luego se generan los resúmenes de los modelos nulos.
+
+```{r, echo=FALSE}
+m001 = lmer(formal ~ (1|RBDE), data_red)
+m002 = lmer(nodisruptivo ~ (1|RBDE), data_red)
+m003 = lmer(disruptivo ~ (1|RBDE), data_red)
+
+
+summary(m001)
+summary(m002)
+summary(m003)
+```
+
+Correlación intraclase. Es un valor que oscila entre 0 (sin variación entre grupos) y 1 (variación entre grupos pero sin variación dentro de los grupos).
+
+```{r}
+0.027/(0.027+0.264) #Formal
+0.009/(0.009+0.089) #Participación no disrruptiva
+0.044/(0.044+0.353) #Participación disrruptiva
+```
+
+Visualización de efectos aleatorios
+
+```{r}
+qqmath(ranef(m001, condVar = TRUE))
+qqmath(ranef(m002, condVar = TRUE))
+qqmath(ranef(m003, condVar = TRUE))
+```
+
+Modelos generales - Participación formal
+
+```{r}
+# Hipótesis 1 - Incidencia de socialización política familiar sobre participación formal
+m1 <- lmer(formal ~ 1  + conversacion + voto_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+m1a <- lmer(formal ~ 1  + conversacion + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+m1b <- lmer(formal ~ 1   + voto_apod + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+# Hipótesis 2 - Incidencia de recursos socioeconómicos sobre participación formal
+m2 <- lmer(formal ~ 1 + pad_libros + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+m2a <- lmer(formal ~ 1 + pad_libros  + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+m2b <- lmer(formal ~ 1 + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+m2c <- lmer(formal ~ 1 + quintil + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+# Hipótesis 3 - Incidencia de socialización política escolar sobre participación formal
+m3 <- lmer(formal ~ 1  +  civico + apertura + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+m3a <- lmer(formal ~ 1  +  civico_gc + meancivico + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+m3b <- lmer(formal ~ 1  + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+# Modelo saturado - con pendiente fija
+m4 <- lmer(formal ~ 1  + conversacion + voto_apod + educ_apod + pad_libros + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+# Resumen
+screenreg(list(m1, m2, m3, m4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo|dependencia|region)")
+screenreg(list(m1a, m1b, m2a, m2b, m3a, m3b, m4), custom.model.names = c("conversación", "voto familiar", "libros","educación", "civico", "apertura", "completo"), omit.coef = "(sexo|dependencia|region)")
+
+#Hipótesis 5 - Interacción entre variables de nivel 1 (conversacion y voto_apod) con variables de nivel 2 (apertura y conversacion) 
+
+# Modelo con Socialización política indirecta liberada
+m5 <- lmer(formal ~ 1  + conversacion + voto_apod  + educ_apod + pad_libros + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia) + factor(sexo) + (1 + conversacion |RBDE), data_red)
+
+
+# Modelo con socialización política indirecta liberada con interacción con apertura a la discusión
+m5b <- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia) + factor(sexo) + conversacion * meanap + (1 + conversacion |RBDE), data_red)
+
+# Modelo con socialización política indirecta liberada con interacción con conversacion
+m5c <- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia) + factor(sexo) + conversacion * meancivico + (1 + conversacion |RBDE), data_red)
+
+#skim(data_red$conversacion)
+
+screenreg(list(m4, m5, m5b, m5c), custom.model.names = c("m4", "m5", "m5b", "m5c"))
+
+anova(m4, m5)
+
+# Modelo de socialización política directa liberada
+m6 <- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+voto_apod |RBDE), data_red)
+
+anova(m4, m6)
+
+m6b <- lmer(formal ~ 1  + conversacion + voto_apod + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + voto_apod * apertura + (1+voto_apod  |RBDE), data_red)
+
+m6c <- lmer(formal ~ 1  + conversacion + voto_apod + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + voto_apod * conversacion + (1+voto_apod  |RBDE), data_red)
+
+
+# Hipótesis 4 - Interacción de variables de nivel 1 (socioculturales) con variables de nivel 2 (apertura y conversacion)
+
+# Modelo de educación de padres liberada
+m8 <- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+educ_apod |RBDE), data_red)
+
+anova(m4, m8)
+
+# Modelo de tramos de libros liberado
+m9 <- lmer(formal ~ 1  + conversacion + voto_apod   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+pad_libros |RBDE), data_red)
+
+anova(m4, m9)
+
+screenreg(list(m4, m8, m9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(sexo|dependencia|region)")
+
+screenreg(list(m4, m5, m5b, m5c, m6, m6b, m6c), custom.model.names = c("completo", "r_conv", "aper x conv", "act x conv", "r_voto", "aper x voto", "act x voto"), omit.coef = "(sexo|dependencia|region)")
+```
+
+```{r , results='asis'}
+stargazer(list(m1a, m1b, m2a, m2b, m3a, m3b, m4), type="html", title= "Tabla 1: Modelos para participación formal", style = "default", covariate.labels = c("Conversación", "Familia votó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña"),
+          dep.var.caption  = "Indicador de Participación formal",
+          dep.var.labels   = "", digits= 2,
+          star.char = c("+", "*", "**", "***"),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c("+ p<=0.1; * p<=0.05; ** p<=0.01; *** p<0.001"), 
+          notes.append = F,
+          column.labels = c("Conversación", "Familia marchó", "libros","Educación", "Actividades cívicas", "Apertura a disucusión", "completo"), model.numbers          = FALSE)
+
+```
+
+Modelos generales - Participación disruptiva
+
+\#Se predicen puntajes factoriales
+
+```{r}
+d1 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d1a <- lmer(disruptivo ~ 1  + conversacion + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d1b <- lmer(disruptivo ~ 1  + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d2 <- lmer(disruptivo ~ 1   + pad_libros + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+d2a <- lmer(disruptivo ~ 1   +  pad_libros + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+d2b <- lmer(disruptivo ~ 1   + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+d3 <- lmer(disruptivo ~ 1  +  civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d3a <- lmer(disruptivo ~ 1  +   civico_gc + meancivico + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d3b <- lmer(disruptivo ~ 1  +  apertura_gc + meanap +  factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d4 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha) + pad_libros + educ_apod + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+#Tabla de regresiones
+screenreg(list(d1, d2, d3, d4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo|dependencia|region)")
+
+screenreg(list(d1a, d1b, d2a, d2b, d3a, d3b, d4), custom.model.names = c("conversación", "marcha familia", "libros","educación", "cívico", "apertura", "completo"), omit.coef = "(sexo|dependencia|region)")
+
+
+d5 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+conversacion |RBDE), data_red)
+
+anova(d4, d5)
+
+d6 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+factor(act_marcha) |RBDE), data_red)
+
+anova(d4, d6)
+
+d6b <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*conversacion+ (1+factor(act_marcha) |RBDE), data_red)
+
+anova(d4, d6)
+
+screenreg(list(d6b), custom.model.names = c("m6b"))
+
+d6c <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*apertura + (1+factor(act_marcha) |RBDE), data_red)
+
+anova(d4, d6c)
+
+
+screenreg(list(d4, d5, d6, d6b, d6c), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x conversacion", "marcha x apertura"), omit.coef = "(sexo|dependencia|region)")
+
+
+d8 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+educ_apod |RBDE), data_red)
+
+anova(d4, d8)
+
+d9 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+pad_libros |RBDE), data_red)
+
+anova(d4, d9)
+
+screenreg(list(d4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(sexo|dependencia|region)")
+```
+
+```{r , results='asis'}
+stargazer(list(d1a, d1b, d2a, d2b, d3a, d3b, d4), type="html", title= "Tabla 2: Modelos para participación disruptiva", style = "default", covariate.labels = c("Conversación", "Familia marchó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña"),
+          dep.var.caption  = "Indicador de Participación disruptiva",
+          dep.var.labels   = "", digits= 2,
+          star.char = c("+", "*", "**", "***"),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c("+ p<=0.1; * p<=0.05; ** p<=0.01; *** p<0.001"), 
+          notes.append = F,
+          column.labels = c("Conversación", "Familia marchó", "libros","Educación", "Actividades cívicas", "Apertura a disucusión", "completo"), model.numbers          = FALSE)
+```
+
+Modelos generales - Participación no disruptiva
+
+```{r}
+n1 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n1b <- lmer(nodisruptivo ~ 1  +  factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n1a <- lmer(nodisruptivo ~ 1  + conversacion  + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n2 <- lmer(nodisruptivo ~ 1   + pad_libros + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+n2b <- lmer(nodisruptivo ~ 1   + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+n2a <- lmer(nodisruptivo ~ 1   + pad_libros + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+n3 <- lmer(nodisruptivo ~ 1  +  civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n3b <- lmer(nodisruptivo ~ 1  +  apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n3a <- lmer(nodisruptivo ~ 1  +  civico_gc + meancivico + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n4 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + pad_libros + educ_apod  + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+table(data_red$pad_libros)
+
+screenreg(list(n1, n2, n3, n4), custom.model.names = c("soc. familiar", "recursos", "soc. escolar", "completo"), omit.coef = "(sexo|dependencia|region)")
+screenreg(list(n1a, n1b, n2a, n2b, n3a, n3b, n4), custom.model.names = c("conversación", "marcha familia", "libros","educación", "cívico(centered & mean)", "apertura(centered & mean)", "completo"), omit.coef = "(sexo|dependencia|region)", title="Multilevel models for Non-disruptive participation")
+
+
+
+n5 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+conversacion |RBDE), data_red)
+
+anova(n4, n5)
+
+n6 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+factor(act_marcha) |RBDE), data_red)
+
+n6a <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*apertura+ (1+factor(act_marcha) |RBDE), data_red)
+
+n6b <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha)*conversacion+ (1+factor(act_marcha) |RBDE), data_red)
+
+
+
+screenreg(list(n4, n5, n6, n6a, n6b), custom.model.names = c("completo", "r_conv", "r_marcha", "marcha x conversacion", "marcha x apertura"), omit.coef = "(sexo|dependencia|region)")
+
+
+n8 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+educ_apod |RBDE), data_red)
+
+anova(n4, n8)
+
+n9 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha)   + educ_apod + pad_libros + conversacion + apertura + factor(region) + factor(dependencia) + factor(sexo) + (1+pad_libros |RBDE), data_red)
+
+anova(n4, n9)
+
+screenreg(list(n4, d8, d9), custom.model.names = c("completo", "r_educ", "r_libros"), omit.coef = "(sexo|dependencia|region)")
+```
+
+```{r , results='asis'}
+stargazer(list(n1a, n1b, n2a, n2b, n3a, n3b, n4), type="html", title= "Tabla 3: Modelos para participación no-disruptiva", style = "default", covariate.labels = c("Conversación", "Familia marchó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña"),
+          dep.var.caption  = "Indicador de Participación no-disruptiva",
+          dep.var.labels   = "", digits= 2,
+          star.char = c("+", "*", "**", "***"),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c("+ p<=0.1; * p<=0.05; ** p<=0.01; *** p<0.001"), 
+          notes.append = F,
+          column.labels = c("Conversación", "Familia marchó", "libros","Educación", "Actividades cívicas", "Apertura a disucusión", "completo"), model.numbers          = FALSE)
+```
