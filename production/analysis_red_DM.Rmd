@@ -12,7 +12,7 @@ Se cargan los paquetes necesarios para el Análisis Multinivel y se carga la BDD
 pacman::p_load(dplyr, sjlabelled, summarytools, ggplot2, lme4, texreg, lattice, stargazer, car)
 
 #BDDb
-load(url("https://github.com/damiranda/pol_parti/blob/branch1/input/data/proc/data.RData?raw=true"))
+load(file = "input/data/proc/data.RData")
 
 ```
 
