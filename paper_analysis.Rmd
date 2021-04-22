@@ -7,11 +7,11 @@ editor_options:
 
 # Descriptivos
 
+## Univariado
 ```{r echo=FALSE, results='asis',message=F}
 pacman::p_load(dplyr, sjlabelled, summarytools, ggplot2, lme4, texreg, lattice, stargazer, car)
 load(file = "input/data/proc/data.RData")
-data$pad_libros <- recode(data$pad_libros, "c(4,5)=4")
-data$pad_libros <- set_label(data$pad_libros,label = "Número de libros en el hogar")
+st_css()
 basereg <- data %>% 
   dplyr::mutate(quintil=quintiles_ingresos_pc_factor)%>%
   dplyr::group_by(RBDE) %>% # Agrupa los datos
@@ -52,33 +52,31 @@ print(dfSummary(basereg,
                labels.col = T, # etiquetas
                na.col = F,    # missing
                graph.col = T, # plot
-               valid.col = T, # n valido
+               valid.col = T, # n valido  
                # col.widths = c(5,5,10,10,10,10)
                ),
-     method = "pander")
+     method = "render")
 ```
 
-
+## Bivariado
 ```{r}
 pacman::p_load(summarytools,haven,sjPlot,dplyr)
-load(file = "input/data/ap_est.RData")
-basereg <- ap_est %>% select(perc_trabajo_duro_factor_est,
-                             perc_esfuerzo_factor_est,
-                             perc_trabajo_duro_factor_ap,
-                             perc_esfuerzo_factor_ap,
-                             sj_direct,
-                             quintiles_ingresos_pc_factor,
-                             libros_hogar_factor_ap,
-                             recompensa_est,
-                             resp_prof_factor,
-                             pos_pol_factor_ap,
-                             pos_pol_factor_est,
-                             genero_factor_est,
-                             dependencia_factor_ap,
+load(file = "input/data/proc/data.RData")
+basereg <- data %>% select(formal,
+                           disruptivo,
+                           nodisruptivo,
+                           act_marcha,
+                           voto_apod,
+                           educ_apod,
+                           pad_libros,
+                           conversacion,
+                           apertura,
+                           civico,
+                           quintil,
+                           sexo,
+                           dependencia
                              # rbd_est
                              ) %>% na.omit(basereg)
-
-
 ```
 
 

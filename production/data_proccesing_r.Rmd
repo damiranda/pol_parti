@@ -1,6 +1,6 @@
 ---
 title: "Preparacion de datos"
-subtitle: "Socializacion de la participacion politica: familia y escuela"
+subtitle: "Socializacion de la Participación política: familia y escuela"
 output: 
   html_document: 
     toc: yes
@@ -51,7 +51,7 @@ apod_data <- read.dta13(file ="https://github.com/formacionciudadana/data-paces/
 * P48 estudiantes A - C corresponden a Socializacion politico familiar directa
 * P49 A - G corresponden a Apertura a la Discusion en el Aula, como dimension de SPE
 * P50 A - G corresponden a Estrategias de aprendizaje civico activo en la escuela, como dimension de SPE
-* Control y caracterizacion. P58 Sexo. P68 estudiantes: numero de libros. P55 Apoderados: ingresos.
+* Control y caracterizacion. P58 Sexo. P68 estudiantes: Número de libros. P55 Apoderados: ingresos.
 
 ```{r}
 est_data <- est_data %>% dplyr::select(P31A, 
@@ -121,7 +121,7 @@ apod_data <- apod_data %>% dplyr::select(P17,
 
 ```
 
-## Participacion politica (base estudiantes)
+## Participación política (base estudiantes)
 ```{r}
 est_data <- est_data %>% mutate(int_mun = P31A) #Intencion de Voto en Municipales
 est_data <- est_data %>% mutate(int_pre = P31B) #Intencion de voto en Presidenciales
@@ -136,7 +136,7 @@ est_data <- est_data %>% mutate(par_servcom = P33G)
 est_data <- est_data %>% mutate(par_reupol = P33H)
 ```
 
-## Socializacion politica escolar (base estudiantes)
+## Socialización política escolar (base estudiantes)
 
 ```{r}
 est_data <- est_data %>% mutate(aper_abiert = P49A) #Apertura a la discusion (49A a 49G)
@@ -155,19 +155,19 @@ est_data <- est_data %>% mutate(civ_medio = P50F)
 est_data <- est_data %>% mutate(civ_comun = P50G)
 ```
 
-## Socializacion politica familiar (base estudiantes)
+## Socialización política familiar (base estudiantes)
 ```{r}
-est_data <- est_data %>% mutate(conv_noticias = P38A) #Conversacion con los padres de noticias de Chile y el mundo
-est_data <- est_data %>% mutate(conv_colegio = P38B) #Conversacion con los padres sobre colegio
-est_data <- est_data %>% mutate(conv_permisos = P38C) #Conversacion con los padres sobre permisos
-est_data <- est_data %>% mutate(conv_amistades = P38D) #Conversacion con los padres sobre amigos
-est_data <- est_data %>% mutate(conv_sociopol = P38E) #Conversacion con los padres de temas politicos y sociales
-est_data <- est_data %>% mutate(pp_voto_presi = P48A)#Participacion politica padres: Votar en presidenciales 2017
-est_data <- est_data %>% mutate(pp_marcha = P48B) #Participacion politica padreS: Marchar
-est_data <- est_data %>% mutate(pp_act_comu = P48C) #Participacion politica padres: Participar en actividades comunitarias 
+est_data <- est_data %>% mutate(conv_noticias = P38A) #conversación con los padres de noticias de Chile y el mundo
+est_data <- est_data %>% mutate(conv_colegio = P38B) #conversación con los padres sobre colegio
+est_data <- est_data %>% mutate(conv_permisos = P38C) #conversación con los padres sobre permisos
+est_data <- est_data %>% mutate(conv_amistades = P38D) #conversación con los padres sobre amigos
+est_data <- est_data %>% mutate(conv_sociopol = P38E) #conversación con los padres de temas politicos y sociales
+est_data <- est_data %>% mutate(pp_voto_presi = P48A)#Participación política padres: Votar en presidenciales 2017
+est_data <- est_data %>% mutate(pp_marcha = P48B) #Participación política padreS: Marchar
+est_data <- est_data %>% mutate(pp_act_comu = P48C) #Participación política padres: Participar en actividades comunitarias 
 ```
 
-## Socializacion politica familiar (base apoderado)
+## Socialización política familiar (base apoderado)
 ```{r}
 apod_data <- apod_data %>% mutate(voto_apod = P17) #Votacion en las ultimas elecciones
 apod_data <- apod_data %>% mutate(voto_prox = P18) #Votacion el domingo
@@ -216,7 +216,7 @@ est_data$par_pared <- set_label(x = est_data$par_pared,label = "PARTICIPACIoN: P
 est_data$par_toma <- set_label(x = est_data$par_toma ,label = "PARTICIPACION: EN tomas")
 est_data$par_servcom <- set_label(x = est_data$par_servcom ,label = "PARTICIPACION: Trabajos comunitarios")
 est_data$par_reupol <- set_label(x = est_data$par_reupol ,label = "PARTICIPACION: Reuniones politicas")
-#Etiquetar variables de Socializacion Politica Escolar
+#Etiquetar variables de Socialización política Escolar
 #Apertura a la discusion en el aula
 est_data$aper_abiert <- set_label(x = est_data$aper_abiert ,label = "APER: Estudiantes pueden manifestar desacuerdo en clases")
 est_data$aper_expr <- set_label(x = est_data$aper_expr ,label = "APER: Profesores estimulan la opinion de estudiantes")
@@ -233,13 +233,13 @@ est_data$civ_foros   <- set_label(x = est_data$civ_foros ,label = "ACA: Foros y 
 est_data$civ_charlas <- set_label(x = est_data$civ_charlas ,label = "ACA: Charlas con invitados")
 est_data$civ_medio   <- set_label(x = est_data$civ_medio ,label = "ACA: Actividades Medioambientales")
 est_data$civ_comun   <- set_label(x = est_data$civ_comun ,label = "ACA: Servicio a la Comunidad")
-#Etiquetar variables de Socializacion Politica Familiar
+#Etiquetar variables de Socialización política Familiar
 # Indirecta
-est_data$conv_noticias <- set_label(x = est_data$conv_noticias ,label = "Conversacion: sobre noticias de Chile y el mundo") 
-est_data$conv_colegio  <- set_label(x = est_data$conv_colegio ,label = "Conversacion: sobre colegio y trabajos escolares")
-est_data$conv_permisos <- set_label(x = est_data$conv_permisos ,label = "Conversacion: sobre permisos")
-est_data$conv_amistades<- set_label(x = est_data$conv_amistades ,label = "Conversacion: sobre lo que haces con tus amigos")
-est_data$conv_sociopol <- set_label(x = est_data$conv_sociopol ,label = "Conversacion: sobre temas politicos y sociales") 
+est_data$conv_noticias <- set_label(x = est_data$conv_noticias ,label = "conversación: sobre noticias de Chile y el mundo") 
+est_data$conv_colegio  <- set_label(x = est_data$conv_colegio ,label = "conversación: sobre colegio y trabajos escolares")
+est_data$conv_permisos <- set_label(x = est_data$conv_permisos ,label = "conversación: sobre permisos")
+est_data$conv_amistades<- set_label(x = est_data$conv_amistades ,label = "conversación: sobre lo que haces con tus amigos")
+est_data$conv_sociopol <- set_label(x = est_data$conv_sociopol ,label = "conversación: sobre temas politicos y sociales") 
 # Directa
 est_data$pp_voto_presi <- set_label(x = est_data$pp_voto_presi ,label = "Part Politica: Votacion en presidenciales 2017") 
 est_data$pp_marcha <- set_label(x = est_data$pp_marcha ,label = "Part Politica: Marchar") 
@@ -264,9 +264,9 @@ apod_data$sexo_apod <- set_label(x = apod_data$sexo_apod,label = "Sexo apoderado
 est_data$region <- set_label(x = est_data$region ,label = "Region")
 est_data$dependencia <- set_label(x = est_data$dependencia ,label = "Dependencia")
 apod_data$ingresos <- set_label(x = apod_data$ingresos ,label = "Ingresos")
-est_data$ed_madre <- set_label (x = est_data$ed_madre ,label ="Educacion Madre")
-est_data$ed_padre <- set_label (x = est_data$ed_padre ,label ="Educacion Padre")
-apod_data$educ_apod <- set_label (x = apod_data$educ_apod ,label ="Educacion padre/madre")
+est_data$ed_madre <- set_label (x = est_data$ed_madre ,label ="Educación Madre")
+est_data$ed_padre <- set_label (x = est_data$ed_padre ,label ="Educación Padre")
+apod_data$educ_apod <- set_label (x = apod_data$educ_apod ,label ="Educación padre/madre")
 apod_data$cantidad <- set_label (x = apod_data$cantidad ,label ="Cantidad de Personas en Hogar")
 ```
 
@@ -275,7 +275,7 @@ apod_data$cantidad <- set_label (x = apod_data$cantidad ,label ="Cantidad de Per
 * Decretar casos perdidos y eliminar sus antiguas etiquetas
 
 ```{r}
-# Participacion politica
+# Participación política
 est_data$int_mun <- set_na(est_data$int_mun, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
 est_data$int_pre <- set_na(est_data$int_pre, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
 est_data$int_inf <- set_na(est_data$int_inf, na = c(4,9), drop.levels = TRUE, as.tag = FALSE)
@@ -420,8 +420,8 @@ frq(data$quintiles_ingresos_pc)
 ```{r}
 data <- data %>% mutate(est_libros = P68) #Libros reportados por estudiantes
 data <- data %>% mutate(pad_libros = P47) #Libros reportados por apoderados
-data$est_libros <- set_label(x = data$est_libros,label = "Numero de libros estudiantes")
-data$pad_libros <- set_label(x = data$pad_libros,label = "Numero de libros apoderados")
+data$est_libros <- set_label(x = data$est_libros,label = "Número de libros estudiantes")
+data$pad_libros <- set_label(x = data$pad_libros,label = "Número de libros apoderados")
 data$est_libros <- set_na(data$est_libros, na = c(8,9), drop.levels = TRUE, as.tag = FALSE)
 data$pad_libros <- set_na(data$pad_libros, na = c(8,9), drop.levels = TRUE, as.tag = FALSE)
 
@@ -443,17 +443,17 @@ data$pad_libros <- factor(data$pad_libros,
                           labels = c("Entre 0 y 10 libros",
                                      "Entre 11 y 25 libros",
                                      "Entre 26 y 100 libros",
-                                     "101 libros o mas "))
-data$pad_libros <- set_label(data$pad_libros,label = "Numero de libros en el hogar")
+                                     "101 libros o más "))
+data$pad_libros <- set_label(data$pad_libros,label = "Número de libros en el hogar")
 data$libros_num <- as.numeric(data$total_libros) #Se crea variable libros numerica
 ```
 
 
-## Educacion padre y madre
+## Educación padre y madre
 
 ```{r}
 data$educ_padres <- ifelse(data$ed_madre>data$ed_padre,data$ed_madre,data$ed_padre) # Crear variable nueva
-data$educ_padres <- set_label(x = data$educ_padres,label = "Nivel educacional mas alto de los padres") # Etiquetar variable nueva
+data$educ_padres <- set_label(x = data$educ_padres,label = "Nivel Educaciónal mas alto de los padres") # Etiquetar variable nueva
 data$educ_padres <- car::recode(data$educ_padres, "2=1; 3=2; 4=3; 5=4")
 frq(data$educ_padres)
 ```
@@ -462,22 +462,22 @@ frq(data$educ_padres)
 
 ```{r}
 data$educ_padres_factor <- factor(data$educ_padres, levels = c(1,2,3,4), 
-                                  labels = c("8vo basico o menos", 
-                                             "Educacion media", 
-                                             "Educacion Tecnica superior", 
-                                             "Educacion universitaria o posgrados"))
+                                  labels = c("8vo básico o menos", 
+                                             "Educación media", 
+                                             "Educación Técnica superior", 
+                                             "Educación universitaria o posgrados"))
 ```
 
 
-### Educacion padres (reportada por ellos mismos)
+### Educación padres (reportada por ellos mismos)
 
 ```{r}
 data$educ_apod <- factor(data$educ_apod, levels = c(1,2,3,4), 
-                             labels = c("8vo basico o menos", 
-                                        "Educacion media", 
-                                        "Educacion Tecnica superior", 
-                                        "Educacion universitaria o posgrados"))
-data$educ_apod <- set_label(data$educ_apod,"Nivel educacional apoderado/a")
+                             labels = c("8vo básico o menos", 
+                                        "Educación media", 
+                                        "Educación Técnica superior", 
+                                        "Educación universitaria o posgrados"))
+data$educ_apod <- set_label(data$educ_apod,"Nivel Educaciónal apoderado/a")
 
 ```
 
@@ -616,7 +616,7 @@ data$civ_comun <- set_labels(data$civ_comun,
 ```
                                        
 
-* Se genera un indice de las variables de socializacion politica en el aula data$civ
+* Se genera un indice de las variables de Socialización política en el aula data$civ
 
 ```{r}
 df_civico <- data.frame(data$civ_tall, data$civ_simul, data$civ_camp, 
@@ -632,7 +632,7 @@ alfa_civ
 data$civico <- (data$civ_tall + data$civ_simul + data$civ_camp + 
                 data$civ_foros + data$civ_charlas + data$civ_medio + data$civ_comun)
 frq(data$civico)
-data$civico<- set_label(data$civico,label = "Indice aprendizaje civico activo en la escuela")
+data$civico<- set_label(data$civico,label = "Indice aprendizaje cívico activo en la escuela")
 
 #Apertura a la discusion en el aula data$aper
 df_apertura <- data.frame(data$aper_abiert, data$aper_expr, data$aper_dist, 
@@ -643,14 +643,14 @@ polychoric(df_apertura)
 data$apertura <- (data$aper_abiert + data$aper_expr + data$aper_dist + 
                   data$aper_estim + data$aper_punt + data$aper_reflx)/6
 
-data$apertura<- set_label(data$apertura,label = "Indice apertura a la discusion en el aula")
+data$apertura<- set_label(data$apertura,label = "Indice apertura a la discusión en el aula")
 #Se genera el alfa de cronbach para evaluar fiabilidad
 alfa_conv <- psych::alpha(df_apertura)
 alfa_conv
 ```
 
-# Variables de Socializacion politica familiar
-## Socializacion politica indirecta (conversacion)
+# Variables de Socialización política familiar
+## Socialización política indirecta (conversación)
 ```{r}
 df_conv <- data.frame(data$conv_sociopol, data$conv_noticias, data$conv_colegio, 
                       data$conv_permisos, data$conv_amistades)
@@ -664,13 +664,13 @@ alfa_conv <- psych::alpha(df_conv)
 alfa_conv
 # Se realiza un indice con aquellas variables que tienen mas sentido teorico y mayor correlacion
 data$conversacion <- (data$conv_sociopol + data$conv_noticias)/2
-data$conversacion<- set_label(data$conversacion,label = "Indice Socializacion politica indirecta (conversacion)")
+data$conversacion<- set_label(data$conversacion,label = "Indice Socialización política indirecta (conversación)")
 frq(data$conversacion)
 ```
 
-## Participacion politica de padres (base estudiantes) 
+## Participación política de padres (base estudiantes) 
 ```{r}
-#Variables dummy, participacion politica apod (data$pp_)
+#Variables dummy, Participación política apod (data$pp_)
 data$pp_act_comu <- car::recode(data$pp_act_comu, "2=0")
 data$pp_act_comu <- set_labels(data$pp_act_comu,
                                labels=c( "No"=0,
@@ -700,7 +700,7 @@ data$voto_padres <- set_labels(data$voto_padres,
                                           "Si"=1))
 ```
 
-## Participacion politica de padres (activista)
+## Participación política de padres (activista)
 ```{r}
 data$act_marcha <- car::recode(data$act_marcha, "2=0; 9=NA")
 data$act_marcha <- set_labels(data$act_marcha,
@@ -733,7 +733,7 @@ alfa_act
 data$act_apod <- (data$act_marcha + data$act_peticion + data$act_reu_sociopol) #Se agrega a la base de datos principal
 ```
 
-## Participacion politica de padres (organizaciones voluntaria)
+## Participación política de padres (organizaciones voluntaria)
 * Recodificacion: No miembro = 0, Miembro = 1
 
 ```{r}
@@ -825,9 +825,9 @@ data3 = data2 %>% dplyr::select(folio, formal, nodisruptivo, disruptivo)
 # Merge
 ```{r}
 data <-  left_join(x = data, y=data3, by="folio")
-data$formal      <- set_label(data$formal,label = "Participacion politica formal")
-data$disruptivo  <- set_label(data$disruptivo,label = "Participacion politica disruptiva")
-data$nodisruptivo<- set_label(data$nodisruptivo,label = "Participacion politica no disruptiva")
+data$formal      <- set_label(data$formal,label = "Participación política formal")
+data$disruptivo  <- set_label(data$disruptivo,label = "Participación política disruptiva")
+data$nodisruptivo<- set_label(data$nodisruptivo,label = "Participación política no disruptiva")
 ```
 
 # Centrado
@@ -842,10 +842,10 @@ data<- data %>%
         dplyr::mutate(civico_gc = civico - meancivico) %>% # Crea variavble centrada al grupo (escuela)
         dplyr::mutate(apertura_gc = apertura - meanap)     # Crea variavble centrada al grupo (escuela)
 
-data$meancivico <- set_label(data$meancivico ,label = "Indice aprendizaje civico activo en la escuela (promedio escuela)")  
-data$civico_gc  <- set_label(data$civico_gc  ,label = "Indice aprendizaje civico activo en la escuela (centrado escuela)") 
-data$meanap     <- set_label(data$meanap     ,label = "Indice apertura a la discusion en el aula (promedio escuela)")
-data$apertura_gc<- set_label(data$apertura_gc,label = "Indice apertura a la discusion en el aula (centrado escuela)")   
+data$meancivico <- set_label(data$meancivico ,label = "Indice aprendizaje cívico activo en la escuela (promedio escuela)")  
+data$civico_gc  <- set_label(data$civico_gc  ,label = "Indice aprendizaje cívico activo en la escuela (centrado escuela)") 
+data$meanap     <- set_label(data$meanap     ,label = "Indice apertura a la discusión en el aula (promedio escuela)")
+data$apertura_gc<- set_label(data$apertura_gc,label = "Indice apertura a la discusión en el aula (centrado escuela)")   
 ```
 
 
@@ -859,7 +859,7 @@ descr <- data %>% dplyr::select(
   voto_apod,
   educ_apod,
   pad_libros,
-  conversacion,
+  conversación,
   apertura,
   civico,
   quintil,
@@ -871,6 +871,7 @@ descr <- data %>% dplyr::select(
   meanap, 
   civico_gc, 
   apertura_gc)
+st_css()
 print(dfSummary(descr,
                plain.ascii = FALSE,
                style = "grid",
@@ -884,7 +885,7 @@ print(dfSummary(descr,
                valid.col = T, # n valido
                # col.widths = c(5,5,10,10,10,10)
                ),
-     method = "pander")
+     method = "render")
 ```
 
 # Guardar datos
