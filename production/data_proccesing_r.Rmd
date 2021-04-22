@@ -790,6 +790,7 @@ frq(data$org_vol)
 
 # Analisis Factorial Confirmatorio
 ```{r,cache=TRUE}
+set.seed(1234)
 #Especificacion del Modelo
 cfa_1 <- '
 # latent variables
@@ -859,7 +860,7 @@ descr <- data %>% dplyr::select(
   voto_apod,
   educ_apod,
   pad_libros,
-  conversación,
+  conversacion,
   apertura,
   civico,
   quintil,

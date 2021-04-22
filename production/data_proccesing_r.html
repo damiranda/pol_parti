@@ -2361,10 +2361,10 @@ tetrachoric(df_civico) #Correlaciones</code></pre>
 ## data.civ_comun   0.41    0.31    0.59      0.52    0.53     0.62    1.00     
 ## 
 ##  with tau of 
-##    data.civ_tall   data.civ_simul    data.civ_camp   data.civ_foros 
-##          0.14349          0.25613         -0.85947         -0.14407 
-## data.civ_charlas   data.civ_medio   data.civ_comun 
-##         -0.00084         -0.39888         -0.11743</code></pre>
+##    data.civ_tall   data.civ_simul    data.civ_camp   data.civ_foros data.civ_charlas 
+##          0.14349          0.25613         -0.85947         -0.14407         -0.00084 
+##   data.civ_medio   data.civ_comun 
+##         -0.39888         -0.11743</code></pre>
 <pre class="r"><code>#Se genera un psych::alpha de cronbach para saber si los indicadores se comportan como indice
 alfa_civ &lt;- psych::alpha(df_civico)
 alfa_civ</code></pre>
@@ -2379,22 +2379,14 @@ alfa_civ</code></pre>
 ## 0.71 0.73 0.75 
 ## 
 ##  Reliability if an item is dropped:
-##                  raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r
-## data.civ_tall         0.72      0.72    0.69      0.30 2.6    0.011 0.0035
-## data.civ_simul        0.71      0.71    0.68      0.29 2.5    0.011 0.0047
-## data.civ_camp         0.70      0.70    0.67      0.28 2.3    0.012 0.0049
-## data.civ_foros        0.68      0.69    0.66      0.27 2.2    0.012 0.0048
-## data.civ_charlas      0.69      0.69    0.66      0.27 2.2    0.012 0.0050
-## data.civ_medio        0.70      0.70    0.67      0.28 2.3    0.012 0.0039
-## data.civ_comun        0.68      0.68    0.65      0.26 2.1    0.012 0.0032
-##                  med.r
-## data.civ_tall     0.30
-## data.civ_simul    0.30
-## data.civ_camp     0.27
-## data.civ_foros    0.27
-## data.civ_charlas  0.29
-## data.civ_medio    0.29
-## data.civ_comun    0.29
+##                  raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+## data.civ_tall         0.72      0.72    0.69      0.30 2.6    0.011 0.0035  0.30
+## data.civ_simul        0.71      0.71    0.68      0.29 2.5    0.011 0.0047  0.30
+## data.civ_camp         0.70      0.70    0.67      0.28 2.3    0.012 0.0049  0.27
+## data.civ_foros        0.68      0.69    0.66      0.27 2.2    0.012 0.0048  0.27
+## data.civ_charlas      0.69      0.69    0.66      0.27 2.2    0.012 0.0050  0.29
+## data.civ_medio        0.70      0.70    0.67      0.28 2.3    0.012 0.0039  0.29
+## data.civ_comun        0.68      0.68    0.65      0.26 2.1    0.012 0.0032  0.29
 ## 
 ##  Item statistics 
 ##                     n raw.r std.r r.cor r.drop mean   sd
@@ -2478,20 +2470,13 @@ alfa_conv</code></pre>
 ## 0.9 0.91 0.91 
 ## 
 ##  Reliability if an item is dropped:
-##                  raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r
-## data.aper_abiert      0.90      0.90    0.88      0.65 9.1   0.0039 0.0015
-## data.aper_expr        0.88      0.88    0.87      0.61 7.7   0.0045 0.0046
-## data.aper_dist        0.89      0.89    0.88      0.63 8.4   0.0042 0.0053
-## data.aper_estim       0.89      0.89    0.88      0.62 8.3   0.0042 0.0032
-## data.aper_punt        0.89      0.89    0.87      0.61 7.8   0.0045 0.0031
-## data.aper_reflx       0.89      0.89    0.87      0.61 7.8   0.0045 0.0029
-##                  med.r
-## data.aper_abiert  0.64
-## data.aper_expr    0.60
-## data.aper_dist    0.65
-## data.aper_estim   0.62
-## data.aper_punt    0.62
-## data.aper_reflx   0.62
+##                  raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+## data.aper_abiert      0.90      0.90    0.88      0.65 9.1   0.0039 0.0015  0.64
+## data.aper_expr        0.88      0.88    0.87      0.61 7.7   0.0045 0.0046  0.60
+## data.aper_dist        0.89      0.89    0.88      0.63 8.4   0.0042 0.0053  0.65
+## data.aper_estim       0.89      0.89    0.88      0.62 8.3   0.0042 0.0032  0.62
+## data.aper_punt        0.89      0.89    0.87      0.61 7.8   0.0045 0.0031  0.62
+## data.aper_reflx       0.89      0.89    0.87      0.61 7.8   0.0045 0.0029  0.62
 ## 
 ##  Item statistics 
 ##                     n raw.r std.r r.cor r.drop mean   sd
@@ -2551,18 +2536,12 @@ alfa_conv</code></pre>
 ## 0.74 0.76 0.78 
 ## 
 ##  Reliability if an item is dropped:
-##                     raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r
-## data.conv_sociopol       0.74      0.74    0.69      0.42 2.8    0.011 0.0053
-## data.conv_noticias       0.69      0.69    0.64      0.36 2.3    0.013 0.0115
-## data.conv_colegio        0.71      0.71    0.68      0.38 2.5    0.012 0.0155
-## data.conv_permisos       0.74      0.74    0.72      0.42 2.9    0.011 0.0145
-## data.conv_amistades      0.70      0.70    0.67      0.37 2.4    0.012 0.0165
-##                     med.r
-## data.conv_sociopol   0.41
-## data.conv_noticias   0.34
-## data.conv_colegio    0.35
-## data.conv_permisos   0.41
-## data.conv_amistades  0.34
+##                     raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+## data.conv_sociopol       0.74      0.74    0.69      0.42 2.8    0.011 0.0053  0.41
+## data.conv_noticias       0.69      0.69    0.64      0.36 2.3    0.013 0.0115  0.34
+## data.conv_colegio        0.71      0.71    0.68      0.38 2.5    0.012 0.0155  0.35
+## data.conv_permisos       0.74      0.74    0.72      0.42 2.9    0.011 0.0145  0.41
+## data.conv_amistades      0.70      0.70    0.67      0.37 2.4    0.012 0.0165  0.34
 ## 
 ##  Item statistics 
 ##                        n raw.r std.r r.cor r.drop mean   sd
@@ -2641,14 +2620,10 @@ alfa_pp</code></pre>
 ## 0.31 0.36 0.41 
 ## 
 ##  Reliability if an item is dropped:
-##                    raw_alpha std.alpha G6(smc) average_r   S/N alpha se var.r
-## data.pp_act_comu       0.061     0.062   0.032     0.032 0.066    0.046    NA
-## data.pp_marcha         0.360     0.361   0.220     0.220 0.565    0.032    NA
-## data.pp_voto_presi     0.331     0.340   0.205     0.205 0.514    0.032    NA
-##                    med.r
-## data.pp_act_comu   0.032
-## data.pp_marcha     0.220
-## data.pp_voto_presi 0.205
+##                    raw_alpha std.alpha G6(smc) average_r   S/N alpha se var.r med.r
+## data.pp_act_comu       0.061     0.062   0.032     0.032 0.066    0.046    NA 0.032
+## data.pp_marcha         0.360     0.361   0.220     0.220 0.565    0.032    NA 0.220
+## data.pp_voto_presi     0.331     0.340   0.205     0.205 0.514    0.032    NA 0.205
 ## 
 ##  Item statistics 
 ##                       n raw.r std.r r.cor r.drop mean   sd
@@ -2705,10 +2680,8 @@ df_act &lt;- data.frame(data$act_voluntariado, data$act_marcha,data$act_peticion
 ## data.act_reu_sociopol 0.58    0.50    0.51    1.00 
 ## 
 ##  with tau of 
-## data.act_voluntariado       data.act_marcha     data.act_peticion 
-##                  0.80                  0.95                  0.83 
-## data.act_reu_sociopol 
-##                  0.89</code></pre>
+## data.act_voluntariado       data.act_marcha     data.act_peticion data.act_reu_sociopol 
+##                  0.80                  0.95                  0.83                  0.89</code></pre>
 <pre class="r"><code>alfa_act &lt;- psych::alpha(df_act)#Alfa de cronbach para evaluar fiabilidad
 alfa_act</code></pre>
 <pre><code>## 
@@ -2722,16 +2695,11 @@ alfa_act</code></pre>
 ## 0.54 0.57 0.6 
 ## 
 ##  Reliability if an item is dropped:
-##                       raw_alpha std.alpha G6(smc) average_r  S/N alpha se
-## data.act_voluntariado      0.52      0.52    0.42      0.26 1.07    0.021
-## data.act_marcha            0.55      0.55    0.45      0.29 1.22    0.019
-## data.act_peticion          0.49      0.49    0.41      0.24 0.97    0.022
-## data.act_reu_sociopol      0.43      0.43    0.34      0.20 0.74    0.025
-##                        var.r med.r
-## data.act_voluntariado 0.0011  0.27
-## data.act_marcha       0.0023  0.29
-## data.act_peticion     0.0108  0.27
-## data.act_reu_sociopol 0.0035  0.23
+##                       raw_alpha std.alpha G6(smc) average_r  S/N alpha se  var.r med.r
+## data.act_voluntariado      0.52      0.52    0.42      0.26 1.07    0.021 0.0011  0.27
+## data.act_marcha            0.55      0.55    0.45      0.29 1.22    0.019 0.0023  0.29
+## data.act_peticion          0.49      0.49    0.41      0.24 0.97    0.022 0.0108  0.27
+## data.act_reu_sociopol      0.43      0.43    0.34      0.20 0.74    0.025 0.0035  0.23
 ## 
 ##  Item statistics 
 ##                         n raw.r std.r r.cor r.drop mean   sd
@@ -2793,30 +2761,20 @@ data$org_sindicato &lt;- set_labels(data$org_sindicato,
 <pre class="r"><code>tetrachoric(df_org)</code></pre>
 <pre><code>## Call: tetrachoric(x = df_org)
 ## tetrachoric correlation 
-##                       dt.rg_sc dt.rg_cr dt.rg_cp dt.rg_g dt.rg_j dt.rg_p
-## data.org_asocprof     1.00                                              
-## data.org_caridad      0.58     1.00                                     
-## data.org_cpadres      0.39     0.62     1.00                            
-## data.org_iglesia      0.43     0.44     0.41     1.00                   
-## data.org_juntavecinos 0.37     0.54     0.66     0.55    1.00           
-## data.org_ppol         0.59     0.58     0.47     0.50    0.41    1.00   
-## data.org_sindicato    0.66     0.32     0.24     0.39    0.32    0.51   
-##                       dt.rg_sn
-## data.org_asocprof             
-## data.org_caridad              
-## data.org_cpadres              
-## data.org_iglesia              
-## data.org_juntavecinos         
-## data.org_ppol                 
-## data.org_sindicato    1.00    
+##                       dt.rg_sc dt.rg_cr dt.rg_cp dt.rg_g dt.rg_j dt.rg_p dt.rg_sn
+## data.org_asocprof     1.00                                                       
+## data.org_caridad      0.58     1.00                                              
+## data.org_cpadres      0.39     0.62     1.00                                     
+## data.org_iglesia      0.43     0.44     0.41     1.00                            
+## data.org_juntavecinos 0.37     0.54     0.66     0.55    1.00                    
+## data.org_ppol         0.59     0.58     0.47     0.50    0.41    1.00            
+## data.org_sindicato    0.66     0.32     0.24     0.39    0.32    0.51    1.00    
 ## 
 ##  with tau of 
-##     data.org_asocprof      data.org_caridad      data.org_cpadres 
-##                  1.16                  0.92                  0.35 
-##      data.org_iglesia data.org_juntavecinos         data.org_ppol 
-##                  0.37                  0.26                  1.42 
-##    data.org_sindicato 
-##                  1.00</code></pre>
+##     data.org_asocprof      data.org_caridad      data.org_cpadres      data.org_iglesia 
+##                  1.16                  0.92                  0.35                  0.37 
+## data.org_juntavecinos         data.org_ppol    data.org_sindicato 
+##                  0.26                  1.42                  1.00</code></pre>
 <pre class="r"><code>#Alfa de Cronbach para evaluar fiabilidad de indicador
 alfa_org &lt;- psych::alpha(df_org)
 alfa_org</code></pre>
@@ -2831,22 +2789,14 @@ alfa_org</code></pre>
 ## 0.68 0.71 0.73 
 ## 
 ##  Reliability if an item is dropped:
-##                       raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r
-## data.org_asocprof          0.67      0.68    0.65      0.26 2.1    0.012 0.0077
-## data.org_caridad           0.66      0.67    0.65      0.25 2.0    0.013 0.0076
-## data.org_cpadres           0.66      0.68    0.65      0.26 2.1    0.013 0.0049
-## data.org_iglesia           0.67      0.68    0.67      0.27 2.2    0.012 0.0089
-## data.org_juntavecinos      0.66      0.67    0.65      0.26 2.1    0.013 0.0052
-## data.org_ppol              0.69      0.69    0.67      0.27 2.2    0.012 0.0090
-## data.org_sindicato         0.69      0.70    0.67      0.28 2.3    0.011 0.0058
-##                       med.r
-## data.org_asocprof      0.25
-## data.org_caridad       0.22
-## data.org_cpadres       0.25
-## data.org_iglesia       0.25
-## data.org_juntavecinos  0.25
-## data.org_ppol          0.25
-## data.org_sindicato     0.26
+##                       raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+## data.org_asocprof          0.67      0.68    0.65      0.26 2.1    0.012 0.0077  0.25
+## data.org_caridad           0.66      0.67    0.65      0.25 2.0    0.013 0.0076  0.22
+## data.org_cpadres           0.66      0.68    0.65      0.26 2.1    0.013 0.0049  0.25
+## data.org_iglesia           0.67      0.68    0.67      0.27 2.2    0.012 0.0089  0.25
+## data.org_juntavecinos      0.66      0.67    0.65      0.26 2.1    0.013 0.0052  0.25
+## data.org_ppol              0.69      0.69    0.67      0.27 2.2    0.012 0.0090  0.25
+## data.org_sindicato         0.69      0.70    0.67      0.28 2.3    0.011 0.0058  0.26
 ## 
 ##  Item statistics 
 ##                         n raw.r std.r r.cor r.drop  mean   sd
@@ -2892,7 +2842,8 @@ frq(data$org_vol)</code></pre>
 </div>
 <div id="analisis-factorial-confirmatorio" class="section level1">
 <h1>Analisis Factorial Confirmatorio</h1>
-<pre class="r"><code>#Especificacion del Modelo
+<pre class="r"><code>set.seed(1234)
+#Especificacion del Modelo
 cfa_1 &lt;- &#39;
 # latent variables
 formal =~ int_inf + int_pre + int_mun
@@ -2974,7 +2925,7 @@ data$apertura_gc&lt;- set_label(data$apertura_gc,label = &quot;Indice apertura a
   voto_apod,
   educ_apod,
   pad_libros,
-  conversación,
+  conversacion,
   apertura,
   civico,
   quintil,
@@ -2985,10 +2936,8 @@ data$apertura_gc&lt;- set_label(data$apertura_gc,label = &quot;Indice apertura a
   meancivico, 
   meanap, 
   civico_gc, 
-  apertura_gc)</code></pre>
-<pre><code>## Error: Can&#39;t subset columns that don&#39;t exist.
-## [31mx[39m Column `conversación` doesn&#39;t exist.</code></pre>
-<pre class="r"><code>st_css()</code></pre>
+  apertura_gc)
+st_css()</code></pre>
 <style type="text/css">
  img {   background-color: transparent;   border: 0; }  .st-table td, .st-table th {   padding: 8px; }  .st-table > thead > tr {    background-color: #eeeeee; }  .st-cross-table td {   text-align: center; }  .st-descr-table td {   text-align: right; }  table.st-table th {   text-align: center; }  table.st-table > thead > tr {    background-color: #eeeeee; }  table.st-table td span {   display: block; }  table.st-table > tfoot > tr > td {   border:none; }  .st-container {   width: 100%;   padding-right: 15px;   padding-left: 15px;   margin-right: auto;   margin-left: auto;   margin-top: 15px; }  .st-multiline {   white-space: pre; }  .st-table {     width: auto;     table-layout: auto;     margin-top: 20px;     margin-bottom: 20px;     max-width: 100%;     background-color: transparent;     border-collapse: collapse; }  .st-table > thead > tr > th, .st-table > tbody > tr > th, .st-table > tfoot > tr > th, .st-table > thead > tr > td, .st-table > tbody > tr > td, .st-table > tfoot > tr > td {   vertical-align: middle; }  .st-table-bordered {   border: 1px solid #bbbbbb; }  .st-table-bordered > thead > tr > th, .st-table-bordered > tbody > tr > th, .st-table-bordered > thead > tr > td, .st-table-bordered > tbody > tr > td {   border: 1px solid #cccccc; }  .st-table-bordered > thead > tr > th, .st-table-bordered > thead > tr > td, .st-table thead > tr > th {   border-bottom: none; }  .st-freq-table > thead > tr > th, .st-freq-table > tbody > tr > th, .st-freq-table > tfoot > tr > th, .st-freq-table > thead > tr > td, .st-freq-table > tbody > tr > td, .st-freq-table > tfoot > tr > td, .st-freq-table-nomiss > thead > tr > th, .st-freq-table-nomiss > tbody > tr > th, .st-freq-table-nomiss > tfoot > tr > th, .st-freq-table-nomiss > thead > tr > td, .st-freq-table-nomiss > tbody > tr > td, .st-freq-table-nomiss > tfoot > tr > td, .st-cross-table > thead > tr > th, .st-cross-table > tbody > tr > th, .st-cross-table > tfoot > tr > th, .st-cross-table > thead > tr > td, .st-cross-table > tbody > tr > td, .st-cross-table > tfoot > tr > td {   padding-left: 20px;   padding-right: 20px; }  .st-table-bordered > thead > tr > th, .st-table-bordered > tbody > tr > th, .st-table-bordered > thead > tr > td, .st-table-bordered > tbody > tr > td {   border: 1px solid #cccccc; }  .st-table-striped > tbody > tr:nth-of-type(odd) {   background-color: #ffffff; }  .st-table-striped > tbody > tr:nth-of-type(even) {   background-color: #f9f9f9; }  .st-descr-table > thead > tr > th, .st-descr-table > tbody > tr > th, .st-descr-table > thead > tr > td, .st-descr-table > tbody > tr > td {   padding-left: 24px;   padding-right: 24px;   word-wrap: break-word; }  .st-freq-table, .st-freq-table-nomiss, .st-cross-table {   border: medium none; }  .st-freq-table > thead > tr:nth-child(1) > th:nth-child(1), .st-cross-table > thead > tr:nth-child(1) > th:nth-child(1), .st-cross-table > thead > tr:nth-child(1) > th:nth-child(3) {   border: none;   background-color: #ffffff;   text-align: center; }  .st-protect-top-border {   border-top: 1px solid #cccccc !important; }  .st-ws-char {   display: inline;   color: #999999;   letter-spacing: 0.2em; }  /* Optionnal classes */ .st-small {   font-size: 13px; }  .st-small td, .st-small th {   padding: 8px; }  .st-small > thead > tr > th, .st-small > tbody > tr > th, .st-small > thead > tr > td, .st-small > tbody > tr > td {   padding-left: 12px;   padding-right: 12px; } </style>
 <pre class="r"><code>print(dfSummary(descr,
@@ -3005,7 +2954,313 @@ data$apertura_gc&lt;- set_label(data$apertura_gc,label = &quot;Indice apertura a
                # col.widths = c(5,5,10,10,10,10)
                ),
      method = &quot;render&quot;)</code></pre>
-<pre><code>## Error in seq_len(ncol(x)): argument must be coercible to non-negative integer</code></pre>
+<div class="container st-container">
+<table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
+  <thead>
+    <tr>
+      <th align="center" class="st-protect-top-border"><strong>Variable</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Label</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Stats / Values</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Freqs (% of Valid)</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Graph</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Valid</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Missing</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">formal
+[numeric]</td>
+      <td align="left">Participaci&#0243;n pol&#0237;tica formal</td>
+      <td align="left">Mean (sd) : -0.2 (0.5)
+min < med < max:
+-1.6 < 0 < 0.8
+IQR (CV) : 0.2 (-2.9)</td>
+      <td align="left" style="vertical-align:middle">234 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAIVJREFUWMPt1tsNgCAMBVBWkA2sG9D9d5MmTahpIlD1R24TPyT38DKKKa1V211lItp98xBlZlBQUFBQUFBQJv8/MUoPPzIoKCjoe1S+T0Far/I7mq8b0qUmL9kyQ1se9Ck1x+wsNS+Qp/J4TS9626c1pwE7gSHaAp9RWUaAkq5KKQUqrVUna6tdzKcwMdgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1518
+(92.8%)</td>
+      <td align="center">117
+(7.2%)</td>
+    </tr>
+    <tr>
+      <td align="left">disruptivo
+[numeric]</td>
+      <td align="left">Participaci&#0243;n pol&#0237;tica disruptiva</td>
+      <td align="left">Mean (sd) : 0.2 (0.6)
+min < med < max:
+-0.4 < 0 < 2.2
+IQR (CV) : 0.9 (4.1)</td>
+      <td align="left" style="vertical-align:middle">234 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAH9JREFUWMPt18EJwCAMhWFXaDeobtDsv1tzSKGoSGJpL/4PBC8fCSYXU1orWbMFY7SInFAoFAqFQqFQKBT6HY1+WB5UgpWh/1P3eFvqXqyKasVZqufeSc0xQe36nu79BobU+s79BoZ03LuXdl7NS0tbOUKrPYvQauJG80TSWrkADwtTdJLHEj8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1518
+(92.8%)</td>
+      <td align="center">117
+(7.2%)</td>
+    </tr>
+    <tr>
+      <td align="left">nodisruptivo
+[numeric]</td>
+      <td align="left">Participaci&#0243;n pol&#0237;tica no disruptiva</td>
+      <td align="left">Mean (sd) : 0 (0.3)
+min < med < max:
+-0.4 < 0 < 1
+IQR (CV) : 0.5 (7.5)</td>
+      <td align="left" style="vertical-align:middle">234 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAJdJREFUWMPt12EKgCAMBWCvYDewbtDuf7cUhxlOW0KE+d4fg/ZVzAZlzFyxMauP1eZKN6IdFBQUFBQUFBQUdHiq/iQuqfrGoGPSxb8crpMS0Te09ZPHlEsK2holplxy0nCtThqPiKfQddJat16nYqMz6k/XqNitjKbKn9Bie/U0Ntrd0NRrKpZsm0QqGV740UOyyXkaM1cOZ4VhG1dlW9kAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1518
+(92.8%)</td>
+      <td align="center">117
+(7.2%)</td>
+    </tr>
+    <tr>
+      <td align="left">act_marcha
+[numeric]</td>
+      <td align="left">Actividad: marcha</td>
+      <td align="left">Min : 0
+Mean : 0.2
+Max : 1</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">0</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">560</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">82.8%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">116</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">17.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGkAAAAqBAMAAABCYGjLAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAADpJREFUSMdjYBi+QIkkoADVpWxMChjVNapr6OsiL6cIkgQEKNKFsJ0UXfDQMBrVNaprZOgiL6cMRwAA7DPYv53StvMAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">676
+(41.3%)</td>
+      <td align="center">959
+(58.7%)</td>
+    </tr>
+    <tr>
+      <td align="left">voto_apod
+[factor]</td>
+      <td align="left">Voto: ultimas elecciones</td>
+      <td align="left">1. No
+2. Si</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">215</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">31.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">474</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">68.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAFkAAAAqBAMAAAAqk+rzAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAADxJREFUOMtjYBi6QAkDCGIBAlDVysZowGhU9ahq+qomLcUKEgXIU61EFFDA5UusYFT1qGraqSYtxQ5FAAAs2cavGvVBBAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNC0yMlQwOToyMjozMC0wNDowMK34qskAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDDcpRJ1AAAAAElFTkSuQmCC"></td>
+      <td align="center">689
+(42.1%)</td>
+      <td align="center">946
+(57.9%)</td>
+    </tr>
+    <tr>
+      <td align="left">educ_apod
+[factor]</td>
+      <td align="left">Nivel Educaci&#0243;nal apoderado/a</td>
+      <td align="left">1. 8vo b&#0225;sico o menos
+2. Educaci&#0243;n media
+3. Educaci&#0243;n T&#0233;cnica superio
+4. Educaci&#0243;n universitaria o</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">77</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">11.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">302</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">44.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">177</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">25.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">127</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">18.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAD4AAABOBAMAAACKzbi2AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAFRJREFUSMdjYBh4oAQGioIYACqvbAwCo/JDVZ5Q/AriAkTKK+ECKO7DBEaj8kNCnlD8Ujn94EjfcFeNyg8xeULxS8X0g1VeGZvbRuWHjDyh+B1IAABAieMbYHuvNwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNC0yMlQwOToyMjozMC0wNDowMK34qskAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDDcpRJ1AAAAAElFTkSuQmCC"></td>
+      <td align="center">683
+(41.8%)</td>
+      <td align="center">952
+(58.2%)</td>
+    </tr>
+    <tr>
+      <td align="left">pad_libros
+[factor]</td>
+      <td align="left">N&#0250;mero de libros en el hogar</td>
+      <td align="left">1. Entre 0 y 10 libros
+2. Entre 11 y 25 libros
+3. Entre 26 y 100 libros
+4. 101 libros o m&#0225;s&thinsp;<div class='st-ws-char'>&#0183;</div></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">133</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">19.7%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">198</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">29.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">240</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">35.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">105</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">15.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADQAAABOBAMAAACd7yh/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAFRJREFUSMdjYKAvUEIARUEogEopG8PBqBRdpfBEiiAWQFhKCQ0oYnUG3C2jUvSQwhMp1IllEMDhDCAwGpWihxSeSKEwljGlYM4wGpWisxSeSKEXAACL4crtbXk2FgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNC0yMlQwOToyMjozMC0wNDowMK34qskAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDDcpRJ1AAAAAElFTkSuQmCC"></td>
+      <td align="center">676
+(41.3%)</td>
+      <td align="center">959
+(58.7%)</td>
+    </tr>
+    <tr>
+      <td align="left">conversacion
+[numeric]</td>
+      <td align="left">Indice Socializaci&#0243;n pol&#0237;tica indirecta
+(conversaci&#0243;n)</td>
+      <td align="left">Mean (sd) : 2.7 (0.8)
+min < med < max:
+1 < 3 < 4
+IQR (CV) : 1 (0.3)</td>
+      <td align="left" style="vertical-align:middle">7 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACsAAACDBAMAAADmPP9wAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAHxJREFUSMftlcENgCAQBClBOhDsgOu/N71IAiobc0f47TznwSa7BEJYS76Ija3qQ6RQz2hQbHzyo/WQNIwU6hkNirWvk9vOfaRSqJ0aFOtc5176HVnvBTXWoEH3DMr+jVSozRoU61pn9Gp23xq1WYNiPeukcSS1X4NiV3EC1t/uBp00JysAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1515
+(92.7%)</td>
+      <td align="center">120
+(7.3%)</td>
+    </tr>
+    <tr>
+      <td align="left">apertura
+[numeric]</td>
+      <td align="left">Indice apertura a la discusi&#0243;n en el
+aula</td>
+      <td align="left">Mean (sd) : 3 (0.7)
+min < med < max:
+1 < 3 < 4
+IQR (CV) : 1 (0.2)</td>
+      <td align="left" style="vertical-align:middle">19 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAKBJREFUWMPt19sNgCAMBVBWkA3UDez+uwmCSoMQ2kSDevtFiEdJry+M+VcN9ZpcZZNtdCZaQEFBQbun/j2npH4CFBQUFBT0U9R9FkclJaJArTuJlrqRmIY1q+i8Xfhd1P+6VKhlEe5ZBHCOrumRQ5qFlCbrk9LkyBso29tGyvtTpOyp2ikzj9Cste00M33SkJGcxhg1NM4UWlu9m6Rl/lUr1d2ElsX+vVUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1476
+(90.3%)</td>
+      <td align="center">159
+(9.7%)</td>
+    </tr>
+    <tr>
+      <td align="left">civico
+[numeric]</td>
+      <td align="left">Indice aprendizaje c&#0237;vico activo en la
+escuela</td>
+      <td align="left">Mean (sd) : 3.9 (2.1)
+min < med < max:
+0 < 4 < 7
+IQR (CV) : 3 (0.5)</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">0</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">120</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">8.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">106</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">7.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">137</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">9.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">238</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">16.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">270</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">18.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">226</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">15.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">6</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">186</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">12.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">7</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">192</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">13.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACEAAACVBAMAAAAkkY4/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAHdJREFUSMftlNENgCAMRBnBbiC4gbf/bqZoDHDRlMgX9T5f0iN9aQhhXJJGNMtFNgC7U8I25M4z0aFIzV4J27A6PMfKZjglbMPsME9Wzbl9dsK7W4y9OExr+xZmJ7x7l7H6nqF/qz/CNjocRmmbXRK28Tv87nBEDvHA0mEJnbBvAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAwrfiqyQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0wNC0yMlQwOToyMjozMC0wNDowMNylEnUAAAAASUVORK5CYII="></td>
+      <td align="center">1475
+(90.2%)</td>
+      <td align="center">160
+(9.8%)</td>
+    </tr>
+    <tr>
+      <td align="left">quintil
+[factor]</td>
+      <td align="left">Quintil de ingreso per capita</td>
+      <td align="left">1. Quintil 1
+2. Quintil 2
+3. Quintil 3
+4. Quintil 4
+5. Quintil 5
+6. No sabe/No responde</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">113</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">6.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">113</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">6.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">113</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">6.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">112</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">6.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">112</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">6.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">1072</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">65.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAFYAAABwBAMAAAB2jZrvAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAFZJREFUWMPt07EJACAMBVFXcAXdINl/Ny0EiwghVgnc1a8J5LdWr7HrXsdOVcFif2zkz1z3afl1bDbLLrBYa9kFFmstu8Birc2yC7d7m5tgsQ8b+bNKLT7KZkLfQeZeAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAwrfiqyQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0wNC0yMlQwOToyMjozMC0wNDowMNylEnUAAAAASUVORK5CYII="></td>
+      <td align="center">1635
+(100.0%)</td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">sexo
+[factor]</td>
+      <td align="left">Sexo estudiante</td>
+      <td align="left">1. Mujer
+2. Hombre</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">743</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">47.1%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">834</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">52.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEgAAAAqBAMAAADi/wAlAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAADdJREFUOMtjYBicQAknUBQUFIQqUjbGBUYVjRxFRCUVQbyAFEVKeAFBhwOB0aiikaGIqKQy2AAAKtyyf+vPmTUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1577
+(96.5%)</td>
+      <td align="center">58
+(3.5%)</td>
+    </tr>
+    <tr>
+      <td align="left">dependencia
+[numeric]</td>
+      <td align="left">Dependencia</td>
+      <td align="left">Mean (sd) : 1.8 (0.7)
+min < med < max:
+1 < 2 < 3
+IQR (CV) : 1 (0.4)</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">605</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">37.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">780</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">47.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">250</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">15.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEIAAAA7BAMAAAA9V0HSAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYe6vPETQAAAEZJREFUOMtjYBg8QAkbEAQDqAplY0xgNKpiCKggHLeCuAEVVSjhBnj8AvXRqIpBrYJw3NI5jeFUAfOL0aiKIaaCcNwOBgAA2DrC17ho8OcAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzAtMDQ6MDCt+KrJAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMwLTA0OjAw3KUSdQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1635
+(100.0%)</td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">region
+[numeric]</td>
+      <td align="left">Region</td>
+      <td align="left">Mean (sd) : 9 (4.7)
+min < med < max:
+2 < 13 < 13
+IQR (CV) : 6 (0.5)</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">407</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">24.9%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">7</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">354</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">21.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">13</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">874</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">53.5%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEgAAAA7BAMAAAAqddEbAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYfnfT02wAAAEhJREFUSMdjYBicQAkFKAqiAqgiZWNkMKpo2CkiKhUI4gVUV4TPRVh9N6poGCoiKhUI4gU0TZmYAGu+QwNGo4qGvCKiUsFgAwBmks0ealF29QAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNC0yMlQwOToyMjozMS0wNDowMAuPoX0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDQtMjJUMDk6MjI6MzEtMDQ6MDB60hnBAAAAAElFTkSuQmCC"></td>
+      <td align="center">1635
+(100.0%)</td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">RBDE
+[numeric]</td>
+      <td align="left"></td>
+      <td align="left">Mean (sd) : 15286.5 (10407.5)
+min < med < max:
+218 < 12868 < 31421
+IQR (CV) : 16973 (0.7)</td>
+      <td align="left" style="vertical-align:middle">64 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYfnfT02wAAAH9JREFUWMPt1WEKgCAMBWCvUDdw3cB3/7u1FkiCRBtFlG//HviBG8pSGqumSzWLSK7JRwG8SberRylQerQZho8ux45ISUmfovpLJUgVlCGojihK9fTttFkzTopuOKH1ffhpDV+i1m6MWiYlJSUlJYWtzxyk+94mJf0RlUClsWoFPbPKMYdSZlcAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzEtMDQ6MDALj6F9AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMxLTA0OjAwetIZwQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1635
+(100.0%)</td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">meancivico
+[numeric]</td>
+      <td align="left">Indice aprendizaje c&#0237;vico activo en la
+escuela (promedio escuela)</td>
+      <td align="left">Mean (sd) : 3.9 (0.9)
+min < med < max:
+1.3 < 3.7 < 6.1
+IQR (CV) : 1.5 (0.2)</td>
+      <td align="left" style="vertical-align:middle">57 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYfnfT02wAAAJBJREFUWMPt11EKgCAQBFCvYDdIb1D3v1u52IrsKq7SlzMfQrCPFJIh5/aKFzlCiu+kTe83FygoKCgoqImm3jnnaFpWqdJ7ozTKk4OC2il9g3M0fssKra+gSmmLCq2voEp5DhQUFHRTWn6x7ZSGf6SBK8BMI79aUK41O63mWpR2naksqC6lp0zl8DANE3F75QGyeLUUTTBe1gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNC0yMlQwOToyMjozMS0wNDowMAuPoX0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDQtMjJUMDk6MjI6MzEtMDQ6MDB60hnBAAAAAElFTkSuQmCC"></td>
+      <td align="center">1635
+(100.0%)</td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">meanap
+[numeric]</td>
+      <td align="left">Indice apertura a la discusi&#0243;n en el
+aula (promedio escuela)</td>
+      <td align="left">Mean (sd) : 3 (0.3)
+min < med < max:
+2.2 < 3 < 4
+IQR (CV) : 0.4 (0.1)</td>
+      <td align="left" style="vertical-align:middle">62 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYfnfT02wAAAHtJREFUWMPt1j0OgCAMBeBewd5AvYHc/27GdqCmwdAOEuW9gYH0W6D8EM2V5SG8Sdx8Dy1XDlBQ0BeontQU3QWBgg6j2r0pKqiAgoL+lnK9H8K0om9TWYK1Qdm8/57K2KSmBhQUtIPa73aQuhrQoVS3MkV1+tYSsdBcOQEb2dDiS4BdhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNC0yMlQwOToyMjozMS0wNDowMAuPoX0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDQtMjJUMDk6MjI6MzEtMDQ6MDB60hnBAAAAAElFTkSuQmCC"></td>
+      <td align="center">1635
+(100.0%)</td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">civico_gc
+[numeric]</td>
+      <td align="left">Indice aprendizaje c&#0237;vico activo en la
+escuela (centrado escuela)</td>
+      <td align="left">Mean (sd) : 0 (1.9)
+min < med < max:
+-5.2 < 0 < 5.3
+IQR (CV) : 2.7 (-380527469728639168)</td>
+      <td align="left" style="vertical-align:middle">328 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYfnfT02wAAAItJREFUWMPt110KgCAQBGCvkDfIvUHd/26pqCj2owNZ4MybuB8qtQ+r1FxZrqKNzXq69Uh3m6HUXxakVm2kpPNRE7oGoBIY6RDqvxRG/YKUlBShVeO10+rk/1D3KpBKXk1K+gHV8f8FaKwkLQa8PuoWpKQNNI3mAM0rX6GpBQItJqJ7KvHknHZGzZUDGWzQ7VisRMQAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDQtMjJUMDk6MjI6MzEtMDQ6MDALj6F9AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA0LTIyVDA5OjIyOjMxLTA0OjAwetIZwQAAAABJRU5ErkJggg=="></td>
+      <td align="center">1475
+(90.2%)</td>
+      <td align="center">160
+(9.8%)</td>
+    </tr>
+    <tr>
+      <td align="left">apertura_gc
+[numeric]</td>
+      <td align="left">Indice apertura a la discusi&#0243;n en el
+aula (centrado escuela)</td>
+      <td align="left">Mean (sd) : 0 (0.7)
+min < med < max:
+-2.4 < 0 < 1.5
+IQR (CV) : 0.9 (27519687153333484)</td>
+      <td align="left" style="vertical-align:middle">563 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QQWBRYfnfT02wAAAHhJREFUWMPt18EJwCAMBdCs0GxQ3aDuv1vp92CKWGpOrfn/4EF8CEIkEYmV7SGakG7/DS1XjtVpfSAXzUCkpKR+ivrbXRQrKSkp6V9pbUBcFKiQkpKSLkC1/YXTtKGvUzUz54Am0xXfqDkzoNncHZDaed5F5yKxcgLtz8jAfO22zgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNC0yMlQwOToyMjozMS0wNDowMAuPoX0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDQtMjJUMDk6MjI6MzEtMDQ6MDB60hnBAAAAAElFTkSuQmCC"></td>
+      <td align="center">1476
+(90.3%)</td>
+      <td align="center">159
+(9.7%)</td>
+    </tr>
+  </tbody>
+</table>
+<p>Generated by <a href='https://github.com/dcomtois/summarytools'>summarytools</a> 0.9.9 (<a href='https://www.r-project.org/'>R</a> version 4.0.2)<br/>2021-04-22</p>
+</div>
 </div>
 <div id="guardar-datos" class="section level1">
 <h1>Guardar datos</h1>

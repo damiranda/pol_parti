@@ -31,7 +31,6 @@ basereg <- data %>%
     conversacion,
     apertura,
     civico,
-    quintil,
     sexo,
     dependencia,
     # region,
