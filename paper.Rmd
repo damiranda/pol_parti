@@ -1,0 +1,300 @@
+---
+title: ¿La manzana cae lejos del árbol? Incidencia de la socialización familiar y
+  escolar de la participación política de jóvenes secundarios
+author: "Daniel Miranda, Julio Iturra, Brian Montenegro & Karen Sepúlveda"
+linestretch: '1.5'
+output:
+  html_document:
+    toc: no
+    df_print: paged
+  bookdown::html_document2:
+    number_sections: no
+  bookdown::pdf_document2:
+    template: null
+    toc: no
+  pdf_document:
+    toc: no
+css: input/css/css.css
+abstract: Comprender el desarrollo del comportamiento político juvenil y las desigualdades
+  asociadas a este sigue siendo un desafío para las ciencias sociales, particularmente
+  en tiempos en que los jóvenes han tomado mayor protagonismo en la esfera pública.
+  Usando datos del Panel de Ciudadanía Escolar (ola 1) en que participaron 1635 estudiantes
+  de 2° medio y 744 de sus padres o apoderados durante el año 2019, se provee evidencia
+  acerca del rol que juegan los recursos de la familia (educación, ingreso y libros)
+  para explicar la participación política de los jóvenes. Así mismo, se provee evidencia
+  acerca del grado de consistencia en el comportamiento político entre padres/madres
+  y sus hijos/hijas, como proceso de socialización. Finalmente, se muestra el rol
+  que juegan características de la escuela, como el desarrollo de actividades de    socialización política y el clima abierto a la discusión, sobre la participación política de jóvenes secundarios.
+link-citations: yes
+linkcolor: blue
+editor_options:
+  chunk_output_type: console
+geometry: margin=0.78in
+header-includes:
+- \usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+- \usepackage{times}
+- \usepackage{caption}
+- \captionsetup[figure, table]{labelfont={bf},labelformat={default},labelsep=period}
+- \usepackage{graphicx}
+- \usepackage{float}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{tinytex}
+- \usepackage{lme4}
+---
+
+```{r setup, include=FALSE}
+if (!require("pacman")) install.packages("pacman")  #si falta pacman, instalar
+if (!require("tinytex")) install.packages("tinytex")#si falta tinytex, instalar
+pacman::p_load(knitr, kableExtra, dplyr, ggplot2,sjmisc,texreg) # librerias
+knitr::opts_chunk$set(warning = FALSE,  # mensaje de warning
+                      message = FALSE,  # mensajes/avisos de librerias  
+                      cache = FALSE,    # cache de los chunks,usar analisis pesados
+                      out.width = '85%',# largo de imagen en %
+                      fig.pos= "H",     # posicion figuras H = HERE
+                      echo = FALSE      # incluir chunk en output
+                      )
+options(scipen=999) # notacion cientifica
+rm(list=ls())       # limpiar workspace
+options(knitr.kable.NA = '') # NA en kable = ''
+options(knitr.graphics.error = FALSE)
+# Sys.setlocale("LC_ALL", "ES_ES.UTF-8")
+table_format = if(is_html_output()) { # Usar en argumento "format=" de kable
+  "html"
+} else if(is_latex_output()) {
+  "latex"
+}
+fwidth = if(is_html_output()) { #Usar en argumento "full_width" de kableExtra
+  T
+} else if(is_latex_output()) {
+  F
+}
+```
+
+```{r}
+load(url("https://github.com/damiranda/pol_parti/blob/branch1/input/data/proc/data.RData?raw=true"))
+
+data_red <- data %>% dplyr::select(formal,
+                                disruptivo,
+                                nodisruptivo,
+                                act_marcha,
+                                voto_apod,
+                                educ_apod,
+                                pad_libros,
+                                conversacion,
+                                apertura,
+                                civico,
+                                sexo,
+                                dependencia,
+                                region,
+                                RBDE, meancivico, meanap, civico_gc, apertura_gc) %>% na.omit
+```
+
+## Introducción
+
+En Chile, las protestas producidas en las revueltas de octubre de 2019 y el aumento de la participación electoral en el Plebiscito Constitucional del 2020 han reactivado el tópico de la participación política en la discusión académica. Esto pues, durante este periodo de tiempo convivieron distintos modos de comportamiento cívico y diferentes expresiones de lo político, desde movilizaciones de carácter activista, que son modos extrainstitucionales de influir en los asuntos públicos, hasta votaciones masivas, que son la definición de la participación política formal. La mayoría de este repertorio de prácticas fue protagonizado por jóvenes estudiantes.
+
+La participación política es un proceso de aprendizaje, especialmente en jóvenes. La participación política de la juventud es sin duda un tema muy relevante para el funcionamiento actual y futuro de las democracias. Investigaciones previas sobre el tema en América Latina e internacionalmente han permitido concluir que existen dos desafíos relevantes para la comprensión de este fenómeno: la constante diversificación de los repertorios de las formas de participación y los modos en que las nuevas generaciones adquieren su comportamiento político. En ese punto toma relevancia la comprensión de la socialización política juvenil en el marco de distintos modos de participar políticamente.
+
+La socialización política se define como la influencia en el interés de la ciudadanía por la participación en la política a través de diversos agentes. En la literatura sobre la temática se ha escrito sobre distintos agentes de socialización política. Tal es el caso de los medios de comunicación, las amistades, las familias y las escuelas. Así, algunos de los factores que inciden en el interés de por la participación ciudadana se heredan intergeneracionalmente, a través de la socialización política familiar, y otras se adquieren en etapas posteriores del curso de vida, específicamente en colegios y liceos.
+
+Cuando el interés por la participación política se reproduce dentro del contexto familiar los académicos del área hablan de transmisión intergeneracional de la participación política, que se define como la herencia del interés por la participación política y de sus preferencias desde los padres/madres/apoderados hacia jóvenes de nuevas generaciones. Así, en la sociología y la ciencia política se ha indicado que la transmisión intergeneracional es un fenómeno que produce desigualdad entre jóvenes de distintos grupos sociales, esto puesto que se ha demostrado que familias con mayor niveles de politización o con mayores recursos económicos y culturales traspasan en mayor medida sus prácticas políticas a sus descendencias, en desmedro de jóvenes con familias menos comprometidas políticamente o con menores recursos. 
+
+A su vez, en las ciencias sociales se ha investigado el papel que juega el agente socializador “escuela” en esta desigualdad. Particularmente se ha estudiado el efecto moderador o potenciador que tiene la socialización política escolar sobre la transmisión intergeneracional de la participación, demostrando para el caso de aquellas con mayores prácticas de socialización política o con mayores niveles de apertura a la discusión, esta desigualdad disminuye o se ve mitigada por la institución escolar.
+
+En este contexto, resulta interesante preguntarse cómo opera la idea de transmisión intergeneracional de la participación política en la juventud chilena, teniendo en cuenta aspectos como los distintos repertorios de participación que exhiben los jóvenes y el efecto moderador que tiene la escuela en esta relación. De esta forma, las preguntas de investigación que guiarán el artículo son las siguientes:
+
+a) ¿En qué medida las prácticas políticas parentales, los recursos socioeconómicos de la familia y la socialización política escolar inciden e n la participación política de los jóvenes?
+b) ¿Qué papel juega la escuela, como agente mitigador o regulador, en la asociación entre los recursos y socialización política parental sobre la participación política de los jóvenes chilenos?
+
+
+## Participación política
+
+## Socialización política familiar
+
+## Socialización política escolar
+
+## Hipótesis
+
+De esta forma, las hipótesis de la investigación son las siguientes:
+
+H1.  Jóvenes  provenientes  de  familias  con  mayores  niveles  de socialización  política familiar presentarán mayores niveles de participación política.
+
+H2a.  Jóvenes  que  crecen  en  familias  con  mayores  recursos  socioeconómicos  y culturales   presentarán   mayores   niveles   de   participación   política   formal   y   activista   no disruptiva.
+
+H2b.  Jóvenes  que  crecen  en  familias  con  mayores  recursos  socioeconómicos  y culturales presentarán menores niveles de participación política activista disruptiva.
+
+H3.  Jóvenes  que  asisten  a  escuelas  con  mayores  prácticas  de  socialización  política presentarán mayores niveles de participación formal y activista no disruptiva.
+
+H4. En escuelas que desarrollan mayores niveles de socialización política, la asociación entre la  socialización  política  familiar con  los  niveles  de  participación  de  los  jóvenes  será menos intensa.
+
+H5. En escuelas con mayores niveles de socialización política, la asociación entre los recursos socioeconómicos y culturales de  la  familia con  los niveles de participación de estos jóvenes será menos intensa.
+
+## Metodología
+
+## Resultados
+
+En la Tabla 4 se presentarán los estadísticos descriptivos para los agentes de socialización política y los distintos tipos de participación política. Seguido a esto, en la Tabla 5 se mostrarán los resultados respecto a las correlaciones bivariadas entre las variables dependientes e independientes de nivel 1 y de nivel 2. En la Tabla 6, 7 y 8 se mostrarán los principales hallazgos respecto al modelamiento multinivel de la participación política formal, no disruptiva y disruptiva, respectivamente.
+
+### Estadísticos Descriptivos
+
+```{r, results='asis'}
+library(stargazer)
+stargazer(data.frame(data_red), title= "Tabla 1: Estadísticos descriptivos", style = "default", type="html", header=FALSE)
+```
+
+### Estadísticos bivariados
+
+### Socialización de la Participación Formal
+
+La siguiente tabla resume los modelos parciales de socialización política familiar, modelo de recursos y socialización política escolar para la variable dependiente participación formal. Del mismo modo, se presenta el modelo completo, que incorpora todos los modelos parciales en conjunto.
+
+```{r}
+library(lme4)
+library(stargazer)
+# Hipótesis 1 - Incidencia de socialización política familiar sobre participación formal
+m1 <- lmer(formal ~ 1  + conversacion + voto_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+m1a <- lmer(formal ~ 1  + conversacion + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+m1b <- lmer(formal ~ 1   + voto_apod + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+# Hipótesis 2 - Incidencia de recursos socioeconómicos sobre participación formal
+m2 <- lmer(formal ~ 1 + pad_libros + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+m2a <- lmer(formal ~ 1 + pad_libros  + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+m2b <- lmer(formal ~ 1 + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+#m2c <- lmer(formal ~ 1 + quintil + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+# Hipótesis 3 - Incidencia de socialización política escolar sobre participación formal
+m3 <- lmer(formal ~ 1  +  civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+m3a <- lmer(formal ~ 1  +  civico_gc + meancivico + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+m3b <- lmer(formal ~ 1  + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+# Modelo saturado - con pendiente fija
+m4 <- lmer(formal ~ 1  + conversacion + voto_apod + educ_apod + pad_libros + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+```
+
+```{r , results='asis'}
+stargazer(list(m1a, m1b, m2a, m2b, m3a, m3b, m4), type="html", title= "Tabla 4: Modelos para participación formal", style = "default", covariate.labels = c("Conversación", "Familia votó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña"),
+          dep.var.caption  = "Indicador de Participación formal",
+          dep.var.labels   = "", digits= 2,
+          star.char = c("+", "*", "**", "***"),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c("+ p<=0.1; * p<=0.05; ** p<=0.01; *** p<0.001"), 
+          notes.append = F,
+          column.labels = c("Conversación", "Familia votó", "Libros","Educación", "Actividades cívicas", "Apertura a disucusión", "Completo"), model.numbers          = FALSE)
+```
+
+En relación al modelo parcial de socialización política familiar se observó que los jóvenes que conversan con mayor frecuencia sobre temas políticos y de contingencia nacional con sus padres, tienen mayores expectativas de participar de la política formal a futuro (β=0,21*** ), es decir, participar en elecciones y de informarse sobre los candidatos de dichas elecciones. Del mismo modo, los resultados arrojaron que el desarrollo de la participación formal de los estudiantes entrevistados está influenciado por la socialización política directa (β=0,21***), vale decir, los padres que declaran haber votado en elecciones pasadas van a incidir positivamente en la participación formal de sus hijos.
+
+Respecto al modelo parcial de recursos culturales, se observó que las familias que cuentan con mayores recursos culturales objetivados –en este caso, libros- tienen una mayor probabilidad de transmitir a los jóvenes el interés por participar en elecciones en relación a la categoría de referencia –tener entre 10 y 25 libros en casa (26 a 100 libros, β=0,14* ; 100 o más libros, β=0,19** ). A su vez, otro de los resultados de esta investigación es que mientras más alta sea la educación de los padres, los jóvenes tienen mayores expectativas de heredar el interés por la participación en política formal, esto pues, frente a los padres que tienen únicamente estudios básicos, los padres con educación técnica tienen un β de 0,24** y los padres con educación universitaria tienen un β de 0,25**.
+
+Sobre el modelo parcial de socialización política escolar es posible señalar que aquellos colegios que tienen mayor cantidad de actividades cívicas en su currículum y que cuentan con mayor grado de apertura a la discusión, formarán jóvenes mayormente comprometidos con la política formal del país (β=0,05***; β=0,09**, respectivamente). No obstante, se puede observar que la percepción del estudiante sobre la cantidad de actividades cívicas que se realizan en el colegio no incide significativamente en la participación política formal de los jóvenes a futuro, sin embargo, la percepción del estudiante sobre los niveles de apertura a la discusión en la escuela sí influye significativamente (β=0,24**).
+
+Aparte del análisis de los modelos parciales, también es importante visualizar el modelo completo para observar como varían los puntajes β en cada una de las variables independientes. En este modelo, las variables de conversación política familiar y socialización política directa disminuyeron en su puntaje, pero se mantienen significativas (β=0,17***, β=0,16***, respectivamente).Por otro lado, las variables de números de libros dejaron de ser significativas, pero las de educación de los padres se mantuvieron en tal condición, sin embargo, disminuyeron su puntaje factorial en relación a la categoría educación básica de padres (β=0,22** para educación técnica; β=0,17* para educación superior). En relación a las variables de socialización escolar, únicamente permaneció significativa al 95% de confianza la variable de número de actividades cívicas, centrada según colegio (β=0,03**).
+
+### Socialización de la Participación Activista No Disruptiva
+
+La Tabla *x* resume los parciales de socialización política familiar, modelo de recursos y socialización política escolar para la variable dependiente participación no disruptiva. Del mismo modo, se presenta el modelo completo, que incorpora todos los modelos parciales en conjunto y también el modelo que contiene la interacción multinivel.
+
+```{r}
+library(lme4)
+library(stargazer)
+n1b <- lmer(nodisruptivo ~ 1  +  factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n1a <- lmer(nodisruptivo ~ 1  + conversacion  + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n2b <- lmer(nodisruptivo ~ 1   + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+n2a <- lmer(nodisruptivo ~ 1   + pad_libros + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+n3a <- lmer(nodisruptivo ~ 1  +  civico_gc + meancivico + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n3b <- lmer(nodisruptivo ~ 1  +  apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n4 <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + pad_libros + educ_apod  + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+n6a <- lmer(nodisruptivo ~ 1  + conversacion + factor(act_marcha) + educ_apod + pad_libros + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha) * meanap + (1+ factor(act_marcha) |RBDE), data_red)
+```
+
+
+```{r , results='asis'}
+stargazer(list(n1a, n1b, n2a, n2b, n3a, n3b, n4, n6a), type="html", title= "Tabla 4: Modelos para participación no-disruptiva", style = "default", covariate.labels = c("Conversación", "Familia marchó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña", "Familia marchó x apertura(mean)"),
+          dep.var.caption  = "Indicador de Participación no-disruptiva",
+          dep.var.labels   = "", digits= 2,
+          star.char = c("+", "*", "**", "***"),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c("+ p<=0.1; * p<=0.05; ** p<=0.01; *** p<0.001"), 
+          notes.append = F,
+          column.labels = c("Conversación", "Familia marchó", "libros","Educación", "Actividades cívicas", "Apertura a disucusión", "completo", "Crosslevel int"), model.numbers          = FALSE)
+```
+
+En el modelo parcial de la participación no disruptiva se identificó que la socialización política indirecta, también conocida como conversación intergeneracional sobre temas políticos y de actualidad, tiene efectos sobre la participación no disruptiva de los jóvenes, sin embargo, en una proporción menor que la participación formal (β de 0,08*** versus 0,21***). Por otro lado, la asistencia de padres y/o madres a marchas influencia la participación de los jóvenes en la política no disruptiva (β=0,09), como, por ejemplo, la asistencia a reuniones políticas, la asistencia a marchas autorizadas, la petición de firmas para causas sociales, entre otros aspectos de la política activista no disruptiva.
+
+En relación al modelo parcial de recursos fue posible establecer que las familias que cuentan con más de 100 libros en casa tienen una mayor expectativa de generar descendencias participantes (β=0,09*), en relación a aquellas familias que tienen 10 o menos libros en su hogar. Mientras tanto, las otras categorías, 11 a 25 libros y 26 a 100 libros, arrojaron resultados no significativos al 90%, 95% y 99% de confianza. A la vez, la educación de los padres tampoco pareciera ser un buen predictor de participación no disruptiva, ya que si bien la educación media, la educación técnica y la educación superior tienen puntajes β positivos en relación a la categoría de referencia (8vo básico o menos), estos efectos no resultaron significativos al 90%, al 95% ni al 99% de confianza.
+
+En el modelo parcial de socialización política escolar fue posible encontrar que aquellas instituciones escolares que en mayor medida realizaban actividades cívicas en sus dependencias, tenían mayores expectativas de generar estudiantes que participen de la política activista no disruptiva (β=0,03*** ). A su vez, aquellas instituciones con mayor apertura a la discusión en el aula de clases, también tienen mejores expectativas de formar ciudadanos participantes de política activista no violenta o ilegal (β=0,04*). Cabe señalar también, que el indicador actividades cívicas promedio y el indicador apertura a la discusión promedio tuvieron puntajes no significativos al 90%, al 95% ni al 99% de confianza.
+
+Sobre el modelo completo es posible añadir que la socialización política indirecta descendió en un 0,01 su puntaje β, sin embargo, la socialización política directa se mantiene en los mismos parámetros que el modelo parcial. Sobre la cantidad de libros en el hogar, ahora todas las categorías pasaron a ser no significativas a ninguno de los niveles de confianza utilizados, al igual que en el caso de la educación de los padres. En tanto, en la socialización política escolar el único indicador que se mantiene significativo al 95% de confianza son las actividades cívicas centradas según el colegio, en donde el puntaje β en el modelo completo alcanza el valor 0,02.
+
+
+### Socialización de la Particiación Activista Disruptiva
+
+La Tabla *x* resume los modelos parciales de socialización política familiar, modelo de recursos y socialización política escolar para la variable dependiente participación disruptiva. Del mismo modo, se presenta el modelo completo, que incorpora todos los modelos parciales en conjunto y también el modelo que contiene la interacción multinivel.
+
+```{r}
+library(lme4)
+library(stargazer)
+d1a <- lmer(disruptivo ~ 1  + conversacion + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d1b <- lmer(disruptivo ~ 1  + factor(act_marcha) + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d2a <- lmer(disruptivo ~ 1   +  pad_libros + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+d2b <- lmer(disruptivo ~ 1   + educ_apod + factor(region) + factor(dependencia) + factor(sexo) + (1 |RBDE), data_red)
+
+d3a <- lmer(disruptivo ~ 1  +   civico_gc + meancivico + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d3b <- lmer(disruptivo ~ 1  +  apertura_gc + meanap +  factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d4 <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha) + pad_libros + educ_apod + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia)+ factor(sexo) + (1 |RBDE), data_red)
+
+d6a <- lmer(disruptivo ~ 1  + conversacion + factor(act_marcha) + educ_apod + pad_libros + civico_gc + meancivico + apertura_gc + meanap + factor(region) + factor(dependencia) + factor(sexo) + factor(act_marcha) * meanap + (1+ factor(act_marcha) |RBDE), data_red)
+```
+
+```{r , results='asis'}
+
+stargazer(list(d1a, d1b, d2a, d2b, d3a, d3b, d4, d6a), type="html", title= "Tabla 5: Modelos para participación disruptiva", style = "default", covariate.labels = c("Conversación", "Familia marchó", "11 a 25 libros(vs menos de 10)", "26 a 100 libros(vs menos de 10)", "100 o más libros(vs menos de 10)", "Ed. Media (vs Básica)", "Ed. Técnica (vs Básica)", "Ed. Universitaria (vs Básica)", "Actividades cívicas(centrada)", "Actividades cívicas(promedio)", "Apertura a discusión(centrada)", "Apertura a discusión(promedio)", "Maule (vs Antofagasta)", "RM (vs Antofagasta)", "Subvencionado(vs Público)", "Privado(vs Público)", "Niña", "Familia marchó x apertura(mean)"),
+          dep.var.caption  = "Indicador de Participación disruptiva",
+          dep.var.labels   = "", digits= 2,
+          star.char = c("+", "*", "**", "***"),
+          star.cutoffs = c(0.1, 0.05, 0.01, 0.001),
+          notes = c("+ p<=0.1; * p<=0.05; ** p<=0.01; *** p<0.001"), 
+          notes.append = F,
+          column.labels = c("Conversación", "Familia marchó", "libros","Educación", "Actividades cívicas", "Apertura a disucusión", "completo", "Crosslevel int"), model.numbers          = FALSE)
+```
+
+En el modelo parcial de socialización política familiar y participación política disruptiva se detectó que la conversación política interactúa positivamente con la participación de jóvenes en política disruptiva (β = 0,08* ). Es decir, la comunicación de los padres con jóvenes, particularmente sobre temáticas de política y actualidad, tiene una influencia positiva en la participación de los jóvenes en política violenta o ilegal. Del mismo modo, la socialización política directa influye positivamente en la participación de los jóvenes en política disruptiva, incluso más que en la política no disruptiva, esto significa que el activismo de padres influencia en mayor medida el desarrollo de actividades de protesta violenta que pacífica (β=0.16* versus β=0.09**).
+
+En el modelo parcial de recursos culturales no fue posible establecer incidencias significativas, ni en la variable número de libros en el hogar ni en la variable educación de los padres.
+
+En el modelo de socialización política escolar se encontró que el número de actividades cívicas que se desarrollan en cada colegio tiene una incidencia en la participación disruptiva de los jóvenes (β = 0,03*). Sin embargo, ninguna de las otras variables testeadas tiene un efecto significativo sobre la variable participación política disruptiva de los jóvenes.
+
+### Discusión y conclusiones
+
+### Bibliografía
+
+### Anexos
