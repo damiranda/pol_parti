@@ -237,7 +237,6 @@ basereg <- data %>% select(formal,
                            civico,
                            sexo,
                            dependencia) %>% na.omit(basereg)
-str(apertura)
 
 df<- dfSummary(basereg,
                plain.ascii = FALSE,
