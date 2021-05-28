@@ -236,8 +236,8 @@ basereg <- data %>% select(formal,
                            apertura,
                            civico,
                            sexo,
-                           dependencia,
-                           ) %>% na.omit(basereg)
+                           dependencia) %>% na.omit(basereg)
+str(apertura)
 
 df<- dfSummary(basereg,
                plain.ascii = FALSE,
@@ -258,12 +258,11 @@ webshot(url ="desc01.html" ,file ="output/tables/desc01.png")
 file.remove(c("desc01.html"))
 ```
 
-La Tabla \@ref(tab:desc01) muestra los estadísticos descriptivos para todas las variables utilizadas en este artículo. La muestra se compone homogéneamente entre hombres y mujeres. La mayor parte de los establecimientos corresponden a colegios particulares subvencionados y municipales, contrastando con una minoría de escuelas particulares pagadas, siendo solo un 13,5% del total. Por otra parte, la mayor parte de los hogares cuentan con una cantidad de libros que va desde los 26 hasta 100 unidades (37,8% de los casos). Por el contrario, sólo un 15,9% declara poseer desde 101 libros o más en sus casas.
+En la Tabla \@ref(tab:desc01) se presentaron los estadísticos descriptivos para todas las variables utilizadas en este estudio. La muestra de 524 estudiantes de 16 años enseña que hay una adhesión alta a formas de participación formal, en desmedro de las disruptivas y no disruptivas, las cuales, según los histogramas presentados, son asimétricas hacia la izquierda (valores de baja participación). En cuanto a la composición de sexo de los estudiantes es relativamente homogénea, el 48,3% corresponde a hombres y el 51,7% a mujeres.
 
-Es posible observar que los alumnos de estas escuelas por lo general no suelen participar en actividades políticas de carácter disruptivo. No obstante, si participan de actividades de naturaleza activista. Al consultar sobre su socialización política, los alumnos declaran conversar nunca o a veces con sus padres sobre política y temas sociales. Y solo un 10,5% (55 casos) menciona hacerlo siempre. Se prevé, además, una intención positiva a participar en actividades políticas formales una vez tengan la edad legal para hacerlo. Esto último contrasta con las respuestas de sus apoderados sobre su comportamiento político actual, donde solo un 17% de estos asistió a manifestaciones convocadas los últimos doce meses. Aunque, un 71,9% de estos declaró haber votado en las elecciones presidenciales de noviembre 2017. Respecto al nivel educacional de los apoderados, la mayor parte de estos (45,8%) poseen educación media completa, seguido de técnico superior (25,6%, 134 casos), educación universitaria (96 casos, 18,3%) y finalmente octavo básico o básica incompleta, con un 10,3% de la muestra (54 casos).
+En cuanto a los padres, solo un 17% de ellos asistió a manifestaciones convocadas los últimos doce meses y un 71,9% declaró haber votado en las elecciones presidenciales de noviembre 2017. Respecto a su nivel educacional, la mayor parte de estos (45,8%) poseen educación media completa, seguido de técnico superior (25,6%, 134 casos), educación universitaria (96 casos, 18,3%) y finalmente octavo básico o básica incompleta, con un 10,3% de la muestra (54 casos).Según el reporte de los padres, la mayor parte de los hogares cuentan con una cantidad de libros que va desde los 26 hasta 100 unidades (37,8% de los casos). Por el contrario, sólo un 15,9% declara poseer desde 101 libros o más en sus casas.
 
-Sobre la participación en actividades relacionadas al aprendizaje cívico en la escuela, solo un 13% de los alumnos declaran participar de estas actividades, aunque la mayoría de las respuestas declaran participar de al menos 3 a 5 actividades en el establecimiento.
-
+Sobre los colegios, la mayor parte de ellos corresponden a la modalidad de particulares subvencionados y municipales, contrastando con una minoría de escuelas particulares pagadas, siendo solo un 13,5% del total. En general, los estudiantes manifestaron que el promeido de actividades cívicas realizadas en las escuelas fue de 4,1, en una escala de 0 a 7, en tanto, también se conoció que el promedio del índice de apertura a la discusión en el aula de la muestra fue de 3,1, en una escala de 1 a 4.
 
 ```{r desc01, echo=FALSE, results='asis'}
 knitr::kable(data.frame(image='![](output/tables/desc01.png){width="500"}'),    # generar tabla
