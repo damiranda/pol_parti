@@ -16,13 +16,13 @@ author:
   number: 3
 linestretch: '1.5'
 output:
+  bookdown::html_document2:
+    number_sections: no
   bookdown::pdf_document2:
     template: null
     toc: no
     pandoc_args:
       - --template=input/mytemplate.tex
-  bookdown::html_document2:
-    number_sections: no
 bibliography: input/bib/referencias.bib
 csl: input/bib/apa.csl
 css: input/css/css.css
